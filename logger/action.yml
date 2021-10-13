@@ -12,7 +12,8 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - uses: actions/checkout/@v1
     - name: Log stuff
       uses: actions/github-script@v3
-        with:
-          script: console.log("${{ inputs.string-to-log }}")
+      with:
+        script: console.log("${{ inputs.string-to-log }}")
