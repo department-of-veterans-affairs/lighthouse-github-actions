@@ -5,10 +5,7 @@ inputs:
     description: 'string to log'
     required: true
     default: 'Enter a phrase to log'
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+
 runs:
   using: "composite"
   steps:
