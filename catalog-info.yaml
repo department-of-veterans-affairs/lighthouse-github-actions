@@ -1,0 +1,22 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: new-example-component
+  description: An example component for Backstage catalog 
+  labels:
+    example.com/custom: custom_label_value
+  annotations:
+    example.com/service-discovery: artistweb
+    circleci.com/project-slug: github/example-org/artist-website
+  tags:
+    - Backstage
+    - Component
+    - Example
+  links:
+    - url: https://backstage.io/docs/features/software-catalog/descriptor-format
+      title: Backstage Documentation
+      icon: dashboard
+spec:
+  type: website
+  lifecycle: experimental
+  owner: team-bandicoot
