@@ -5,14 +5,6 @@ metadata:
   description: An example component for Backstage catalog 
   annotations:
     github.com/project-slug: lighthouse-backstage-example
-  tags:
-    - Backstage
-    - Component
-    - Example
-  links:
-    - url: https://backstage.io/docs/features/software-catalog/descriptor-format
-      title: Backstage Documentation
-      icon: dashboard
 spec:
   type: website
   lifecycle: experimental
