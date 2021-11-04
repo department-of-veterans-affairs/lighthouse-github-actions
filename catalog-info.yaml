@@ -3,11 +3,8 @@ kind: Component
 metadata:
   name: new-example-component
   description: An example component for Backstage catalog 
-  labels:
-    example.com/custom: custom_label_value
   annotations:
-    example.com/service-discovery: artistweb
-    circleci.com/project-slug: github/example-org/artist-website
+    github.com/project-slug: lighthouse-backstage-example
   tags:
     - Backstage
     - Component
