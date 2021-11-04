@@ -4,7 +4,7 @@ metadata:
   name: new-example-component
   description: An example component for Backstage catalog 
   annotations:
-    github.com/project-slug: lighthouse-backstage-example
+    github.com/project-slug: department-of-veterans-affairs/lighthouse-backstage-actions
 spec:
   type: website
   lifecycle: experimental
