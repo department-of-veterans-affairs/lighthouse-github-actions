@@ -43,10 +43,10 @@ spec:
         - name: git-sync
             image: k8s.gcr.io/git-sync:v3.1.5
             args:
-            - "--repo=https://github.com/department-of-veterans-affairs/${repo_name}"
-            - "--branch=main"
-            - "--depth=1"
-            - "--one-time"
+                - "--repo=https://github.com/department-of-veterans-affairs/${repo_name}"
+                - "--branch=main"
+                - "--depth=1"
+                - "--one-time"
             volumeMounts:
             - name: repo
                 mountPath: /tmp/git
@@ -60,12 +60,12 @@ spec:
             imagePullPolicy: Always
             command: ['/bin/sh']
             args: 
-            - -c
-            - |
-            cd /tmp/git/lighthouse-embark
-            techdocs-cli generate --source-dir /tmp/git/lighthouse-embark --output-dir /tmp/git/techdocs/lighthouse-embark --no-docker -v
-            techdocs-cli publish --publisher-type awsS3 --storage-name embark-techdocs-storage --entity "${team_name}"/"${kind}"/"${name}" --directory /tmp/git/techdocs/lighthouse-embark 
-            scuttle python -V
+                - -c
+                - |
+                    cd /tmp/git/lighthouse-embark
+                    techdocs-cli generate --source-dir /tmp/git/lighthouse-embark --output-dir /tmp/git/techdocs/lighthouse-embark --no-docker -v
+                    techdocs-cli publish --publisher-type awsS3 --storage-name embark-techdocs-storage --entity "${team_name}"/"${kind}"/"${name}" --directory /tmp/git/techdocs/lighthouse-embark 
+                    scuttle python -V
             volumeMounts:
             - name: repo
                 mountPath: /tmp/git/
