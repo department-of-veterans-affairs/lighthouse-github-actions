@@ -4,6 +4,9 @@ inputs:
   kubeconfig: 
     description: 'Kubernetes context -- config file usually located at ~/.kube/config'
     required: true
+  namespace:
+    description: 'Namespace to use for Kubernetes job'
+    required: true
   serviceAccountName:
     description: 'Service account name'
     required: true
@@ -29,6 +32,9 @@ runs:
     with:
       method: kubeconfig
       kubeconfig: ${{ inputs.kubeconfig }}
+  - name: Set namespace
+    run: kubectl config set-context --current --namespace=${{ inputs.namespace }}
+    shell: bash
   - name: Create techdocs Job
     run: >
       ./scripts/create-techdocs-job.sh 

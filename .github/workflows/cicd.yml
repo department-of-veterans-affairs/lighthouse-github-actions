@@ -17,6 +17,7 @@ jobs:
       uses: ./.github/actions/techdocs
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
+        namespace: "lighthouse-bandicoot-dev"
         serviceAccountName: "bandicoot-sa"
         repository: "lighthouse-embark"
         team-name: "lighthouse-bandicoot"
