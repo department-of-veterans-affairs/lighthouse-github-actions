@@ -38,12 +38,12 @@ spec:
       labels:
         app: embark-techdocs
     spec:
-      serviceAccountName: bandicoot-sa
+      serviceAccountName: ${service_account_name}
       initContainers:
       - name: git-sync
         image: k8s.gcr.io/git-sync:v3.1.5
         args:
-         - "--repo=https://github.com/department-of-veterans-affairs/lighthouse-embark"
+         - "--repo=https://github.com/department-of-veterans-affairs/${repo_name}"
          - "--branch=main"
          - "--depth=1"
          - "--one-time"
@@ -64,7 +64,7 @@ spec:
         - |
           cd /tmp/git/lighthouse-embark
           techdocs-cli generate --source-dir /tmp/git/lighthouse-embark --output-dir /tmp/git/techdocs/lighthouse-embark --no-docker -v
-          techdocs-cli publish --publisher-type awsS3 --storage-name embark-techdocs-storage --entity default/component/embark-monorepo --directory /tmp/git/techdocs/lighthouse-embark 
+          techdocs-cli publish --publisher-type awsS3 --storage-name embark-techdocs-storage --entity ${team_name}/${kind}/${name} --directory /tmp/git/techdocs/lighthouse-embark 
           scuttle python -V
         volumeMounts:
           - name: repo
