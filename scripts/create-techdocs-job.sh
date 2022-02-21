@@ -26,66 +26,66 @@ create_job() {
     kind=${4:-"Component"}
     name=${5}
 
-cat <<- EOF | kubectl apply -f -
+cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
-name: create-techdocs
+    name: create-techdocs
 spec:
-ttlSecondsAfterFinished: 100
-template:
-metadata:
-labels:
-    app: create-techdocs
-spec:
-serviceAccountName: ${service_account_name}
-initContainers:
-- name: git-sync
-    image: k8s.gcr.io/git-sync:v3.1.5
-    args:
-    - "--repo=https://github.com/department-of-veterans-affairs/${repo_name}"
-    - "--branch=main"
-    - "--depth=1"
-    - "--one-time"
-    volumeMounts:
-    - name: repo
-        mountPath: /tmp/git
-    resources:
-    limits:
-        cpu: 100m
-        memory: 150Mi
-containers:
-- name: techdocs
-    image: ghcr.io/department-of-veterans-affairs/embark-deployment/techdocs:latest
-    imagePullPolicy: Always
-    command: ['/bin/sh']
-    args: 
-    - -c
-    - |
-    cd /tmp/git/lighthouse-embark
-    techdocs-cli generate --source-dir /tmp/git/lighthouse-embark --output-dir /tmp/git/techdocs/lighthouse-embark --no-docker -v
-    techdocs-cli publish --publisher-type awsS3 --storage-name embark-techdocs-storage --entity "${team_name}"/"${kind}"/"${name}" --directory /tmp/git/techdocs/lighthouse-embark 
-    scuttle python -V
-    volumeMounts:
-    - name: repo
-        mountPath: /tmp/git/
-    env:
-    - name: ENVOY_ADMIN_API
-    value: "http://127.0.0.1:15000"
-    - name: ISTIO_QUIT_API
-    value: "http://127.0.0.1:15020"
-    - name: SCUTTLE_LOGGING
-    value: "true"
-    resources:
-    limits:
-        cpu: 500m
-        memory: 1024Mi
-imagePullSecrets:
-    - name: "dockerconfigjson-ghcr"
-restartPolicy: Never
-volumes:
-- name: repo
-    emptyDir: {}
+    ttlSecondsAfterFinished: 100
+    template:
+    metadata:
+        labels:
+            app: create-techdocs
+    spec:
+        serviceAccountName: ${service_account_name}
+        initContainers:
+        - name: git-sync
+            image: k8s.gcr.io/git-sync:v3.1.5
+            args:
+            - "--repo=https://github.com/department-of-veterans-affairs/${repo_name}"
+            - "--branch=main"
+            - "--depth=1"
+            - "--one-time"
+            volumeMounts:
+            - name: repo
+                mountPath: /tmp/git
+            resources:
+            limits:
+                cpu: 100m
+                memory: 150Mi
+        containers:
+        - name: techdocs
+            image: ghcr.io/department-of-veterans-affairs/embark-deployment/techdocs:latest
+            imagePullPolicy: Always
+            command: ['/bin/sh']
+            args: 
+            - -c
+            - |
+            cd /tmp/git/lighthouse-embark
+            techdocs-cli generate --source-dir /tmp/git/lighthouse-embark --output-dir /tmp/git/techdocs/lighthouse-embark --no-docker -v
+            techdocs-cli publish --publisher-type awsS3 --storage-name embark-techdocs-storage --entity "${team_name}"/"${kind}"/"${name}" --directory /tmp/git/techdocs/lighthouse-embark 
+            scuttle python -V
+            volumeMounts:
+            - name: repo
+                mountPath: /tmp/git/
+            env:
+            - name: ENVOY_ADMIN_API
+            value: "http://127.0.0.1:15000"
+            - name: ISTIO_QUIT_API
+            value: "http://127.0.0.1:15020"
+            - name: SCUTTLE_LOGGING
+            value: "true"
+            resources:
+            limits:
+                cpu: 500m
+                memory: 1024Mi
+        imagePullSecrets:
+            - name: "dockerconfigjson-ghcr"
+        restartPolicy: Never
+        volumes:
+        - name: repo
+            emptyDir: {}
 EOF
 }
 
