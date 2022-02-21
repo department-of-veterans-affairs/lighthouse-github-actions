@@ -26,7 +26,7 @@ create_job() {
     kind=${4:-"Component"}
     name=${5}
 
-kubectl apply -f <<- EOF
+kubectl apply -f - <<- EOF
 apiVersion: batch/v1
 kind: Job
 metadata:
