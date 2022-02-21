@@ -35,7 +35,7 @@ runs:
   - name: Set namespace
     run: kubectl config set-context --current --namespace=${{ inputs.namespace }}
     shell: bash
-  - name: Create techdocs Job
+  - name: Create techdocs Job # Things to add: display logs from pod in github action steps?
     run: >
       ./scripts/create-techdocs-job.sh 
       ${{ inputs.serviceAccountName }}
