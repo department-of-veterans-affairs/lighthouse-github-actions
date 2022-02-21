@@ -1,0 +1,40 @@
+name: 'Publish Techdocs'
+description: 'Generates and publishes techdocs using kubernetes job'
+inputs:
+  kubeconfig: 
+    description: 'Kubernetes context -- config file usually located at ~/.kube/config'
+    required: true
+  serviceAccountName:
+    description: 'Service account name'
+    required: true
+  repository:
+    description: 'Name of repository'
+    required: true
+  team-name:
+    description: 'Namespace of entity; used as namespace for --entity <namespace/kind/name>'
+    required: true
+  kind:
+    description: 'Kind of entity; used as kind for --entity <namespace/kind/name>'
+    required: true
+  name:
+    description: 'Name of Entity; used as name for --entity <namespace/kind/name>'
+    required: true
+
+
+runs:
+  using: "composite"
+  steps:
+  - name: Set K8s context
+    uses: azure/k8s-set-context@v1
+    with:
+      method: kubeconfig
+      kubeconfig: ${{ inputs.kubeconfig }}
+  - name: Create techdocs Job
+    run: >
+      ./scripts/create-techdocs-job.sh 
+      ${{ inputs.serviceAccountName }}
+      ${{ inputs.repository }}
+      ${{ inputs.team-name }}
+      ${{ inputs.kind }}
+      ${{ inputs.name }}
+    shell: bash

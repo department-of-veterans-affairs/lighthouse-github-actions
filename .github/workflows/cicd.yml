@@ -1,0 +1,25 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.4.0
+    - name: Generic step in CI/CD process
+      run: echo "hello CI/CD world"
+    # Improve user experience by having user provide url to catalog-info.yaml and parse the yaml file for kind, name, team, and repository.
+    - name: Create techdocs 
+      uses: ./.github/actions/techdocs
+      with:
+        kubeconfig: ${{ secrets.KUBE_CONFIG }}
+        serviceAccountName: "bandicoot-sa"
+        repository: "lighthouse-embark"
+        team-name: "lighthouse-bandicoot"
+        kind: "Component"
+        name: "embark-monorepo"
+        
