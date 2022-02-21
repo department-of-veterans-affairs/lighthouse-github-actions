@@ -1,2 +1,2 @@
-# lighthouse-backstage-actions
-Custom GitHub Actions for lighthouse-backstage repository
+# lighthouse-github-actions
+Custom GitHub Actions for Lighthouse Internal Developer Portal
