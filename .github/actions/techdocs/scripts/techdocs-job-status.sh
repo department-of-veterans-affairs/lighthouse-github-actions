@@ -19,7 +19,7 @@ stream_output() {
 }
 await_job() {
 
-while ! bash -c 'kubectl get pods | grep "lighthouse-techdocs" | grep "1/1"' > /dev/null 2>&1; do 
+while ! bash -c 'kubectl get job.batch/lighthouse-techdocs | grep "1/1"' > /dev/null 2>&1; do 
     kubectl logs -f -l app=lighthouse-techdocs
     sleep 15;
     if kubectl get pods | grep "lighthouse-techdocs" | grep "0/1" | grep "Error"; then
