@@ -43,7 +43,7 @@ spec:
       - name: git-sync
         image: k8s.gcr.io/git-sync:v3.1.5
         args:
-         - "--repo=https://github.com/department-of-veterans-affairs/${repo_name}"
+         - "--repo=https://github.com/${repo_name}"
          - "--branch=main"
          - "--depth=1"
          - "--one-time"

@@ -27,15 +27,15 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
     # *Required*
     kubeconfig: ''
 
-    # Namespace that the job will run in. 
-    # Default: "default"
+    # Namespace that the job will run in
+    # Default: 'default'
     namespace: ''
 
-    # ServiceAccountName used by the job. Needed for credentials to connect to S3 bucket.
+    # ServiceAccountName used by the job; needed for credentials to connect to S3 bucket.
     # *Required*
     serviceAccountName: ''
 
-    # Repository name where the documentation lives.
+    # Owner and repository where the documentation lives (e.g. department-of-veterans-affairs/lighthouse-embark)
     # Default: ${{ github.repository }}
     repository: ''
 
