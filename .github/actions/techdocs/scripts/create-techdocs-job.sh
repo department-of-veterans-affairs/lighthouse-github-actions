@@ -55,7 +55,7 @@ spec:
       initContainers:
       - name: git-sync
         image: k8s.gcr.io/git-sync:v3.1.5
-        args: ${args}
+        args: ${git_sync_args}
         volumeMounts:
           - name: repo
             mountPath: /tmp/git
