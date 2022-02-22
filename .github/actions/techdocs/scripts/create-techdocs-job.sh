@@ -8,7 +8,9 @@ TEAM_NAME=${3}
 KIND=${4:-"Component"}
 NAME=${5}
 
-export args=''
+export git_sync_args=''
+export techdocs_generate_args=''
+export techdocs_publish_args=''
 
 check_required_environment() {
   local required_env=""
@@ -21,11 +23,18 @@ check_required_environment() {
   done
 }
 
-set_args() {
+set_git_sync_args() {
   repo_name=${1}
   gh_user=${2}
   gh_token=${3}
-  args="[\"--repo=https://github.com/${repo_name}\", \"--branch=main\", \"--depth=1\", \"--one-time\", \"--username\", \"${gh_user}\", \"--password\", \"${gh_token}\"]"
+  git_sync_args="[\"--repo=https://github.com/${repo_name}\", \"--branch=main\", \"--depth=1\", \"--one-time\", \"--username\", \"${gh_user}\", \"--password\", \"${gh_token}\"]"
+}
+
+set_techdocs_args () {
+  repo=${1}
+  src_dir="tmp/git/${repo##*/}"
+  techdocs_generate_args="techdocs-cli generate --source-dir /tmp/git/${repo} --output-dir /tmp/git/techdocs/${repo} --no-docker -v"
+  techdocs_publish_args="techdocs-cli publish --publisher-type awsS3 --storage-name embark-techdocs-storage --entity ${team_name}/${kind}/${name} --directory /tmp/git/techdocs/${repo}"
 }
 
 create_job() {
@@ -67,8 +76,8 @@ spec:
         - -c
         - |
           cd /tmp/git/lighthouse-embark
-          techdocs-cli generate --source-dir /tmp/git/lighthouse-embark --output-dir /tmp/git/techdocs/lighthouse-embark --no-docker -v
-          techdocs-cli publish --publisher-type awsS3 --storage-name embark-techdocs-storage --entity ${team_name}/${kind}/${name} --directory /tmp/git/techdocs/lighthouse-embark 
+          ${techdocs_generate_args}
+          ${techdocs_publish_args}
           scuttle python -V
         volumeMounts:
           - name: repo
@@ -101,9 +110,9 @@ run_main() {
     name=${5}
     
     check_required_environment "${service_account_name}" "${repo_name}" "${team_name}" "${kind}" "${name}" || exit 1
-    set_args "${repo_name}" "${GITHUB_USER}" "${GITHUB_TOKEN}" || exit 1
-
-    create_job "${service_account_name}" "${team_name}" "${kind}" "${name}" || exit 1
+    set_git_sync_args "${repo_name}" "${GITHUB_USER}" "${GITHUB_TOKEN}" || exit 1
+    set_techdocs_args "${repo_name}" "${team_name}" "${kind}" "${name}" || exit 1
+    create_job "${service_account_name}" || exit 1
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
