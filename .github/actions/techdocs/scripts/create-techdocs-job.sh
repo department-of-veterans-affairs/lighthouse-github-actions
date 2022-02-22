@@ -39,9 +39,9 @@ set_techdocs_args () {
 
 create_job() {
   service_account_name=${1}
-  team_name=${2}
-  kind=${3:-"Component"}
-  name=${4}
+  # team_name=${2}
+  # kind=${3:-"Component"}
+  # name=${4}
 
 cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
