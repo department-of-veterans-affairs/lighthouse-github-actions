@@ -6,12 +6,14 @@ inputs:
     required: true
   namespace:
     description: 'Namespace to use for Kubernetes job'
-    required: true
+    default: 'default'
+    required: false
   serviceAccountName:
     description: 'Service account name'
     required: true
   repository:
     description: 'Name of repository'
+    default: ${{ github.repository }}
     required: true
   team-name:
     description: 'Namespace of entity; used as namespace for --entity <namespace/kind/name>'
@@ -32,6 +34,11 @@ runs:
     with:
       method: kubeconfig
       kubeconfig: ${{ inputs.kubeconfig }}
+  - name: Test context
+    run: |
+      echo "repo: ${{ github.repository }}"
+      echo "action_path: ${{ github.action_path }}"
+    shell: bash
   - name: Set namespace
     run: kubectl config set-context --current --namespace=${{ inputs.namespace }}
     shell: bash
