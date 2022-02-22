@@ -24,6 +24,14 @@ inputs:
   name:
     description: 'Name of Entity; used as name for --entity <namespace/kind/name>'
     required: true
+  username:
+    description: 'Name of Entity; used as name for --entity <namespace/kind/name>'
+    default: ${{ github.owner }}
+    required: false
+  token:
+    description: 'Name of Entity; used as name for --entity <namespace/kind/name>'
+    default: ${{ github.token }}
+    required: false
 
 
 runs:
@@ -45,4 +53,9 @@ runs:
       ${{ inputs.team-name }}
       ${{ inputs.kind }}
       ${{ inputs.name }}
+      ${{ inputs.username }}
+      ${{ inputs.token }}
+    env: 
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_USER: ${{ github.owner }}
     shell: bash

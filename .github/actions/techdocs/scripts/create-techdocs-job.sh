@@ -8,6 +8,8 @@ TEAM_NAME=${3}
 KIND=${4:-"Component"}
 NAME=${5}
 
+export args=''
+
 check_required_environment() {
   local required_env=""
 
@@ -19,12 +21,19 @@ check_required_environment() {
   done
 }
 
+set_args() {
+  "${repo_name}" "${GITHUB_USER}" "${GITHUB_TOKEN}"
+  repo_name=${1}
+  gh_user=${2}
+  gh_token=${3}
+  args='["--repo=https://github.com/${repo_name}", "--branch=main", "--depth=1", "--one-time", "--username", "${gh_user}", "--password", "${gh_token}"]'
+}
+
 create_job() {
-    service_account_name=${1}
-    repo_name=${2}
-    team_name=${3}
-    kind=${4:-"Component"}
-    name=${5}
+  service_account_name=${1}
+  team_name=${2}
+  kind=${3:-"Component"}
+  name=${4}
 
   args='["--repo=https://github.com/${repo_name}", "--branch=main", "--depth=1", "--one-time"]'
 
@@ -95,7 +104,8 @@ run_main() {
     name=${5}
 
     check_required_environment "${service_account_name}" "${repo_name}" "${team_name}" "${kind}" "${name}" || exit 1
-    create_job "${service_account_name}" "${repo_name}" "${team_name}" "${kind}" "${name}" || exit 1
+    set_args "${repo_name}" "${GITHUB_USER}" "${GITHUB_TOKEN}" || exit 1
+    create_job "${service_account_name}" "${team_name}" "${kind}" "${name}" || exit 1
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
