@@ -23,13 +23,14 @@ while ! bash -c 'kubectl get job.batch/lighthouse-techdocs | grep "1/1"' > /dev/
     kubectl logs -f -l app=lighthouse-techdocs
     sleep 15;
     if kubectl get pods | grep "lighthouse-techdocs" | grep "0/1" | grep "Error"; then
-        echo "Techdocs error!";
+        echo "Techdocs status: Error";
+        kubectl get pods 
         kubectl logs -f -l app=lighthouse-techdocs
         exit 1;
     fi
     if kubectl get pods | grep "lighthouse-techdocs" | grep "0/1" | grep "CrashLoopBackOff"; then
-        echo "Techdocs error! CrashLoopBackOff";
-        ku logs -f -l app=lighthouse-techdocs
+        echo "Techdocs status: CrashLoopBackOff";
+        kubectl logs -f -l app=lighthouse-techdocs
         exit 1;
     fi
 done

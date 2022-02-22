@@ -14,14 +14,8 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
 
 <!-- start usage -->
 ```yaml
-- name: Check out internal repository
-  uses: actions/checkout@v2
-  with:
-    repository: department-of-veterans-affairs/lighthouse-github-actions
-    token: ${{ secrets.GH_TOKEN }}
-    path: ./.github/actions/lighthouse-github-actions
 - name: Create Techdocs Job
-  uses: ./.github/actions/lighthouse-github-actions/.github/actions/techdocs
+  uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
   with:
     # Kubernetes Context for the cluster the job will run on. Uses azure/k8s-set-context@v1
     # *Required*
