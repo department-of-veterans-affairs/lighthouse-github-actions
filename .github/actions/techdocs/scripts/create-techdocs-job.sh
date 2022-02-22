@@ -34,8 +34,6 @@ create_job() {
   kind=${3:-"Component"}
   name=${4}
 
-  args='["--repo=https://github.com/${repo_name}", "--branch=main", "--depth=1", "--one-time"]'
-
 cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
