@@ -38,18 +38,19 @@ set_techdocs_args () {
 
 create_job() {
   service_account_name=${1}
+  repo=${2##*/}
 
 cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: embark-techdocs
+  name: lighthouse-techdocs
 spec:
   ttlSecondsAfterFinished: 100
   template:
     metadata:
       labels:
-        app: embark-techdocs
+        app: lighthouse-techdocs
     spec:
       serviceAccountName: ${service_account_name}
       initContainers:
@@ -71,7 +72,7 @@ spec:
         args: 
         - -c
         - |
-          cd /tmp/git/lighthouse-embark
+          cd /tmp/git/${repo}
           ${techdocs_generate_args}
           ${techdocs_publish_args}
           scuttle python -V
