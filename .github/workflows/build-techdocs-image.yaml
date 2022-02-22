@@ -1,8 +1,6 @@
 name: Build techdocs image
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
