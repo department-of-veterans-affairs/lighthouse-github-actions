@@ -26,13 +26,15 @@ set_args() {
   gh_user=${2}
   gh_token=${3}
   args='["--repo=https://github.com/${repo_name}", "--branch=main", "--depth=1", "--one-time", "--username", "${gh_user}", "--password", "${gh_token}"]'
+  echo "${args}"
 }
 
 create_job() {
   service_account_name=${1}
-  team_name=${2}
-  kind=${3:-"Component"}
-  name=${4}
+  _args=${2}
+  team_name=${3}
+  kind=${4:-"Component"}
+  name=${5}
 
 cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
@@ -99,10 +101,11 @@ run_main() {
     team_name=${3}
     kind=${4:-"Component"}
     name=${5}
-
+    local _args
     check_required_environment "${service_account_name}" "${repo_name}" "${team_name}" "${kind}" "${name}" || exit 1
-    set_args "${repo_name}" "${GITHUB_USER}" "${GITHUB_TOKEN}" || exit 1
-    create_job "${service_account_name}" "${team_name}" "${kind}" "${name}" || exit 1
+    _args=$(set_args "${repo_name}" "${GITHUB_USER}" "${GITHUB_TOKEN}" || exit 1)
+
+    create_job "${service_account_name}" "${_args}" "${team_name}" "${kind}" "${name}" || exit 1
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
