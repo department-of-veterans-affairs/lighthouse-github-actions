@@ -109,7 +109,7 @@ run_main() {
     check_required_environment "${service_account_name}" "${repo_name}" "${team_name}" "${kind}" "${name}" || exit 1
     set_git_sync_args "${repo_name}" "${GITHUB_USER}" "${GITHUB_TOKEN}" || exit 1
     set_techdocs_args "${repo_name}" "${team_name}" "${kind}" "${name}" || exit 1
-    create_job "${service_account_name}" || exit 1
+    create_job "${service_account_name}" "${repo_name}" || exit 1
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
