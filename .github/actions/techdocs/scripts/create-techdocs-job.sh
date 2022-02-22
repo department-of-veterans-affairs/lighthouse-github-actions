@@ -26,6 +26,8 @@ create_job() {
     kind=${4:-"Component"}
     name=${5}
 
+  args='["--repo=https://github.com/${repo_name}", "--branch=main", "--depth=1", "--one-time"]'
+
 cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
@@ -42,11 +44,7 @@ spec:
       initContainers:
       - name: git-sync
         image: k8s.gcr.io/git-sync:v3.1.5
-        args:
-         - "--repo=https://github.com/${repo_name}"
-         - "--branch=main"
-         - "--depth=1"
-         - "--one-time"
+        args: ${args}
         volumeMounts:
           - name: repo
             mountPath: /tmp/git
