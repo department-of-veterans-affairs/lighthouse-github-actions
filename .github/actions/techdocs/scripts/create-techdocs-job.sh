@@ -22,7 +22,6 @@ check_required_environment() {
 }
 
 set_args() {
-  "${repo_name}" "${GITHUB_USER}" "${GITHUB_TOKEN}"
   repo_name=${1}
   gh_user=${2}
   gh_token=${3}
