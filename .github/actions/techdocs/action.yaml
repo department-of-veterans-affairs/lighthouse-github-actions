@@ -26,7 +26,7 @@ inputs:
     required: true
   username:
     description: 'Name of Entity; used as name for --entity <namespace/kind/name>'
-    default: ${{ github.owner }}
+    default: ${{ github.repository_owner }}
     required: false
   token:
     description: 'Name of Entity; used as name for --entity <namespace/kind/name>'
@@ -57,5 +57,5 @@ runs:
       ${{ inputs.token }}
     env: 
       GITHUB_TOKEN: ${{ github.token }}
-      GITHUB_USER: ${{ github.owner }}
+      GITHUB_USER: ${{ github.repository_owner }}
     shell: bash
