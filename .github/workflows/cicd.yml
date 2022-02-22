@@ -17,7 +17,7 @@ jobs:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
         namespace: "lighthouse-bandicoot-dev"
         serviceAccountName: "bandicoot-sa"
-        repository: "lighthouse-embark"
+        repository: "department-of-veterans-affairs/lighthouse-embark"
         team-name: "lighthouse-bandicoot"
         kind: "Component"
         name: "embark-monorepo"
