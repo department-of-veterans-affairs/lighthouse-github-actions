@@ -25,7 +25,6 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
   with:
     # Kubernetes Context for the cluster the job will run on. Uses azure/k8s-set-context@v1
     # *Required*
-    # Default: ${{ secrets.KUBE_CONFIG }}
     kubeconfig: ''
 
     # Namespace that the job will run in. 
