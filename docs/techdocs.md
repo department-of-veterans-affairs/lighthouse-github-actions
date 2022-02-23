@@ -1,8 +1,3 @@
-# lighthouse-github-actions
-Custom GitHub Actions for Lighthouse Internal Developer Portal
-
-<embed type="text/html" src="https://raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/docs/techdocs.md" width="500" height="200">
-
 # Techdocs Action
 
 This action creates a [Kubernetes Job](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/example-techdocs-job.yaml) that will generate and publish your Techdocs for the Lighthouse Internal Developer Portal.
