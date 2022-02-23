@@ -55,6 +55,7 @@ spec:
       labels:
         app: lighthouse-techdocs-${repo}
     spec:
+      serviceAccountName: ${service_account_name}
       initContainers:
       - name: git-sync
         image: k8s.gcr.io/git-sync:v3.1.5

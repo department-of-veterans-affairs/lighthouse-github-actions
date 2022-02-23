@@ -1,3 +1,6 @@
+name: CI/CD Workflow Demo
+on:
+  workflow_dispatch:
 jobs:
   create-techdocs:
     runs-on: ubuntu-latest
@@ -9,8 +12,4 @@ jobs:
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
         namespace: "lighthouse-bandicoot-dev"
-
-name: CI/CD Workflow Demo
-
-on:
-  workflow_dispatch:
+        serviceAccountName: "bandicoot-sa"
