@@ -69,7 +69,7 @@ spec:
             memory: 150Mi
       containers:
       - name: techdocs
-        image: ghcr.io/department-of-veterans-affairs/embark-deployment/techdocs:latest1
+        image: ghcr.io/department-of-veterans-affairs/embark-deployment/techdocs:latest
         imagePullPolicy: Always
         command: ['/bin/sh']
         args: 
@@ -94,7 +94,7 @@ spec:
             cpu: 500m
             memory: 1024Mi
       imagePullSecrets:
-        - name: "${ghcr_secrets}"
+        - name: "somesecret-that-doesnt-exist"
       restartPolicy: Never
       volumes:
       - name: repo

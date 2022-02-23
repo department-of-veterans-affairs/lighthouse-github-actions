@@ -51,7 +51,7 @@ run_main() {
   repo=${1##*/}
 
   await_job "${repo}" || exit 1
-  clean_up "${repo}" || exit 1
+  clean_up "${repo}" "0" || exit 1
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
