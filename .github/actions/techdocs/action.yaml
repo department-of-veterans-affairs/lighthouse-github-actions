@@ -84,13 +84,13 @@ runs:
     shell: bash
   - name: Validating Techdocs Location for Catalog Entity
     run: |
-      if [[ -z ${{ steps.entity.outputs.namespace }} ]]; then
+      if [[ ${{ "steps.entity.outputs.namespace" }} == "null" ]]; then
         echo "Error: cannot create Techdocs with this Entity's namespace. Please add a valid namespace for the Entity."
       fi
-      if [[ -z ${{ steps.entity.outputs.kind }} ]]; then
+      if [[ ${{ "steps.entity.outputs.kind" }} == "null" ]]; then
         echo "Error: cannot create Techdocs with this Entity's Kind. Please add a valid Kind for the Entity."
       fi
-      if [[ -z ${{ steps.entity.outputs.name }} ]]; then
+      if [[ ${{ "steps.entity.outputs.name" }} == "null" }} ]]; then
         echo "Error: cannot create Techdocs with this Entity's Name. Please add a valid Name for the Entity."
       fi
       echo "Entity's Techdocs Location: ${{ steps.entity.outputs.namespace }}/${{ steps.entity.outputs.kind }}/${{ steps.entity.outputs.name }}"
