@@ -24,7 +24,7 @@ await_job() {
     if kubectl get pods | grep "${job_name}" | grep -E "Error|BackOff"; then
         echo "Techdocs error!"
         kubectl logs -f -l app="${job_name}"
-        clean_up "${repo}"
+        clean_up "${repo}" "1"
     fi
     # if kubectl get pods | grep "${job_name}" | grep "BackOff"; then
     #     echo "Techdocs error!"
@@ -38,12 +38,13 @@ await_job() {
 
 clean_up() {
   repo_name=${1}
+  exit_code=${2:-0}
   local job_name="lighthouse-techdocs-${repo}"
   echo "Cleaning up resources..."
   kubectl delete secret lighthouse-techdocs-${repo_name}-secrets
   kubectl delete job.batch/${job_name}
   echo "Clean up complete"
-  exit 0
+  exit ${exit_code}
 }
 
 run_main() {
