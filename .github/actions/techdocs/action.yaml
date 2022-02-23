@@ -86,6 +86,14 @@ runs:
     run: |
       echo "Entity's Techdocs Location: ${{ steps.entity.outputs.namespace }}/${{ steps.entity.outputs.kind }}/${{ steps.entity.outputs.name }}"
     shell: bash
+  - name: Create Dockerconfigjson
+    run: >
+      ${{ github.action_path }}/scripts/create-dockerconfigjson.sh
+      "${{ inputs.repository }}"
+    env: 
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_USER: ${{ github.repository_owner }}
+    shell: bash
   - name: Create techdocs Job
     run: >
       ${{ github.action_path }}/scripts/create-techdocs-job.sh 

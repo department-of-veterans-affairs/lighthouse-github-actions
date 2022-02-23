@@ -41,6 +41,7 @@ create_job() {
   # What to do about dockerconfigjson?
   service_account_name=${1}
   repo=${2##*/}
+  local ghcr_secrets="lighthouse-techdocs-${repo}-secrets"
 
 cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
@@ -93,7 +94,7 @@ spec:
             cpu: 500m
             memory: 1024Mi
       imagePullSecrets:
-        - name: "dockerconfigjson-ghcr"
+        - name: "${ghcr_secrets}"
       restartPolicy: Never
       volumes:
       - name: repo
