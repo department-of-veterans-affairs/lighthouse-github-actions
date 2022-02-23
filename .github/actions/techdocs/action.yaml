@@ -60,6 +60,9 @@ runs:
       namespace=$(cat "${file}" | yq .namespace)
       kind=$(cat "${file}" | yq .kind)
       name=$(cat "${file}" | yq .name)
+      ls
+      
+      echo "$name"
       if [[ -z ${{ inputs.team-name }} ]]; then
         echo "::set-output name=namespace::$namespace"
       else
