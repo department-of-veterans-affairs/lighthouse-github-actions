@@ -4,7 +4,7 @@ set -euo pipefail
 REPO_NAME=${1}
 
 check_required_environment() {
-  # Check that namespace/kind/name are not missing
+  # TODO: check for env variables
   local required_env=""
 
   for reqvar in $required_env; do
