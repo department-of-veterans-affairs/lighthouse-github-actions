@@ -60,23 +60,27 @@ runs:
       namespace=$(cat "${file}" | yq .namespace)
       kind=$(cat "${file}" | yq .kind)
       name="$(cat "${file}" | yq .metadata.name)"
-      ls
-      cat ./catalog-info.yaml
       echo -e "${kind}"
       echo "$name"
       if [[ -z "${{ inputs.team-name }}" ]]; then
+        echo 'Using namespace from catalog-info.yaml'
         echo "::set-output name=namespace::$namespace"
       else
+        echo 'Using namespace from input'
         echo "::set-output name=namespace::${{ inputs.team-name }}"
       fi
-      if [[ -z ${{ inputs.kind }} ]]; then
+      if [[ -z "${{ inputs.kind }}" ]]; then
+        echo 'Using kind from catalog-info.yaml'
         echo "::set-output name=kind::$kind"
       else
+        echo 'Using kind from input'
         echo "::set-output name=kind::${{ inputs.kind }}"
       fi
-      if [[ -z ${{ inputs.name }} ]]; then
+      if [[ -z "${{ inputs.name }}" ]]; then
+        echo 'Using name from catalog-info.yaml'
         echo "::set-output name=name::${name}"
       else
+        echo 'Using name from input'
         echo "::set-output name=kind::${{ inputs.name }}"
       fi
     shell: bash
