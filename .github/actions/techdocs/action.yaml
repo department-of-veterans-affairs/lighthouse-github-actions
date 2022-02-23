@@ -60,13 +60,13 @@ runs:
       namespace=$(cat "${file}" | yq .namespace)
       kind=$(cat "${file}" | yq .kind)
       name=$(cat "${file}" | yq .name)
-      if [[ -z ${{ inputs.team-name }} ]]; then
+      if [[ -n ${{ inputs.team-name }} ]]; then
         echo "::set-output name=namespace::$namespace"
       fi
-      if [[ -z ${{ inputs.kind }} ]]; then
+      if [[ -n ${{ inputs.kind }} ]]; then
         echo "::set-output name=kind::$kind"
       fi
-      if [[ -z ${{ inputs.name }} ]]; then
+      if [[ -n ${{ inputs.name }} ]]; then
         echo "::set-output name=name::$name"
       fi
     shell: bash
