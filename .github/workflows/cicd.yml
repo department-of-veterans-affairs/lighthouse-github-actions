@@ -1,4 +1,4 @@
-name: CI/CD Workflow Demo
+name: CI/CD Workflow Example
 on:
   workflow_dispatch:
 jobs:
@@ -6,10 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.4.0
-    # Improve user experience by having user provide url to catalog-info.yaml and parse the yaml file for kind, name, team, and repository.
     - name: Create techdocs
       uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
-        namespace: "lighthouse-bandicoot-dev"
-        serviceAccountName: "bandicoot-sa"
+        kube_namespace: 'lighthouse-bandicoot-dev'
+        serviceAccountName: 'bandicoot-sa'

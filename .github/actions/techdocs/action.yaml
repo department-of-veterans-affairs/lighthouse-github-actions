@@ -4,7 +4,7 @@ inputs:
   kubeconfig:
     description: 'Kubernetes context -- config file usually located at ~/.kube/config'
     required: true
-  namespace:
+  kube_namespace:
     description: 'Namespace to use for Kubernetes job'
     default: 'default'
     required: false
@@ -49,8 +49,8 @@ runs:
     with:
       method: kubeconfig
       kubeconfig: ${{ inputs.kubeconfig }}
-  - name: Set namespace
-    run: kubectl config set-context --current --namespace=${{ inputs.namespace }}
+  - name: Set kube namespace
+    run: kubectl config set-context --current --namespace=${{ inputs.kube_namespace }}
     shell: bash
   - name: Get entity path
     id: entity
