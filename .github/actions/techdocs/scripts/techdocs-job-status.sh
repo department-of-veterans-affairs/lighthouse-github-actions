@@ -15,19 +15,20 @@ check_required_environment() {
 }
 
 await_job() {
-
-  while ! bash -c 'kubectl get job.batch/lighthouse-techdocs | grep "1/1"' > /dev/null 2>&1; do 
-    kubectl logs -f -l app=lighthouse-techdocs
+  repo=$1
+  job_name="lighthouse-techdocs-${repo}"
+  while ! bash -c "kubectl get job.batch/${job_name} | grep \"1/1\"" > /dev/null 2>&1; do 
+    kubectl logs -f -l app=${job_name}
     sleep 15;
-    if kubectl get pods | grep "lighthouse-techdocs" | grep "0/1" | grep "Error"; then
+    if kubectl get pods | grep "${job_name}" | grep "0/1" | grep "Error"; then
         echo "Techdocs status: Error";
         kubectl get pods 
-        kubectl logs -f -l app=lighthouse-techdocs
+        kubectl logs -f -l app="${job_name}"
         exit 1;
     fi
-    if kubectl get pods | grep "lighthouse-techdocs" | grep "0/1" | grep "CrashLoopBackOff"; then
+    if kubectl get pods | grep "${job_name}" | grep "0/1" | grep "CrashLoopBackOff"; then
         echo "Techdocs status: CrashLoopBackOff";
-        kubectl logs -f -l app=lighthouse-techdocs
+        kubectl logs -f -l app="${job_name}"
         exit 1;
     fi
   done
@@ -35,7 +36,9 @@ await_job() {
 }
 
 run_main() {
-  await_job || exit 1
+  repo=${1##*/}
+
+  await_job "${repo}" || exit 1
   echo "Techdocs Job complete"
 }
 

@@ -46,13 +46,13 @@ cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: lighthouse-techdocs
+  name: lighthouse-techdocs-${repo}
 spec:
   ttlSecondsAfterFinished: 100
   template:
     metadata:
       labels:
-        app: lighthouse-techdocs
+        app: lighthouse-techdocs-${repo}
     spec:
       serviceAccountName: ${service_account_name}
       initContainers:
