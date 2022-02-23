@@ -20,5 +20,4 @@ jobs:
         repository: "department-of-veterans-affairs/lighthouse-embark"
         team-name: "lighthouse-bandicoot"
         kind: "Component"
-        name: "embark-monorepo"
         
