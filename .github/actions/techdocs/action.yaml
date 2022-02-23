@@ -70,7 +70,7 @@ runs:
         echo "::set-output name=name::${name}"
       fi
     shell: bash
-  - name: Create techdocs Job # Things to add: display logs from pod in github action steps?
+  - name: Create techdocs Job
     run: >
       ${{ github.action_path }}/scripts/create-techdocs-job.sh 
       ${{ inputs.serviceAccountName }}
