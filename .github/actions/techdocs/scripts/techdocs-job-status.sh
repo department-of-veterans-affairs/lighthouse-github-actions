@@ -26,13 +26,7 @@ await_job() {
         kubectl logs -f -l app="${job_name}"
         clean_up "${repo}" "1"
     fi
-    # if kubectl get pods | grep "${job_name}" | grep "BackOff"; then
-    #     echo "Techdocs error!"
-    #     kubectl logs -f -l app="${job_name}"
-    #     clean_up
-    # fi
   done
-
   echo "Techdocs Job complete"
 }
 

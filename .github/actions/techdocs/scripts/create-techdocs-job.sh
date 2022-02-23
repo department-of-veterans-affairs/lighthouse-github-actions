@@ -94,7 +94,7 @@ spec:
             cpu: 500m
             memory: 1024Mi
       imagePullSecrets:
-        - name: "somesecret-that-doesnt-exist"
+        - name: "${ghcr_secrets}"
       restartPolicy: Never
       volumes:
       - name: repo
