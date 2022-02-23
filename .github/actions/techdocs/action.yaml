@@ -59,12 +59,12 @@ runs:
       file="./${{ inputs.catalog-info }}.yaml"
       namespace=$(cat "${file}" | yq .namespace)
       kind=$(cat "${file}" | yq .kind)
-      name=$(cat "${file}" | yq .metadata.name)
+      name="$(cat "${file}" | yq .metadata.name)"
       ls
       cat ./catalog-info.yaml
       echo -e "${kind}"
       echo "$name"
-      if [[ -z ${{ inputs.team-name }} ]]; then
+      if [[ -z "${{ inputs.team-name }}" ]]; then
         echo "::set-output name=namespace::$namespace"
       else
         echo "::set-output name=namespace::${{ inputs.team-name }}"
@@ -75,7 +75,7 @@ runs:
         echo "::set-output name=kind::${{ inputs.kind }}"
       fi
       if [[ -z ${{ inputs.name }} ]]; then
-        echo "::set-output name=name::$(echo "${name}")"
+        echo "::set-output name=name::${name}"
       else
         echo "::set-output name=kind::${{ inputs.name }}"
       fi
