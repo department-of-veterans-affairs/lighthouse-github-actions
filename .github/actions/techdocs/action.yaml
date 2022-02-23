@@ -63,26 +63,27 @@ runs:
       echo -e "${kind}"
       echo "$name"
       if [[ -z "${{ inputs.team-name }}" ]]; then
-        echo 'Using namespace from catalog-info.yaml'
+        echo 'Using Entity Namespace from ${{ inputs.catalog-info }}.yaml'
         echo "::set-output name=namespace::$namespace"
       else
-        echo 'Using namespace from input'
+        echo 'Using Entity Namespace from input'
         echo "::set-output name=namespace::${{ inputs.team-name }}"
       fi
       if [[ -z "${{ inputs.kind }}" ]]; then
-        echo 'Using kind from catalog-info.yaml'
+        echo 'Using Entity Kind from ${{ inputs.catalog-info }}.yaml'
         echo "::set-output name=kind::$kind"
       else
         echo 'Using kind from input'
         echo "::set-output name=kind::${{ inputs.kind }}"
       fi
       if [[ -z "${{ inputs.name }}" ]]; then
-        echo 'Using name from catalog-info.yaml'
-        echo "::set-output name=name::${name}"
+        echo 'Using Entity Name from ${{ inputs.catalog-info }}.yaml'
+        echo "::set-output name=name::$name"
       else
-        echo 'Using name from input'
+        echo 'Using Entity Name from input'
         echo "::set-output name=kind::${{ inputs.name }}"
       fi
+      Entity's Techdocs location: ${namespace}/${kind}/${name}
     shell: bash
   - name: Create techdocs Job
     run: >
