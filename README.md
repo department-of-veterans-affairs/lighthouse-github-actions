@@ -62,10 +62,14 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
 
 # Scenarios
 - [Add action to existing Github Workflow](#Add-action-to-existing-Github-Workflow)
-- [Create Techdocs for Private Repository](#Create-Techdocs-for-Private-Repository)
-
+- [Create standlone workflow](#Create-standalone-workflow)
 
 ## Add action to existing Github Workflow
+```yaml
+TODO
+```
+
+## Create standalone workflow
 
 ```yaml
 # Example workflow
