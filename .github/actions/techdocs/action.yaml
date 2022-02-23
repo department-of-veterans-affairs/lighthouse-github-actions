@@ -75,7 +75,7 @@ runs:
         echo "::set-output name=kind::${{ inputs.kind }}"
       fi
       if [[ -z ${{ inputs.name }} ]]; then
-        echo "::set-output name=name::$name"
+        echo "::set-output name=name::$(echo "${name}")"
       else
         echo "::set-output name=kind::${{ inputs.name }}"
       fi
