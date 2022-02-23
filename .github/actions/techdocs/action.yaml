@@ -61,7 +61,7 @@ runs:
       kind=$(cat "${file}" | yq .kind)
       name=$(cat "${file}" | yq .name)
       ls
-      
+      cat ./catalog-info.yaml
       echo "$name"
       if [[ -z ${{ inputs.team-name }} ]]; then
         echo "::set-output name=namespace::$namespace"
