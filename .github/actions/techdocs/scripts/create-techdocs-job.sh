@@ -55,7 +55,6 @@ spec:
       labels:
         app: lighthouse-techdocs-${repo}
     spec:
-      serviceAccountName: ${service_account_name}
       initContainers:
       - name: git-sync
         image: k8s.gcr.io/git-sync:v3.1.5
@@ -72,7 +71,7 @@ spec:
         image: ghcr.io/department-of-veterans-affairs/embark-deployment/techdocs:latest
         imagePullPolicy: Always
         command: ['/bin/sh']
-        args: 
+        args:
         - -c
         - |
           cd /tmp/git/${repo}
@@ -108,7 +107,7 @@ run_main() {
     team_name=${3}
     kind=${4:-"Component"}
     name=${5}
-    
+
     check_required_environment "${service_account_name}" "${repo_name}" "${team_name}" "${kind}" "${name}" || exit 1
     set_git_sync_args "${repo_name}" "${GITHUB_USER}" "${GITHUB_TOKEN}" || exit 1
     set_techdocs_args "${repo_name}" "${team_name}" "${kind}" "${name}" || exit 1

@@ -1,7 +1,7 @@
 name: 'Publish Techdocs'
 description: 'Generates and publishes techdocs using kubernetes job'
 inputs:
-  kubeconfig: 
+  kubeconfig:
     description: 'Kubernetes context -- config file usually located at ~/.kube/config'
     required: true
   namespace:
@@ -10,7 +10,7 @@ inputs:
     required: false
   serviceAccountName:
     description: 'Service account name'
-    required: true
+    required: false
   repository:
     description: 'Name of repository'
     default: ${{ github.repository }}
@@ -36,7 +36,6 @@ inputs:
     description: 'Name of catalog entity descriptor file'
     default: 'catalog-info.yaml'
     required: false
-
 
 runs:
   using: "composite"
@@ -99,13 +98,13 @@ runs:
     run: >
       ${{ github.action_path }}/scripts/create-dockerconfigjson.sh
       "${{ inputs.repository }}"
-    env: 
+    env:
       GITHUB_TOKEN: ${{ github.token }}
       GITHUB_USER: ${{ github.repository_owner }}
     shell: bash
   - name: Create techdocs Job
     run: >
-      ${{ github.action_path }}/scripts/create-techdocs-job.sh 
+      ${{ github.action_path }}/scripts/create-techdocs-job.sh
       "${{ inputs.serviceAccountName }}"
       "${{ inputs.repository }}"
       "${{ steps.entity.outputs.namespace }}"
@@ -113,7 +112,7 @@ runs:
       "${{ steps.entity.outputs.name }}"
       "${{ inputs.username }}"
       "${{ inputs.token }}"
-    env: 
+    env:
       GITHUB_TOKEN: ${{ github.token }}
       GITHUB_USER: ${{ github.repository_owner }}
     shell: bash
@@ -121,4 +120,3 @@ runs:
     run: >
       ${{ github.action_path }}/scripts/techdocs-job-status.sh "${{ inputs.repository }}"
     shell: bash
-  
