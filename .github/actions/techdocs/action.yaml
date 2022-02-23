@@ -60,14 +60,20 @@ runs:
       namespace=$(cat "${file}" | yq .namespace)
       kind=$(cat "${file}" | yq .kind)
       name=$(cat "${file}" | yq .name)
-      if [[ -n ${{ inputs.team-name }} ]]; then
+      if [[ -z ${{ inputs.team-name }} ]]; then
         echo "::set-output name=namespace::$namespace"
+      else
+        echo "::set-output name=namespace::${{ inputs.team-name }}"
       fi
-      if [[ -n ${{ inputs.kind }} ]]; then
+      if [[ -z ${{ inputs.kind }} ]]; then
         echo "::set-output name=kind::$kind"
+      else
+        echo "::set-output name=kind::${{ inputs.kind }}"
       fi
-      if [[ -n ${{ inputs.name }} ]]; then
+      if [[ -z ${{ inputs.name }} ]]; then
         echo "::set-output name=name::$name"
+      else
+        echo "::set-output name=kind::${{ inputs.name }}"
       fi
     shell: bash
   - name: Create techdocs Job
