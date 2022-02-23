@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+REPO_NAME=${1}
 
 check_required_environment() {
   local required_env=""
@@ -44,5 +45,5 @@ run_main() {
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
 then
-  run_main 
+  run_main "${REPO_NAME}"
 fi
