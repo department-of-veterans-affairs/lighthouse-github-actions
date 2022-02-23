@@ -20,7 +20,7 @@ create_ghcr_secrets() {
     gh_user=${2}
     gh_token=${3}
     local secret_args
-    secret_args="\"lighthouse-techdocs-${repo_name}-secrets\" --docker-server=https://ghcr.io --docker-username=\"${gh_user}\" --docker-password=\"${gh_token}\""
+    secret_args="lighthouse-techdocs-${repo_name}-secrets --docker-server=https://ghcr.io --docker-username=${gh_user} --docker-password=${gh_token}"
     kubectl create secret docker-registry ${secret_args}
 }
 
