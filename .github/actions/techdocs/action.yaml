@@ -61,13 +61,13 @@ runs:
       kind=$(cat "${file}" | yq .kind)
       name=$(cat "${file}" | yq .name)
       if [[ -z ${{ inputs.team-name }} ]]; then
-        echo "::set-output name=namespace::${namespace}"
+        echo "::set-output name=namespace::$namespace"
       fi
       if [[ -z ${{ inputs.kind }} ]]; then
-        echo "::set-output name=kind::${kind}"
+        echo "::set-output name=kind::$kind"
       fi
       if [[ -z ${{ inputs.name }} ]]; then
-        echo "::set-output name=name::${name}"
+        echo "::set-output name=name::$name"
       fi
     shell: bash
   - name: Create techdocs Job
