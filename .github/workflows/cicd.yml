@@ -4,12 +4,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  create-techdocs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.4.0
-    - name: Generic step in CI/CD process
-      run: echo "hello CI/CD world"
     # Improve user experience by having user provide url to catalog-info.yaml and parse the yaml file for kind, name, team, and repository.
     - name: Create techdocs 
       uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main

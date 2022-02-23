@@ -57,7 +57,7 @@ runs:
     id: entity
     run: |
       file="./${{ inputs.descriptor-file }}"
-      namespace=$(cat "${file}" | yq .namespace)
+      namespace=$(cat "${file}" | yq .metadata.namespace)
       kind=$(cat "${file}" | yq .kind)
       name="$(cat "${file}" | yq .metadata.name)"
       if [[ -z "${{ inputs.team-name }}" ]]; then
