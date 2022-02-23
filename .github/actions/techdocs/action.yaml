@@ -25,16 +25,16 @@ inputs:
     description: 'Name of Entity; used as name for --entity <namespace/kind/name>'
     required: false
   username:
-    description: 'Name of Entity; used as name for --entity <namespace/kind/name>'
+    description: 'Username used for GHCR authentication'
     default: ${{ github.repository_owner }}
     required: false
   token:
-    description: 'Name of Entity; used as name for --entity <namespace/kind/name>'
+    description: 'Token used for GHCR authentication'
     default: ${{ github.token }}
     required: false
-  catalog-info:
+  descriptor-file:
     description: 'Name of catalog entity descriptor file'
-    default: 'catalog-info'
+    default: 'catalog-info.yaml'
     required: false
 
 
@@ -56,34 +56,43 @@ runs:
   - name: Get entity path
     id: entity
     run: |
-      file="./${{ inputs.catalog-info }}.yaml"
+      file="./${{ inputs.descriptor-file }}"
       namespace=$(cat "${file}" | yq .namespace)
       kind=$(cat "${file}" | yq .kind)
       name="$(cat "${file}" | yq .metadata.name)"
       if [[ -z "${{ inputs.team-name }}" ]]; then
-        echo 'Using Entity Namespace from ${{ inputs.catalog-info }}.yaml'
+        echo 'Using Entity Namespace from ${{ inputs.descriptor-file }}'
         echo "::set-output name=namespace::$namespace"
       else
         echo 'Using Entity Namespace from input'
         echo "::set-output name=namespace::${{ inputs.team-name }}"
       fi
       if [[ -z "${{ inputs.kind }}" ]]; then
-        echo 'Using Entity Kind from ${{ inputs.catalog-info }}.yaml'
+        echo 'Using Entity Kind from ${{ inputs.descriptor-file }}'
         echo "::set-output name=kind::$kind"
       else
         echo 'Using Entity Kind from input'
         echo "::set-output name=kind::${{ inputs.kind }}"
       fi
       if [[ -z "${{ inputs.name }}" ]]; then
-        echo 'Using Entity Name from ${{ inputs.catalog-info }}.yaml'
+        echo 'Using Entity Name from ${{ inputs.descriptor-file }}'
         echo "::set-output name=name::$name"
       else
         echo 'Using Entity Name from input'
         echo "::set-output name=name::${{ inputs.name }}"
       fi
     shell: bash
-  - name: Entity's Techdocs Location
+  - name: Validating Techdocs Location for Catalog Entity
     run: |
+      if [[ -z ${{ steps.entity.namespace }} ]]; then
+        echo "Error: cannot create Techdocs with this Entity's namespace. Please add a valid namespace for the Entity."
+      fi
+      if [[ -z ${{ steps.entity.kind }} ]]; then
+        echo "Error: cannot create Techdocs with this Entity's Kind. Please add a valid Kind for the Entity."
+      fi
+      if [[ -z ${{ steps.entity.name }} ]]; then
+        echo "Error: cannot create Techdocs with this Entity's Name. Please add a valid Name for the Entity."
+      fi
       echo "Entity's Techdocs Location: ${{ steps.entity.outputs.namespace }}/${{ steps.entity.outputs.kind }}/${{ steps.entity.outputs.name }}"
     shell: bash
   - name: Create Dockerconfigjson

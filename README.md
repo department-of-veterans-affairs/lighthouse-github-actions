@@ -21,7 +21,7 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
     # *Required*
     kubeconfig: ''
 
-    # Namespace that the job will run in
+    # Kubernetes Namespace that the Techdocs job will be created in
     # Default: 'default'
     namespace: ''
 
@@ -33,17 +33,30 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
     # Default: ${{ github.repository }}
     repository: ''
 
+    # Name of Entity descriptor file; used to create Entity path (i.e. namespace/kind/name)
+    # Default: 'catalog-info.yaml'
+    descriptor-file:
+
     # Team name; used to create path to entity's documentation 
-    # *Required*
+    # Default: Value of the 'metadata.namespace' field from Entity descriptor file
+    # Required IF the Entity descriptor file does not define the 'metadata.namespace'
     team-name: ''
 
     # Entity's Kind; used to create path to entity's documentation 
-    # *Required*
+    # Default: Value of the 'Kind' field from Entity descriptor file
     kind: ''
 
     # Entity's name; used to create path to entity's documentation 
-    # *Required*
+    # Default: Value of the 'metadata.name' field from Entity descriptor file
     name: ''
+
+    # Username used for GHCR authentication
+    # Default: ${{ github.repository_owner }}
+    username: ''
+
+    # Token used for GHCR authentication
+    # Default: ${{ github.token }}
+    token: ''
 
 ```
 <!-- end usage -->
