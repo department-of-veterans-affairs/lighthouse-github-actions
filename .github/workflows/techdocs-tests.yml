@@ -1,8 +1,8 @@
 name: Techdocs Test Suite
 
 # Work in progress
-# on:
-#   workflow_dispatch:
+on:
+  workflow_dispatch:
 
 jobs:
   build:
