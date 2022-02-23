@@ -89,19 +89,19 @@ runs:
   - name: Create techdocs Job
     run: >
       ${{ github.action_path }}/scripts/create-techdocs-job.sh 
-      ${{ inputs.serviceAccountName }}
-      ${{ inputs.repository }}
-      ${{ steps.entity.outputs.namespace }}
-      ${{ steps.entity.outputs.kind }}
-      ${{ steps.entity.outputs.name }}
-      ${{ inputs.username }}
-      ${{ inputs.token }}
+      "${{ inputs.serviceAccountName }}"
+      "${{ inputs.repository }}"
+      "${{ steps.entity.outputs.namespace }}"
+      "${{ steps.entity.outputs.kind }}"
+      "${{ steps.entity.outputs.name }}"
+      "${{ inputs.username }}"
+      "${{ inputs.token }}"
     env: 
       GITHUB_TOKEN: ${{ github.token }}
       GITHUB_USER: ${{ github.repository_owner }}
     shell: bash
   - name: Techdocs Job status
     run: >
-      ${{ github.action_path }}/scripts/techdocs-job-status.sh
+      ${{ github.action_path }}/scripts/techdocs-job-status.sh "${{ inputs.repository }}"
     shell: bash
   
