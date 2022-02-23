@@ -1,0 +1,32 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: pretty-format-json
+        args: ['--autofix']
+        stages: [commit]
+      - id: sort-simple-yaml
+        files: '^(?!\.pre-commit-config).*\.y(a)?ml'
+        stages: [commit]
+      - id: trailing-whitespace
+        stages: [commit]
+
+  - repo: https://github.com/thoughtworks/talisman
+    rev: v1.23.0
+    hooks:
+      - id: talisman-commit
+        entry: cmd --githook pre-commit
+        stages: [commit]
+
+  - repo: https://github.com/punitlad/commiterator.git
+    rev: v0.3.0
+    hooks:
+      - id: check-commit-message
+        args: ["[API-[0-9]{4,}]"]
+        stages: ["commit-msg"]
+
+  - repo: https://github.com/zaslow/git-tag-name-validator
+    rev: '0.1.2'
+    hooks:
+      - id: validate-git-tag-name
+        args: ['0Y.0M.MICRO']
