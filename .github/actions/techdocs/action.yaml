@@ -81,7 +81,10 @@ runs:
         echo 'Using Entity Name from input'
         echo "::set-output name=kind::${{ inputs.name }}"
       fi
-      echo "Entity's Techdocs location: ${{ steps.entity.outputs.namespace }}/${{ steps.entity.outputs.kind }}/${{ steps.entity.outputs.name }}"
+    shell: bash
+  - name: Entity's Techdocs Location
+    run: |
+      echo "Entity's Techdocs Location: ${{ steps.entity.outputs.namespace }}/${{ steps.entity.outputs.kind }}/${{ steps.entity.outputs.name }}"
     shell: bash
   - name: Create techdocs Job
     run: >
