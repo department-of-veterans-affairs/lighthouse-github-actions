@@ -10,7 +10,7 @@ inputs:
     required: false
   serviceAccountName:
     description: 'Service account name'
-    required: false
+    required: true
   repository:
     description: 'Name of repository'
     default: ${{ github.repository }}

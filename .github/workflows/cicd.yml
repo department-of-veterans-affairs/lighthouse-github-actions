@@ -9,6 +9,7 @@ jobs:
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
         namespace: "lighthouse-bandicoot-dev"
+        serviceAccountName: "bandicoot-sa"
 
 name: CI/CD Workflow Demo
 
