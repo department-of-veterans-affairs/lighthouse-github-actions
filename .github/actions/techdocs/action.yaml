@@ -71,7 +71,7 @@ runs:
         echo 'Using Entity Kind from ${{ inputs.catalog-info }}.yaml'
         echo "::set-output name=kind::$kind"
       else
-        echo 'Using kind from input'
+        echo 'Using Entity Kind from input'
         echo "::set-output name=kind::${{ inputs.kind }}"
       fi
       if [[ -z "${{ inputs.name }}" ]]; then
