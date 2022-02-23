@@ -17,13 +17,13 @@ inputs:
     required: true
   team-name:
     description: 'Namespace of entity; used as namespace for --entity <namespace/kind/name>'
-    required: true
+    required: false
   kind:
     description: 'Kind of entity; used as kind for --entity <namespace/kind/name>'
-    required: true
+    required: false
   name:
     description: 'Name of Entity; used as name for --entity <namespace/kind/name>'
-    required: true
+    required: false
   username:
     description: 'Name of Entity; used as name for --entity <namespace/kind/name>'
     default: ${{ github.repository_owner }}
@@ -32,11 +32,19 @@ inputs:
     description: 'Name of Entity; used as name for --entity <namespace/kind/name>'
     default: ${{ github.token }}
     required: false
+  catalog-info:
+    description: 'Name of catalog entity descriptor file'
+    default: 'catalog-info'
+    required: false
 
 
 runs:
   using: "composite"
   steps:
+  - uses: actions/checkout@2.4.0
+    with:
+      ref: 'main'
+      repository: ${{ inputs.repository }}
   - name: Set K8s context
     uses: azure/k8s-set-context@v1
     with:
@@ -45,14 +53,31 @@ runs:
   - name: Set namespace
     run: kubectl config set-context --current --namespace=${{ inputs.namespace }}
     shell: bash
+  - name: Get entity path
+    id: entity
+    run: |
+      file="./${{ inputs.catalog-info }}.yaml"
+      namespace=$(cat "${file}" | yq .namespace)
+      kind=$(cat "${file}" | yq .kind)
+      name=$(cat "${file}" | yq .name)
+      if [[ -z ${{ inputs.team-name }} ]]; then
+        echo "::set-output name=namespace::${namespace}"
+      fi
+      if [[ -z ${{ inputs.kind }} ]]; then
+        echo "::set-output name=kind::${kind}"
+      fi
+      if [[ -z ${{ inputs.name }} ]]; then
+        echo "::set-output name=name::${name}"
+      fi
+    shell: bash
   - name: Create techdocs Job # Things to add: display logs from pod in github action steps?
     run: >
       ${{ github.action_path }}/scripts/create-techdocs-job.sh 
       ${{ inputs.serviceAccountName }}
       ${{ inputs.repository }}
-      ${{ inputs.team-name }}
-      ${{ inputs.kind }}
-      ${{ inputs.name }}
+      ${{ steps.entity.outputs.namespace }}
+      ${{ steps.entity.outputs.kind }}
+      ${{ steps.entity.outputs.name }}
       ${{ inputs.username }}
       ${{ inputs.token }}
     env: 
