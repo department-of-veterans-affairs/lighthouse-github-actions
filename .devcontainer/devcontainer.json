@@ -46,5 +46,5 @@
 
 	// "oryx build" will automatically install your dependencies and attempt to build your project
 	"postCreateCommand": "oryx build -p virtualenv_name=.venv --log-file /tmp/oryx-build.log --manifest-dir /tmp || echo 'Could not auto-build. Skipping.'",
-    "postStartCommand": "sudo apt-get update && sudo apt-get install -y python3-pip; pip3 install pre-commit"
+    "postStartCommand": "sudo apt-get update && sudo apt-get install -y python3-pip; pip3 install pre-commit; pre-commit"
 }
