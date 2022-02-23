@@ -15,6 +15,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2.4.0
+    - name: Fail
+      run: exit 1
+    # Work in progress   
     # Improve user experience by having user provide url to catalog-info.yaml and parse the yaml file for kind, name, team, and repository.
     - name: Test Techdocs 
       uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
