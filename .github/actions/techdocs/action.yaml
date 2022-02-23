@@ -60,8 +60,6 @@ runs:
       namespace=$(cat "${file}" | yq .namespace)
       kind=$(cat "${file}" | yq .kind)
       name="$(cat "${file}" | yq .metadata.name)"
-      echo -e "${kind}"
-      echo "$name"
       if [[ -z "${{ inputs.team-name }}" ]]; then
         echo 'Using Entity Namespace from ${{ inputs.catalog-info }}.yaml'
         echo "::set-output name=namespace::$namespace"
@@ -83,7 +81,7 @@ runs:
         echo 'Using Entity Name from input'
         echo "::set-output name=kind::${{ inputs.name }}"
       fi
-      Entity's Techdocs location: ${namespace}/${kind}/${name}
+      echo "Entity's Techdocs location: ${namespace}/${kind}/${name}"
     shell: bash
   - name: Create techdocs Job
     run: >
