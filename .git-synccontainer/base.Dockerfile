@@ -17,9 +17,9 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
 
 # Install VA certs
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    apt-get install -y --no-install-recommends -o Dpkg::Options::="--force-confnew" tcptraceroute ca-certificates && \
-    apt-get clean
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends -o Dpkg::Options::="--force-confnew" ca-certificates \
+    && apt-get clean
 COPY ./certs/* /usr/local/share/ca-certificates
 
 RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-ICA1-v1.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-ICA1-v1.crt && \
@@ -34,7 +34,7 @@ RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2
     openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-ICA10.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-ICA10.crt && \
     openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.crt
 
-RUN /usr/sbin/update-ca-certificates -f
+RUN /usr/sbin/update-ca-certificates
 RUN mkdir /app
 WORKDIR /app
 RUN chown -R 1000:1000 /app
