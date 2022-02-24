@@ -25,4 +25,3 @@ RUN /usr/sbin/update-ca-certificates
 
 USER ${current_user}
 
-ENTRYPOINT ["/tmp/git"]
