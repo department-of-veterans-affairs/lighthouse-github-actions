@@ -62,17 +62,35 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
 
 # Scenarios
 - [Add action to existing Github Workflow](#Add-action-to-existing-Github-Workflow)
-- [Create Techdocs for Private Repository](#Create-Techdocs-for-Private-Repository)
-
+- [Create standlone workflow](#Create-standalone-workflow)
 
 ## Add action to existing Github Workflow
-
 ```yaml
 TODO
 ```
 
-## Create Techdocs for Private Repository
+## Create standalone workflow
 
 ```yaml
-TODO
+# Example workflow
+name: Build and publish deployment repo docs 
+
+on:
+  push:
+    branches: [main]
+    paths: ['docs/*']
+  workflow_dispatch:
+
+jobs:
+  build-and-publish-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Techdocs Job
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+          namespace: "lighthouse-bandicoot-dev"
+          serviceAccountName: "bandicoot-sa"
 ```
+
+
