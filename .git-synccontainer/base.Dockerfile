@@ -1,11 +1,25 @@
-FROM golang:1.9 as builder
-WORKDIR /src
-COPY main.go .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o git-sync .
+FROM mcr.microsoft.com/vscode/devcontainers/base:0-bullseye
 
-FROM alpine/git
-RUN apk --no-cache add ca-certificates
+# Enable new "BUILDKIT" mode for Docker CLI
+ENV DOCKER_BUILDKIT=1
 
+# Options
+ARG INSTALL_ZSH="true"
+ARG UPGRADE_PACKAGES="false"
+ARG USE_MOBY="true"
+ARG USERNAME=git-sync
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+# Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
+COPY library-scripts/*.sh /tmp/library-scripts/
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
+    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
+
+# Install VA certs
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+    apt-get install -y --no-install-recommends -o Dpkg::Options::="--force-confnew" ca-certificates && \
+    apt-get clean
 COPY ./certs/* /usr/local/share/ca-certificates
 
 RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-ICA1-v1.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-ICA1-v1.crt && \
@@ -22,10 +36,4 @@ RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2
 
 RUN /usr/sbin/update-ca-certificates
 
-WORKDIR /bin
-COPY --from=builder /src/git-sync .
-VOLUME ["/git"]
-ENV GIT_SYNC_DEST /git
-
-WORKDIR /usr/bin
-ENTRYPOINT ["/bin/git-sync"]
+ENTRYPOINT [ "/bin/bash", "git" ]
