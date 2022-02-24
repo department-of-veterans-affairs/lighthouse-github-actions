@@ -34,6 +34,7 @@ RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2
     openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-ICA10.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-ICA10.crt && \
     openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.crt
 
-RUN /usr/sbin/update-ca-certificates
+RUN /usr/sbin/update-ca-certificates \
+    && git config --global http.sslCAinfo /etc/ssl/certs/ca-certificates.crt
 
 ENTRYPOINT [ "/bin/sh" ]
