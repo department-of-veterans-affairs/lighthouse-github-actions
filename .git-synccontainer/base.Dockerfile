@@ -18,7 +18,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 # Install VA certs
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    apt-get install -y --no-install-recommends -o Dpkg::Options::="--force-confnew" ca-certificates && \
+    apt-get install -y --no-install-recommends -o Dpkg::Options::="--force-confnew" update-ca-certificates ca-certificates && \
     apt-get clean
 COPY ./certs/* /usr/local/share/ca-certificates
 
@@ -34,7 +34,6 @@ RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2
     openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-ICA10.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-ICA10.crt && \
     openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.crt
 
-RUN /usr/sbin/update-ca-certificates \
-    && git config --global http.sslCAinfo /etc/ssl/certs/ca-certificates.crt
+RUN /usr/sbin/update-ca-certificates
 
 ENTRYPOINT [ "/bin/sh" ]
