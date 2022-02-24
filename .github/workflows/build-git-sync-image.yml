@@ -1,3 +1,9 @@
+name: Build git-sync image
+on:
+  workflow_dispatch:
+permissions:
+  packages: write
+  contents: read
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -23,19 +29,10 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v2.7.0
         with:
-          context: ./.git-synccontainer
+          context: .
           file: ./.git-synccontainer/base.Dockerfile
           push: true
           platforms: linux/amd64
           tags: ${{ steps.meta.outputs.tags }}
           secrets: |
             "GIT_AUTH_TOKEN=${{ github.token }}"
-
-name: Build git-sync image
-
-on:
-  workflow_dispatch:
-
-permissions:
-  packages: write
-  contents: read

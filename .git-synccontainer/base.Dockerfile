@@ -7,7 +7,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get install -y --no-install-recommends -o Dpkg::Options::="--force-confnew" ca-certificates && \
     apt-get clean
 
-COPY ../certs/* /usr/local/share/ca-certificates
+COPY ./certs/* /usr/local/share/ca-certificates
 
 RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-ICA1-v1.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-ICA1-v1.crt && \
     openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-ICA2-v1.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-ICA2-v1.crt && \
