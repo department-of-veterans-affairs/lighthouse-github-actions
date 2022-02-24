@@ -22,7 +22,7 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
 
     # Kubernetes Namespace that the Techdocs job will be created in
     # Default: 'default'
-    namespace: ''
+    kube_namespace: ''
 
     # ServiceAccountName used by the job; needed for credentials to connect to S3 bucket.
     # *Required*
