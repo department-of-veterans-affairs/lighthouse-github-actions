@@ -12,7 +12,7 @@ ENV GIT_SYNC_DEST /git
 
 # USER root
 # Install VA certs
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+RUN apt-get update && \
     apt-get install -y --no-install-recommends -o Dpkg::Options::="--force-confnew" ca-certificates && \
     apt-get clean
 
