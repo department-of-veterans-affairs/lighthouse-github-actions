@@ -36,7 +36,5 @@ RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2
 
 RUN /usr/sbin/update-ca-certificates \
     && git config --global http.sslCAinfo /etc/ssl/certs/ca-certificates.crt
-WORKDIR /app
-RUN chown -R 1000:1000 /app
-USER 1000
+
 ENTRYPOINT [ "/bin/sh" ]
