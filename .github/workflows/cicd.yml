@@ -7,7 +7,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2.4.0
     - name: Create techdocs
-      uses: ./.github/actions/techdocs@main
+      uses: ./.github/actions/techdocs
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
         kube_namespace: 'lighthouse-bandicoot-dev'
