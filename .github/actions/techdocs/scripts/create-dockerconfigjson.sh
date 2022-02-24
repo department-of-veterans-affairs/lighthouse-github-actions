@@ -21,7 +21,7 @@ create_ghcr_secrets() {
     gh_token=${3}
     local secret_args
     secret_args="lighthouse-techdocs-${repo_name}-secrets --docker-server=https://ghcr.io --docker-username=${gh_user} --docker-password=${gh_token}"
-    kubectl create secret docker-registry ${secret_args}
+    kubectl create secret docker-registry ${secret_args} -o yaml | kubectl apply -f -
 }
 
 run_main() {
@@ -33,5 +33,5 @@ run_main() {
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
 then
-  run_main "${REPO_NAME}" 
+  run_main "${REPO_NAME}"
 fi
