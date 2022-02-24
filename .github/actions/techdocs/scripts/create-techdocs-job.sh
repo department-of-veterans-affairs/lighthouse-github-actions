@@ -5,7 +5,7 @@ set -euo pipefail
 SERVICE_ACCOUNT_NAME=${1}
 REPO_NAME=${2}
 TEAM_NAME=${3}
-KIND=${4:-"Component"}
+KIND=${4:-"component"}
 NAME=${5}
 
 export git_sync_args=''
@@ -38,10 +38,10 @@ set_techdocs_args () {
 }
 
 create_job() {
-  # What to do about dockerconfigjson?
   service_account_name=${1}
   repo=${2##*/}
-  local ghcr_secrets="lighthouse-techdocs-${repo}-secrets"
+  local ghcr_secrets
+  ghcr_secrets="lighthouse-techdocs-${repo}-secrets"
 
 cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
@@ -106,7 +106,7 @@ run_main() {
     service_account_name=${1}
     repo_name=${2}
     team_name=${3}
-    kind=${4:-"Component"}
+    kind=${4}
     name=${5}
 
     check_required_environment "${service_account_name}" "${repo_name}" "${team_name}" "${kind}" "${name}" || exit 1
