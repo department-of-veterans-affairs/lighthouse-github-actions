@@ -58,7 +58,7 @@ spec:
       serviceAccountName: ${service_account_name}
       initContainers:
       - name: git-sync
-        image: k8s.gcr.io/git-sync:v3.4.0
+        image: k8s.gcr.io/git-sync:v3.1.6
         args: ${git_sync_args}
         volumeMounts:
           - name: repo
