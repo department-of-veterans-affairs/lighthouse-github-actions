@@ -110,11 +110,9 @@ runs:
       "${{ steps.entity.outputs.namespace }}"
       "${{ steps.entity.outputs.kind }}"
       "${{ steps.entity.outputs.name }}"
-      "${{ inputs.username }}"
-      "${{ inputs.token }}"
     env:
-      GITHUB_TOKEN: ${{ github.token }}
-      GITHUB_USER: ${{ github.repository_owner }}
+      GITHUB_TOKEN: ${{ inputs.token }}
+      GITHUB_USER: ${{ inputs.username }}
     shell: bash
   # - name: Techdocs Job status
   #   run: >
