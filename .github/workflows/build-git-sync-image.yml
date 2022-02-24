@@ -1,0 +1,41 @@
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to GHCR
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner  }}
+          password: ${{ github.token }} # This is not the actual password of the user, just a token
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/lighthouse-github-actions/git-sync
+          tags: |
+            type=raw, value=latest
+      - name: Build and push image
+        uses: docker/build-push-action@v2.7.0
+        with:
+          context: ./.git-synccontainer
+          file: ./.git-synccontainer/base.Dockerfile
+          push: true
+          platforms: linux/amd64
+          tags: ${{ steps.meta.outputs.tags }}
+          secrets: |
+            "GIT_AUTH_TOKEN=${{ github.token }}"
+
+name: Build git-sync image
+
+on:
+  workflow_dispatch:
+
+permissions:
+  packages: write
+  contents: read

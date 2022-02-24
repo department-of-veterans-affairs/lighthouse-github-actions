@@ -1,3 +1,4 @@
 fileignoreconfig:
-- filename: .github/actions/techdocs/scripts/create-dockerconfigjson.sh
-  checksum: 62d1c2eb25c83fbb70c7b8fc10ab9a88dc5c04ccc25781a6df578239a67bddfa
+- filename: .github/workflows/build-git-sync-image.yml
+  checksum: 2b6aec438be3c776c223ea593b38a07a3e279f90dc3fffc7c1e626370a3bb08f
+version: ""
