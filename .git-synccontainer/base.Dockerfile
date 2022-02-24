@@ -35,5 +35,8 @@ RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2
     openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.crt
 
 RUN /usr/sbin/update-ca-certificates
-
-ENTRYPOINT [ "/bin/sh" ]
+RUN mkdir /app
+WORKDIR /app
+RUN chown -R 1000:1000 /app
+USER 1000
+ENTRYPOINT [ "/usr/bin" ]
