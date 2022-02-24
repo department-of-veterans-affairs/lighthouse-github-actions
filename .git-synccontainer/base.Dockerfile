@@ -34,7 +34,8 @@ RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2
     openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-ICA10.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-ICA10.crt && \
     openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.crt
 
-RUN /usr/sbin/update-ca-certificates
+RUN dpkg-reconfigure ca-certificates
+#RUN /usr/sbin/update-ca-certificates
 RUN mkdir /app
 WORKDIR /app
 RUN chown -R 1000:1000 /app
