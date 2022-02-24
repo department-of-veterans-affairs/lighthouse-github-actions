@@ -22,11 +22,11 @@ await_job() {
   while ! bash -c "kubectl get job.batch/${job_name} | grep \"1/1\"" > /dev/null 2>&1; do
     kubectl logs -f -l app=${job_name}
     sleep 15;
-    # if kubectl get pods | grep "${job_name}" | grep -E "Error|BackOff"; then
-    #     echo "Techdocs error!"
-    #     kubectl logs -f -l app="${job_name}"
-    #     clean_up "${repo}" "1"
-    # fi
+    if kubectl get pods | grep "${job_name}" | grep -E "Error|BackOff"; then
+        echo "Techdocs error!"
+        kubectl logs -f -l app="${job_name}"
+        clean_up "${repo}" "1"
+    fi
   done
   echo "Techdocs Job complete"
 }

@@ -116,7 +116,7 @@ runs:
       GITHUB_TOKEN: ${{ github.token }}
       GITHUB_USER: ${{ github.repository_owner }}
     shell: bash
-  - name: Techdocs Job status
-    run: >
-      ${{ github.action_path }}/scripts/techdocs-job-status.sh "${{ inputs.repository }}"
-    shell: bash
+  # - name: Techdocs Job status
+  #   run: >
+  #     ${{ github.action_path }}/scripts/techdocs-job-status.sh "${{ inputs.repository }}"
+  #   shell: bash
