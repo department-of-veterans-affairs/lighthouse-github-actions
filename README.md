@@ -6,7 +6,7 @@ Custom GitHub Actions for Lighthouse Internal Developer Portal
 This action creates a [Kubernetes Job](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/example-techdocs-job.yaml) that will generate and publish your Techdocs for the Lighthouse Internal Developer Portal.
 
 # Overview
-The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/kubernetes/git-sync) container and a `Techdocs` container<sup>[1](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/pkgs/container/lighthouse-github-actions%2Ftechdocs)[2](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/.techdocscontainer/base.Dockerfile)</sup>. The `git-sync` container is an initContainer that pulls a git repository to a shared volume so the Techdocs container has a copy of all markdown files. The `Techdocs` container then uses the [Techdocs-cli](https://backstage.io/docs/features/techdocs/cli) to generate and publish your documentation to the Lighthouse S3 bucket. 
+The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/kubernetes/git-sync) container and a `Techdocs` container<sup>[1](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/pkgs/container/lighthouse-github-actions%2Ftechdocs)[2](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/.techdocscontainer/base.Dockerfile)</sup>. The `git-sync` container is an initContainer that pulls a git repository to a shared volume so the Techdocs container has a copy of all markdown files. The `Techdocs` container then uses the [Techdocs-cli](https://backstage.io/docs/features/techdocs/cli) to generate and publish your documentation to the Lighthouse S3 bucket.
 
 
 # Usage
@@ -36,16 +36,16 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
     # Default: 'catalog-info.yaml'
     descriptor-file:
 
-    # Team name; used to create path to entity's documentation 
+    # Team name; used to create path to entity's documentation
     # Default: Value of the 'metadata.namespace' field from Entity descriptor file
     # Required IF the Entity descriptor file does not define the 'metadata.namespace'
     team-name: ''
 
-    # Entity's Kind; used to create path to entity's documentation 
+    # Entity's Kind; used to create path to entity's documentation
     # Default: Value of the 'Kind' field from Entity descriptor file
     kind: ''
 
-    # Entity's name; used to create path to entity's documentation 
+    # Entity's name; used to create path to entity's documentation
     # Default: Value of the 'metadata.name' field from Entity descriptor file
     name: ''
 
