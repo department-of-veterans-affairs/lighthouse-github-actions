@@ -18,7 +18,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 # Install VA certs
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    apt-get install -y --no-install-recommends -o Dpkg::Options::="--force-confnew" update-ca-certificates ca-certificates && \
+    apt-get install -y --no-install-recommends -o Dpkg::Options::="--force-confnew" ca-certificates && \
     apt-get clean
 COPY ./certs/* /usr/local/share/ca-certificates
 
