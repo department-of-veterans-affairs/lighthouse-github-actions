@@ -35,5 +35,6 @@ RUN openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2
     openssl x509 -inform DER -in /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.cer -out /usr/local/share/ca-certificates/VA-Internal-S2-RCA1-v1.crt
 
 RUN /usr/sbin/update-ca-certificates
+WORKDIR /app
 USER vscode
 ENTRYPOINT [ "/bin/sh" ]
