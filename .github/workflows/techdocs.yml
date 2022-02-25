@@ -7,6 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.4.0
+      with:
+        ref: 'main'
+        token: ${{ secrets.GITHUB_TOKEN }}
     - name: Create techdocs
       uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
       with:
