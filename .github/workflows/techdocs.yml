@@ -2,6 +2,7 @@ name: Create Techdocs
 on:
   repository_dispatch:
     types: [techdocs]
+  workflow_dispatch:
 jobs:
   create-techdocs:
     runs-on: ubuntu-latest
