@@ -47,13 +47,7 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 <!-- end usage -->
 
 # Examples
-- [Add action to existing Github Workflow](#Add-action-to-existing-Github-Workflow)
 - [Create standlone workflow](#Create-standalone-workflow)
-
-## Add action to existing Github Workflow
-```yaml
-TODO
-```
 
 ## Create standalone workflow
 
@@ -75,5 +69,5 @@ jobs:
           repository: ${{ github.repository }}
           descriptor-file: 'catalog-info.yaml'
           team-name: 'lighthouse-bandicoot'
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.WEBHOOK_PAT }}
 ```

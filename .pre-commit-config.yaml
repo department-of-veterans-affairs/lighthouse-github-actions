@@ -22,8 +22,9 @@ repos:
     rev: v0.3.0
     hooks:
       - id: check-commit-message
-        args: ["[API-[0-9]{4,}]"]
-        stages: ["commit-msg"]
+        args:
+          - '\[API-[0-9]{4,}\]'
+        stages: [commit-msg]
 
   - repo: https://github.com/zaslow/git-tag-name-validator
     rev: '0.1.2'
