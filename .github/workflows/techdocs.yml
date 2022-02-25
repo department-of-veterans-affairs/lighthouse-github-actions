@@ -34,11 +34,3 @@ jobs:
         descriptor-file: '${{ inputs.descriptor-file }}'
         team-name: '${{ inputs.team-name }}'
         token: '${{ github.token }}'
-    # - name: Compare workflows
-    #   run: |
-    #     echo "${{ github.sha }}"
-    #     echo "${{ github.run_id }}"
-    #     echo "${{ github.run_number }}"
-    #     echo "${{ github.event.client_payload.sha }}"
-    #     echo "${{ github.event.client_payload.run_id }}"
-    #     echo "${{ github.event.client_payload.run_number }}"

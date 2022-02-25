@@ -22,6 +22,12 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: check inputs
+      run: |
+        echo "${{ inputs.repository }}"
+        echo "${{ inputs.descriptor-file }}"
+        echo "${{ inputs.team-name }}"
+      shell: bash
     - name: Dispatch and wait
       id: webhook
       uses: aurelien-baudet/workflow-dispatch@93e95b157d791ae7f42aef8f8a0d3d723eba1c31
