@@ -76,7 +76,7 @@ spec:
         args:
         - -c
         - |
-          cd /tmp/git/${repo}
+          cd /tmp/git/${repo} || exit 1
           ${techdocs_generate_args}
           ${techdocs_publish_args}
           scuttle python -V > /dev/null 2>&1
