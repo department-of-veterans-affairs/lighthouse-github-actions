@@ -1,0 +1,38 @@
+name: 'Send Techdocs Webhook'
+description: 'Sends a webhook to trigger repository dispatch event for techdocs workflow'
+inputs:
+  event:
+    description: 'Event trigger'
+    required: false
+    default: 'techdocs'
+  repository:
+    description: 'Name of repository'
+    required: true
+  descriptor-file:
+    description: 'Name of catalog entity descriptor file'
+    required: false
+  team-name:
+    description: 'Namespace of entity; used as namespace for --entity <namespace/kind/name>'
+    required: false
+  token:
+    description: 'Personal Access token for webhook'
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Send webhook to embark-deployment repo
+      run: |
+        curl -H "Accept: application/vnd.github.everest-preview+json" \
+        -H "Authorization: token ${{ inputs.token }}" \
+        --request POST \
+        --data \
+        '{ "event_type": "${{ inputs.event }}", \
+        "client_payload": { \
+        "repository": "${{ inputs.repository }}", \
+        "descriptor-file": "${{ inputs.descriptor-file }}", \
+        "team-name": "${{ inputs.team-name }}", \
+         } }' \
+        https://api.github.com/repos/department-of-veterans-affairs/embark-deployment/dispatches
+      shell: bash
