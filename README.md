@@ -10,9 +10,11 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
 
 ## Techdocs Prerequisites
 The root directory of your repository contains:
-- [x] a <a href="https://backstage.io/docs/features/software-catalog/descriptor-format#overall-shape-of-an-entity">`catalog-info.yaml`</a> with a <a href="https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref">backstage.io/techdocs-ref</a> annotation
+- [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-embark/blob/main/catalog-info.yaml">`catalog-info.yaml`</a> with a <a href="https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref">backstage.io/techdocs-ref</a> annotation
 - [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-embark/blob/main/mkdocs.yml">`mkdocs.yaml`</a> configuration file
 - [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-embark/tree/main/docs">`docs`</a> directory where all your documentation lives
+
+More info about [Entity Descriptor files](https://backstage.io/docs/features/software-catalog/descriptor-format#overall-shape-of-an-entity)
 
 # Usage
 
@@ -21,18 +23,6 @@ The root directory of your repository contains:
 - name: Create Techdocs Job
   uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
   with:
-    # Kubernetes Context for the cluster the job will run on. Uses azure/k8s-set-context@v1
-    # *Required*
-    kubeconfig: ''
-
-    # Kubernetes Namespace that the Techdocs job will be created in
-    # Default: 'default'
-    kube_namespace: ''
-
-    # ServiceAccountName used by the job; needed for credentials to connect to S3 bucket.
-    # *Required*
-    serviceAccountName: ''
-
     # Owner and repository where the documentation lives (e.g. department-of-veterans-affairs/lighthouse-embark)
     # Default: ${{ github.repository }}
     repository: ''
@@ -46,26 +36,14 @@ The root directory of your repository contains:
     # Required IF the Entity descriptor file does not define the 'metadata.namespace'
     team-name: ''
 
-    # Entity's Kind; used to create path to entity's documentation
-    # Default: Value of the 'Kind' field from Entity descriptor file
-    kind: ''
-
-    # Entity's name; used to create path to entity's documentation
-    # Default: Value of the 'metadata.name' field from Entity descriptor file
-    name: ''
-
-    # Username used for GHCR authentication
-    # Default: ${{ github.repository_owner }}
-    username: ''
-
-    # Token used for GHCR authentication
-    # Default: ${{ github.token }}
+    # Personal Access Token used for Techdocs Webhook
+    # Scopes: Repo 
     token: ''
 
 ```
 <!-- end usage -->
 
-# Scenarios
+# Examples
 - [Add action to existing Github Workflow](#Add-action-to-existing-Github-Workflow)
 - [Create standlone workflow](#Create-standalone-workflow)
 
@@ -78,24 +56,23 @@ TODO
 
 ```yaml
 # Example workflow
-name: Build and publish deployment repo docs 
-
+name: Publish Documentation
 on:
   push:
     branches: [main]
     paths: ['docs/*']
-  workflow_dispatch:
-
 jobs:
-  build-and-publish-docs:
+  create-techdocs:
     runs-on: ubuntu-latest
     steps:
-      - name: Create Techdocs Job
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
+      - uses: actions/checkout@v2
+      - name: Techdocs webhook
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs-webhook@main
         with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
-          namespace: "lighthouse-bandicoot-dev"
-          serviceAccountName: "bandicoot-sa"
+          repository: ${{ github.repository }}
+          descriptor-file: 'catalog-info.yaml'
+          team-name: 'lighthouse-bandicoot'
+          token: ${{ secrets.PAT }}
 ```
 
 
