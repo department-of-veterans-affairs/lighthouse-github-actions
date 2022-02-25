@@ -19,3 +19,11 @@ jobs:
         repository: ${{ github.event.client_payload.repository }}
         descriptor-file: ${{ github.event.client_payload.descriptor-file }}
         team-name: ${{ github.event.client_payload.team-name }}
+    - name: Compare workflows
+      run: |
+        echo "${{ github.sha }}"
+        echo "${{ github.run_id }}"
+        echo "${{ github.run_number }}"
+        echo "${{ github.event.client_payload.sha }}"
+        echo "${{ github.event.client_payload.run_id }}"
+        echo "${{ github.event.client_payload.run_number }}"

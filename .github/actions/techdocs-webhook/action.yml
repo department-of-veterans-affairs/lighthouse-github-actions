@@ -30,6 +30,9 @@ runs:
         --data
         '{ "event_type": "${{ inputs.event }}",
         "client_payload": {
+        "sha": "${{ github.sha }}",
+        "run_id": "${{ github.run_id }}",
+        "run_number": "${{ github.run_number }}",
         "repository": "${{ inputs.repository }}",
         "descriptor-file": "${{ inputs.descriptor-file }}",
         "team-name": "${{ inputs.team-name }}"
