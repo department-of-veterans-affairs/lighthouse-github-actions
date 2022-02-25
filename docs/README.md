@@ -35,7 +35,7 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 
     # Team name; used to create path to entity's documentation
     # Default: Value of the 'metadata.namespace' field from Entity descriptor file
-    # Required IF the Entity descriptor file does not define the 'metadata.namespace'
+    # Required IF the Entity descriptor file does not define the 'metadata.namespace' field
     team-name: ''
 
     # Personal Access Token used for Techdocs Webhook
