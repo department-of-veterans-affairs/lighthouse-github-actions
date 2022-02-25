@@ -1,3 +1,3 @@
 fileignoreconfig:
-- filename: .github/actions/techdocs/scripts/create-techdocs-job.scuttle.sh
-  checksum: 72805a6bf78063ebc21cbb5e6ce4e7c8a2442c6037489085cb5ee722332000d0
+- filename: .github/actions/techdocs-webhook/action.yml
+  checksum: d9fd666f41cabd84c2267c234c49dc25d14bf53988b708668d59a049cdd0308e
