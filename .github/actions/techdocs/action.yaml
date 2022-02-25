@@ -67,21 +67,21 @@ runs:
         echo "Using Entity Namespace from ${file}"
         echo "::set-output name=namespace::$namespace"
       else
-        echo 'Using Entity Namespace from user's input'
+        echo 'Using Entity Namespace from user\'s input'
         echo "::set-output name=namespace::${{ inputs.team-name }}"
       fi
       if [[ -z "${{ inputs.kind }}" ]]; then
         echo "Using Entity Kind from ${file}"
         echo "::set-output name=kind::$kind"
       else
-        echo 'Using Entity Kind from user's input'
+        echo 'Using Entity Kind from user\'s input'
         echo "::set-output name=kind::${{ inputs.kind }}"
       fi
       if [[ -z "${{ inputs.name }}" ]]; then
         echo "Using Entity Name from ${file}"
         echo "::set-output name=name::$name"
       else
-        echo 'Using Entity Name from user's input'
+        echo 'Using Entity Name from user\'s input'
         echo "::set-output name=name::${{ inputs.name }}"
       fi
     shell: bash
