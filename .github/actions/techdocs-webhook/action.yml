@@ -17,8 +17,6 @@ inputs:
   token:
     description: 'Personal Access token for webhook'
     required: false
-    default: ${{ github.token }}
-
 runs:
   using: 'composite'
   steps:
