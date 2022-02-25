@@ -31,7 +31,7 @@ runs:
         user: ${{ github.repository_owner }}
         sha: ${{ github.sha }}
         event_type: 'techdocs'
-        client_payload: '{ "repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "team-name": "${{ inputs.team-name }}", "token": "${{ inputs.token }}" }'
+        client_payload: '{ "sha": "${{ github.sha }}","repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "team-name": "${{ inputs.team-name }}", "token": "${{ inputs.token }}" }'
         workflow_status_timeout: 1200
     - name: Display Results
       run: |
