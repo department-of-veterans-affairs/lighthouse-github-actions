@@ -1,11 +1,6 @@
+site_name: 'Lighthouse Github Actions'
 nav:
-  - Home: README.md
-  - Codespace tools: codespace-tools.md
-  - Local Deployments: local-deployment.md
-  - Nonprod Deployments: nonprod-deployment.md
-  - Sealed Secrets: sealed-secrets.md
-
+  - Home: index.md
+  - Techdocs: techdocs.md
 plugins:
   - techdocs-core
-
-site_name: 'Lighthouse Github Actions'

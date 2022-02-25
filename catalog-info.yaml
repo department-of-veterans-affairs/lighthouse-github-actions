@@ -3,7 +3,7 @@ kind: Component
 metadata:
   name: lighthouse-github-actions
   namespace: lighthouse-bandicoot
-  description: Github Repository for Lighthouse Github Actions
+  description: Custom Github Actions for the Lighthouse Internal Developer Portal
   annotations:
     backstage.io/techdocs-ref: url:https://github.com/department-of-veterans-affairs/lighthouse-github-actions
     github.com/project-slug: department-of-veterans-affairs/lighthouse-github-actions
