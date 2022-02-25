@@ -1,5 +1,8 @@
 name: CI/CD Workflow Example
 on:
+  push:
+    branches: [main]
+    paths: ['docs/*']
   workflow_dispatch:
 jobs:
   create-techdocs:
