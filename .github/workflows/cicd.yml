@@ -12,4 +12,4 @@ jobs:
           repository: 'department-of-veterans-affairs/lighthouse-github-actions'
           descriptor-file: 'catalog-info.yaml'
           team-name: 'lighthouse-bandicoot'
-          token: ${{ secrets.WEBHOOK_PAT}}
+          token: ${{ secrets.WEBHOOK_PAT }}
