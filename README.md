@@ -8,6 +8,11 @@ This action creates a [Kubernetes Job](https://github.com/department-of-veterans
 # Overview
 The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/kubernetes/git-sync) container and a `Techdocs` container<sup>[1](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/pkgs/container/lighthouse-github-actions%2Ftechdocs)[2](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/.techdocscontainer/base.Dockerfile)</sup>. The `git-sync` container is an initContainer that pulls a git repository to a shared volume so the Techdocs container has a copy of all markdown files. The `Techdocs` container then uses the [Techdocs-cli](https://backstage.io/docs/features/techdocs/cli) to generate and publish your documentation to the Lighthouse S3 bucket.
 
+## Techdocs Prerequisites
+The root directory of your repository contains:
+- [x] a <a href="https://backstage.io/docs/features/software-catalog/descriptor-format#overall-shape-of-an-entity">`catalog-info.yaml`</a> with a <a href="https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref">backstage.io/techdocs-ref</a> annotation
+- [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-embark/blob/main/mkdocs.yml">`mkdocs.yaml`</a> configuration file
+- [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-embark/tree/main/docs">`docs`</a> directory where all your documentation lives
 
 # Usage
 
