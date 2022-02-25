@@ -10,11 +10,8 @@ jobs:
       with:
         ref: 'main'
         token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Check inputs
-      run: |
-        echo '${{ inputs.repository }}'
-        echo '${{ inputs.descriptor-file }}'
-        echo '${{ inputs.team-name }}'
+    - name: ${{ github.event.client_payload.sha }}
+      run: echo "${{ github.event.client_payload.sha }}"
     - name: Create techdocs
       uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
       with:
