@@ -1,0 +1,26 @@
+name: Create Techdocs
+on:
+  workflow_call:
+    inputs:
+      repository:
+        required: true
+        type: string
+      descriptor-file:
+        required: false
+        type: string
+      team-name:
+        required: true
+        type: string
+jobs:
+  create-techdocs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create techdocs
+      uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
+      with:
+        kubeconfig: ${{ secrets.KUBE_CONFIG }}
+        kube_namespace: 'lighthouse-bandicoot-dev'
+        serviceAccountName: 'bandicoot-sa'
+        repository: ${{ inputs.repository }}
+        descriptor-file: ${{ inputs.repository }}
+        team-name: ${{ inputs.team-name }}

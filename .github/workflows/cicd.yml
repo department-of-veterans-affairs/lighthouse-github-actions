@@ -3,12 +3,11 @@ on:
   workflow_dispatch:
 jobs:
   create-techdocs:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2.4.0
-    - name: Create techdocs
-      uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
-      with:
-        kubeconfig: ${{ secrets.KUBE_CONFIG }}
-        kube_namespace: 'lighthouse-bandicoot-dev'
-        serviceAccountName: 'bandicoot-sa'
+    name: Generate and Publish Techdocs
+    uses: department-of-veterans-affairs/lighthouse-github-actions/.github/workflows/techdocs.yml@main
+    with:
+      kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      kube_namespace: 'lighthouse-bandicoot-dev'
+      serviceAccountName: 'bandicoot-sa'
+      repository: 'department-of-veterans-affairs/lighthouse-github-actions'
+      team-name: 'lighthouse-bandicoot'

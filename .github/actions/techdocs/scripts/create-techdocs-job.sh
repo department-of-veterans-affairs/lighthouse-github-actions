@@ -54,6 +54,7 @@ spec:
     metadata:
       labels:
         app: lighthouse-techdocs-${repo}
+        sidecar.istio.io/inject: "false"
     spec:
       serviceAccountName: ${service_account_name}
       initContainers:
