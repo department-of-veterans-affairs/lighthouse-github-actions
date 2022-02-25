@@ -20,21 +20,19 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: check inputs
-      run: |
-        echo "${{ inputs.repository }}"
-        echo "${{ inputs.descriptor-file }}"
-        echo "${{ inputs.team-name }}"
-      shell: bash
-    - name: Dispatch and wait
-      id: webhook
-      uses: adityakar/workflow-dispatcher@a0f690a2262373956eaee3ef74a01f5afed4ec7c
+    - name: run test-in-another-repo
+      id: get_status
+      uses: stinkyfingers/cross-repo-dispatch@v0.0
       with:
         owner: 'department-of-veterans-affairs'
         repo: 'lighthouse-github-actions'
-        token: ${{ inputs.token }}
-        event_type: techdocs
+        ref: 'main'
+        pat: ${{ inputs.token }}
+        user: ${{ github.repository_owner }}
+        sha: ${{ github.sha }}
+        event_type: 'techdocs'
         client_payload: '{ "repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "team-name": "${{ inputs.team-name }}" }'
+        workflow_status_timeout: 1200
     # - name: Send webhook to initiate techdocs
     #   run: >
     #     curl -H "Accept: application/vnd.github.everest-preview+json"
