@@ -28,7 +28,7 @@ runs:
       with:
         workflow: Create Techdocs
         token: ${{ inputs.token }}
-        inputs: '{ "repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "team-name": "${{ inputs.team-name }}", "debug": true }'
+        inputs: '{ "repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "team-name": "${{ inputs.team-name }}" }'
     # - name: Send webhook to initiate techdocs
     #   run: >
     #     curl -H "Accept: application/vnd.github.everest-preview+json"
