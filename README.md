@@ -34,7 +34,7 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
 
     # Name of Entity descriptor file; used to create Entity path (i.e. namespace/kind/name)
     # Default: 'catalog-info.yaml'
-    descriptor-file:
+    descriptor-file: ''
 
     # Team name; used to create path to entity's documentation
     # Default: Value of the 'metadata.namespace' field from Entity descriptor file
