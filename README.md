@@ -39,7 +39,7 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
     team-name: ''
 
     # Personal Access Token used for Techdocs Webhook
-    # Scopes: Repo 
+    # Scopes: Repo
     # Required: true
     token: ''
 
@@ -77,5 +77,3 @@ jobs:
           team-name: 'lighthouse-bandicoot'
           token: ${{ secrets.PAT }}
 ```
-
-
