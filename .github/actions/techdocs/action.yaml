@@ -57,27 +57,30 @@ runs:
     run: |
       file="./${{ inputs.descriptor-file }}"
       if [[ "${file}" == "./" ]]; then
+        echo 'checking for descriptor-file'
         file=$(ls | grep 'catalog-info')
+        ls | grep 'catalog-info'
+        echo "file: ${file}"
       fi
       namespace=$(cat "${file}" | yq .metadata.namespace)
       kind=$(cat "${file}" | yq .kind)
       name="$(cat "${file}" | yq .metadata.name)"
       if [[ -z "${{ inputs.team-name }}" ]]; then
-        echo 'Using Entity Namespace from ${{ inputs.descriptor-file }}'
+        echo 'Using Entity Namespace from ${file}'
         echo "::set-output name=namespace::$namespace"
       else
         echo 'Using Entity Namespace from input'
         echo "::set-output name=namespace::${{ inputs.team-name }}"
       fi
       if [[ -z "${{ inputs.kind }}" ]]; then
-        echo 'Using Entity Kind from ${{ inputs.descriptor-file }}'
+        echo 'Using Entity Kind from ${file}'
         echo "::set-output name=kind::$kind"
       else
         echo 'Using Entity Kind from input'
         echo "::set-output name=kind::${{ inputs.kind }}"
       fi
       if [[ -z "${{ inputs.name }}" ]]; then
-        echo 'Using Entity Name from ${{ inputs.descriptor-file }}'
+        echo 'Using Entity Name from ${file}'
         echo "::set-output name=name::$name"
       else
         echo 'Using Entity Name from input'
