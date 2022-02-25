@@ -30,11 +30,13 @@ runs:
       shell: bash
     - name: Dispatch and wait
       id: webhook
-      uses: aurelien-baudet/workflow-dispatch@93e95b157d791ae7f42aef8f8a0d3d723eba1c31
+      uses: adityakar/workflow-dispatcher@a0f690a2262373956eaee3ef74a01f5afed4ec7c
       with:
-        workflow: 'techdocs.yml'
+        owner: 'department-of-veterans-affairs'
+        repo: 'lighthouse-bandicoot-dev'
         token: ${{ inputs.token }}
-        inputs: '{ "repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "team-name": "${{ inputs.team-name }}" }'
+        event_type: techdocs
+        client_payload: '{ "repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "team-name": "${{ inputs.team-name }}" }'
     # - name: Send webhook to initiate techdocs
     #   run: >
     #     curl -H "Accept: application/vnd.github.everest-preview+json"

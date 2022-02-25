@@ -1,16 +1,7 @@
 name: Create Techdocs
 on:
-  workflow_dispatch:
-    inputs:
-      repository:
-        description: 'Repository name to run techdocs job with'
-        required: true
-      descriptor-file:
-        description: 'Descriptor file for Entity(e.g. catalog-info.yaml)'
-        required: false
-      team-name:
-        description: 'Team name; can be omitted if descriptor file includes .metadata.namespace'
-        required: false
+  repository_dispatch:
+    types: [techdocs]
 jobs:
   create-techdocs:
     runs-on: ubuntu-latest
@@ -30,7 +21,7 @@ jobs:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
         kube_namespace: 'lighthouse-bandicoot-dev'
         serviceAccountName: 'bandicoot-sa'
-        repository: '${{ inputs.repository }}'
-        descriptor-file: '${{ inputs.descriptor-file }}'
-        team-name: '${{ inputs.team-name }}'
+        repository: ${{ github.event.client_payload.repository }}
+        descriptor-file: ${{ github.event.client_payload.descriptor-file }}
+        team-name: ${{ github.event.client_payload.team-name }}
         token: '${{ github.token }}'
