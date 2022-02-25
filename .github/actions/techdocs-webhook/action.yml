@@ -31,7 +31,7 @@ runs:
       uses: adityakar/workflow-dispatcher@a0f690a2262373956eaee3ef74a01f5afed4ec7c
       with:
         owner: 'department-of-veterans-affairs'
-        repo: 'lighthouse-bandicoot-dev'
+        repo: 'lighthouse-github-actions'
         token: ${{ inputs.token }}
         event_type: techdocs
         client_payload: '{ "repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "team-name": "${{ inputs.team-name }}" }'
