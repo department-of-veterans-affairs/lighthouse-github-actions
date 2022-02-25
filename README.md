@@ -25,10 +25,12 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
   with:
     # Owner and repository where the documentation lives (e.g. department-of-veterans-affairs/lighthouse-embark)
     # Default: ${{ github.repository }}
+    # Required: true
     repository: ''
 
     # Name of Entity descriptor file; used to create Entity path (i.e. namespace/kind/name)
     # Default: 'catalog-info.yaml'
+    # Required: false
     descriptor-file: ''
 
     # Team name; used to create path to entity's documentation
@@ -38,6 +40,7 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 
     # Personal Access Token used for Techdocs Webhook
     # Scopes: Repo 
+    # Required: true
     token: ''
 
 ```
