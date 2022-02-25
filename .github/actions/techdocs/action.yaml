@@ -43,7 +43,7 @@ runs:
     with:
       ref: 'main'
       repository: ${{ inputs.repository }}
-      token: ${{ github.token }}
+      token: ${{ inputs.token }}
   - name: Set K8s context
     uses: azure/k8s-set-context@v1
     with:
