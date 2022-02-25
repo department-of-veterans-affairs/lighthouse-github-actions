@@ -27,7 +27,7 @@ runs:
         owner: 'department-of-veterans-affairs'
         repo: 'lighthouse-github-actions'
         ref: 'main'
-        pat: ${{ github.token }}
+        pat: ${{ inputs.token }}
         user: ${{ github.repository_owner }}
         sha: ${{ github.sha }}
         event_type: 'techdocs'
