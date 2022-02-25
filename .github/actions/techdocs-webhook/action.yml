@@ -24,7 +24,7 @@ runs:
   steps:
     - name: Dispatch and wait
       id: webhook
-      uses: aurelien-baudet/workflow-dispatch@v93e95b157d791ae7f42aef8f8a0d3d723eba1c31
+      uses: aurelien-baudet/workflow-dispatch@93e95b157d791ae7f42aef8f8a0d3d723eba1c31
       with:
         workflow: Create Techdocs
         token: ${{ inputs.token }}
