@@ -22,7 +22,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Send webhook to embark-deployment repo
+    - name: Send webhook to initiate techdocs
       run: |
         curl -H "Accept: application/vnd.github.everest-preview+json" \
         -H "Authorization: token ${{ inputs.token }}" \
@@ -34,5 +34,5 @@ runs:
         "descriptor-file": "${{ inputs.descriptor-file }}", \
         "team-name": "${{ inputs.team-name }}", \
          } }' \
-        https://api.github.com/repos/department-of-veterans-affairs/embark-deployment/dispatches
+        https://api.github.com/repos/department-of-veterans-affairs/lighthouse-github-actions/dispatches
       shell: bash
