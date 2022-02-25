@@ -1,7 +1,12 @@
+name: Create Techdocs
+on:
+  repository_dispatch:
+    types: [techdocs]
 jobs:
   create-techdocs:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2.4.0
     - name: Create techdocs
       uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
       with:
@@ -11,10 +16,3 @@ jobs:
         repository: ${{ github.event.client_payload.repository }}
         descriptor-file: ${{ github.event.client_payload.descriptor-file }}
         team-name: ${{ github.event.client_payload.team-name }}
-
-name: Create Techdocs
-
-# Only run on webhook events that include the 'dev' event type.
-on:
-  repository_dispatch:
-    types: [techdocs]
