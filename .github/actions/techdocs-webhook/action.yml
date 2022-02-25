@@ -27,11 +27,11 @@ runs:
         owner: 'department-of-veterans-affairs'
         repo: 'lighthouse-github-actions'
         ref: 'main'
-        pat: ${{ inputs.token }}
+        pat: ${{ github.token }}
         user: ${{ github.repository_owner }}
         sha: ${{ github.sha }}
         event_type: 'techdocs'
-        client_payload: '{ "repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "team-name": "${{ inputs.team-name }}" }'
+        client_payload: '{ "repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "team-name": "${{ inputs.team-name }}", "token": "${{ inputs.token }}" }'
         workflow_status_timeout: 1200
     # - name: Send webhook to initiate techdocs
     #   run: >
