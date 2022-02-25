@@ -79,6 +79,7 @@ spec:
           cd /tmp/git/${repo} || exit 1
           ${techdocs_generate_args}
           ${techdocs_publish_args}
+          scuttle python -V > /dev/null 2>&1
         volumeMounts:
           - name: repo
             mountPath: /tmp/git/

@@ -1,3 +1,3 @@
 fileignoreconfig:
-- filename: .git-synccontainer/scripts/common-debian.sh
-  checksum: 32bca634a7c63c04a56adfc8c1d5e63f205cc239926005327eeec4e67b745226
+- filename: .github/actions/techdocs/scripts/create-techdocs-job.scuttle.sh
+  checksum: 72805a6bf78063ebc21cbb5e6ce4e7c8a2442c6037489085cb5ee722332000d0
