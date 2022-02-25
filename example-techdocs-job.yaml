@@ -1,4 +1,5 @@
 # Example Techdocs Job
+
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -31,12 +32,12 @@ spec:
         image: ghcr.io/department-of-veterans-affairs/embark-deployment/techdocs:latest
         imagePullPolicy: Always
         command: ['/bin/sh']
-        args: 
+        args:
         - -c
         - |
           cd /tmp/git/lighthouse-embark
           techdocs-cli generate --source-dir /tmp/git/lighthouse-embark --output-dir /tmp/git/techdocs/lighthouse-embark --no-docker -v
-          techdocs-cli publish --publisher-type awsS3 --storage-name embark-techdocs-storage --entity default/component/embark-monorepo --directory /tmp/git/techdocs/lighthouse-embark 
+          techdocs-cli publish --publisher-type awsS3 --storage-name embark-techdocs-storage --entity default/component/embark-monorepo --directory /tmp/git/techdocs/lighthouse-embark
           scuttle python -V
         volumeMounts:
           - name: repo
