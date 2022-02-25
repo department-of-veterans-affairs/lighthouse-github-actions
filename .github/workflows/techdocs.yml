@@ -6,10 +6,6 @@ jobs:
   create-techdocs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2.4.0
-      with:
-        ref: 'main'
-        token: ${{ secrets.GITHUB_TOKEN }}
     - name: ${{ github.event.client_payload.sha }}
       run: echo "${{ github.event.client_payload.sha }}"
     - name: Create techdocs
