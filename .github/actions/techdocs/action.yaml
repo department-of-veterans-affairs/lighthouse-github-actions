@@ -13,7 +13,6 @@ inputs:
     required: true
   repository:
     description: 'Name of repository'
-    default: ${{ github.repository }}
     required: true
   team-name:
     description: 'Namespace of entity; used as namespace for --entity <namespace/kind/name>'

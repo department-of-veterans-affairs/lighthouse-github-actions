@@ -19,15 +19,21 @@ jobs:
       with:
         ref: 'main'
         token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Check inputs
+      run: |
+        echo '${{ inputs.repository }}'
+        echo '${{ inputs.descriptor-file }}'
+        echo '${{ inputs.team-name }}'
     - name: Create techdocs
       uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
         kube_namespace: 'lighthouse-bandicoot-dev'
         serviceAccountName: 'bandicoot-sa'
-        repository: ${{ inputs.repository }}
-        descriptor-file: ${{ inputs.descriptor-file }}
-        team-name: ${{ inputs.team-name }}
+        repository: '${{ inputs.repository }}'
+        descriptor-file: '${{ inputs.descriptor-file }}'
+        team-name: '${{ inputs.team-name }}'
+        token: '${{ github.token }}'
     # - name: Compare workflows
     #   run: |
     #     echo "${{ github.sha }}"
