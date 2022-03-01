@@ -10,9 +10,9 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
 
 ## Techdocs Prerequisites
 The root directory of your repository contains:
-- [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-embark/blob/main/catalog-info.yaml">`catalog-info.yaml`</a> with a <a href="https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref">backstage.io/techdocs-ref</a> annotation
-- [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-embark/blob/main/mkdocs.yml">`mkdocs.yaml`</a> configuration file
-- [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-embark/tree/main/docs">`docs`</a> directory where all your documentation lives
+- [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/catalog-info.yaml">`catalog-info.yaml`</a> with a <a href="https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref">backstage.io/techdocs-ref</a> annotation
+- [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/mkdocs.yml">`mkdocs.yaml`</a> configuration file
+- [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs">`docs`</a> directory where all your documentation lives
 
 More info about [Entity Descriptor files](https://backstage.io/docs/features/software-catalog/descriptor-format#overall-shape-of-an-entity)
 
@@ -23,7 +23,7 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 - name: Create Techdocs Job
   uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
   with:
-    # Owner and repository where the documentation lives (e.g. department-of-veterans-affairs/lighthouse-embark)
+    # Owner and repository where the documentation lives (e.g. department-of-veterans-affairs/lighthouse-developer-portal)
     # Default: ${{ github.repository }}
     # Required: true
     repository: ''

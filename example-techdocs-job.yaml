@@ -3,20 +3,20 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: embark-techdocs
+  name: lighthouse-developer-portal-techdocs
 spec:
   ttlSecondsAfterFinished: 100
   template:
     metadata:
       labels:
-        app: embark-techdocs
+        app: lighthouse-developer-portal-techdocs
     spec:
       serviceAccountName: bandicoot-sa
       initContainers:
       - name: git-sync
         image: k8s.gcr.io/git-sync:v3.1.5
         args:
-         - "--repo=https://github.com/department-of-veterans-affairs/lighthouse-embark"
+         - "--repo=https://github.com/department-of-veterans-affairs/lighthouse-developer-portal"
          - "--branch=main"
          - "--depth=1"
          - "--one-time"
@@ -29,15 +29,15 @@ spec:
             memory: 150Mi
       containers:
       - name: techdocs
-        image: ghcr.io/department-of-veterans-affairs/embark-deployment/techdocs:latest
+        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal-deployment/techdocs:latest
         imagePullPolicy: Always
         command: ['/bin/sh']
         args:
         - -c
         - |
-          cd /tmp/git/lighthouse-embark
-          techdocs-cli generate --source-dir /tmp/git/lighthouse-embark --output-dir /tmp/git/techdocs/lighthouse-embark --no-docker -v
-          techdocs-cli publish --publisher-type awsS3 --storage-name embark-techdocs-storage --entity default/component/embark-monorepo --directory /tmp/git/techdocs/lighthouse-embark
+          cd /tmp/git/lighthouse-developer-portal
+          techdocs-cli generate --source-dir /tmp/git/lighthouse-developer-portal --output-dir /tmp/git/techdocs/lighthouse-developer-portal --no-docker -v
+          techdocs-cli publish --publisher-type awsS3 --storage-name embark-techdocs-storage --entity default/component/lighthouse-developer-portal-monorepo --directory /tmp/git/techdocs/lighthouse-developer-portal
           scuttle python -V
         volumeMounts:
           - name: repo
