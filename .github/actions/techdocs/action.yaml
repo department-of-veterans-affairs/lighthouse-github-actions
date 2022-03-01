@@ -16,6 +16,7 @@ inputs:
     required: true
   team-name:
     description: 'Namespace of entity; used as namespace for --entity <namespace/kind/name>'
+    default: 'default'
     required: false
   kind:
     description: 'Kind of entity; used as kind for --entity <namespace/kind/name>'
