@@ -13,6 +13,7 @@ inputs:
     required: false
   team-name:
     description: 'Namespace of entity; used as namespace for --entity <namespace/kind/name>'
+    default: 'default'
     required: false
   token:
     description: 'Personal Access token for webhook'
