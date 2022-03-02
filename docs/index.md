@@ -36,7 +36,7 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
     # Team name; used to create path to entity's documentation
     # Default: Value of the 'metadata.namespace' field from Entity descriptor file
     # Required IF the Entity descriptor file does not define the 'metadata.namespace' field
-    team-name: ''
+    namespace: ''
 
     # Personal Access Token used for Techdocs Webhook
     # Scopes: Repo
@@ -68,6 +68,6 @@ jobs:
         with:
           repository: ${{ github.repository }}
           descriptor-file: 'catalog-info.yaml'
-          team-name: 'lighthouse-bandicoot'
+          namespace: 'lighthouse-bandicoot'
           token: ${{ secrets.WEBHOOK_PAT }}
 ```

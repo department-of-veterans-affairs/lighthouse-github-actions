@@ -15,7 +15,7 @@ inputs:
     description: 'Name of repository'
     default: ${{ github.repository }}
     required: true
-  team-name:
+  namespace:
     description: 'Namespace of entity; used as namespace for --entity <namespace/kind/name>'
     required: false
   kind:
@@ -59,12 +59,12 @@ runs:
       namespace=$(cat "${file}" | yq .metadata.namespace)
       kind=$(cat "${file}" | yq .kind)
       name="$(cat "${file}" | yq .metadata.name)"
-      if [[ -z "${{ inputs.team-name }}" ]]; then
+      if [[ -z "${{ inputs.namespace }}" ]]; then
         echo 'Using Entity Namespace from ${{ inputs.descriptor-file }}'
         echo "::set-output name=namespace::$namespace"
       else
         echo 'Using Entity Namespace from input'
-        echo "::set-output name=namespace::${{ inputs.team-name }}"
+        echo "::set-output name=namespace::${{ inputs.namespace }}"
       fi
       if [[ -z "${{ inputs.kind }}" ]]; then
         echo 'Using Entity Kind from ${{ inputs.descriptor-file }}'

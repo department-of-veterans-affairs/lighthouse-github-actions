@@ -71,6 +71,6 @@ jobs:
         with:
           repository: ${{ github.repository }}
           descriptor-file: 'catalog-info.yaml'
-          team-name: 'lighthouse-bandicoot'
+          namespace: 'lighthouse-bandicoot'
           token: ${{ secrets.WEBHOOK_PAT }}
 ```
