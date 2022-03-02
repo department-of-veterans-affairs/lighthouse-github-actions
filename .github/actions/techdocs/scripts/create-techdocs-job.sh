@@ -5,7 +5,7 @@ set -euo pipefail
 SERVICE_ACCOUNT_NAME=${1}
 REPO_NAME=${2}
 TEAM_NAME=${3}
-KIND=${4:-"component"}
+KIND=${4:-"Component"}
 NAME=${5}
 
 export git_sync_args=''
