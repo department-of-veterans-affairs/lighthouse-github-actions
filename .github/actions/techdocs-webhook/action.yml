@@ -21,6 +21,10 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Sanity Check
+      run: |
+        echo ${{ inputs.team-name }}
+      shell: bash
     - name: run test-in-another-repo
       id: get_status
       uses: stinkyfingers/cross-repo-dispatch@52c5ff3cc7277612c058d932896ac665f77ec249
