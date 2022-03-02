@@ -30,9 +30,12 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
     # Required: false
     descriptor-file: ''
 
-    # Team name; used to create path to entity's documentation
-    # Default: Value of the 'metadata.namespace' field from Entity descriptor file
-    # Required IF the Entity descriptor file does not define the 'metadata.namespace'
+    # Namespace of the Catalog Entity in the Lighthouse Developer Portal
+    # Default: 'default'
+    # Note: This value should match the 'metadata.namespace' field in the Entity descriptor file.
+    # The 'metadata.namespace' field is arbitrary and does not correspond to an actual Kubernetes namespace.
+    # It is recommended to use your team name for the 'metadata.namespace' field to prevent collisions with
+    # Catalog Entities from other teams.
     namespace: ''
 
     # Personal Access Token used for Techdocs Webhook
@@ -44,13 +47,7 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 <!-- end usage -->
 
 # Examples
-- [Add action to existing Github Workflow](#Add-action-to-existing-Github-Workflow)
 - [Create standlone workflow](#Create-standalone-workflow)
-
-## Add action to existing Github Workflow
-```yaml
-TODO
-```
 
 ## Create standalone workflow
 
@@ -72,5 +69,5 @@ jobs:
           repository: ${{ github.repository }}
           descriptor-file: 'catalog-info.yaml'
           namespace: 'lighthouse-bandicoot'
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.WEBHOOK_PAT }}
 ```
