@@ -50,9 +50,9 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 <!-- end usage -->
 
 # Examples
-- [Create standlone workflow](#Create-standalone-workflow)
+- [Create standlone workflow with Github Actions](#Create-standalone-workflow-with-github-actions)
 
-## Create standalone workflow
+## Create standalone workflow with Github Actions
 
 ```yaml
 # Example workflow
@@ -60,7 +60,7 @@ name: Publish Documentation
 on:
   push:
     branches: [main]
-    paths: ['docs/*']
+    paths: ['**/docs/*']
 jobs:
   create-techdocs:
     runs-on: ubuntu-latest
