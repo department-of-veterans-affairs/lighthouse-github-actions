@@ -70,5 +70,6 @@ jobs:
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs-webhook@main
         with:
           repository: ${{ github.repository }}
+          namespace: 'lighthouse-bandicoot'
           token: ${{ secrets.WEBHOOK_PAT }}
 ```
