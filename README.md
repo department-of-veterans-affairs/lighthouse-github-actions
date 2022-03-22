@@ -10,12 +10,9 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
 
 ## Techdocs Prerequisites
 The root directory of your repository contains:
-- [x] a [catalog-info.yaml](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/catalog-info.yaml)<a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/catalog-info.yaml">`catalog-info.yaml`</a> with a <a href="https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref">backstage.io/techdocs-ref</a> annotation
-- [x] a [mkdocs.yaml](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/mkdocs.yml)<a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/mkdocs.yml">`mkdocs.yaml`</a> configuration file
-- [x] a [docs/](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs)<a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs">`docs`</a> directory where all your documentation lives
-- [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/catalog-info.yaml">`catalog-info.yaml`</a> with a <a href="https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref">backstage.io/techdocs-ref</a> annotation
-- [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/mkdocs.yml">`mkdocs.yaml`</a> configuration file
-- [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs">`docs`</a> directory where all your documentation lives
+ - [x] a [catalog-info.yaml](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/catalog-info.yaml) with a [backstage.io/techdocs-ref](https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref) annotation
+- [x] a [mkdocs.yaml](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/mkdocs.yml) configuration file
+- [x] a [docs](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs) directory where all your documentation lives
 
 More info about [Entity Descriptor files](https://backstage.io/docs/features/software-catalog/descriptor-format#overall-shape-of-an-entity)
 
