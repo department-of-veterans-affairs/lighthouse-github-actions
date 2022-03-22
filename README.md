@@ -14,6 +14,7 @@ The root directory of your repository contains:
 -  [x] a [catalog-info.yaml](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/catalog-info.yaml) with a [backstage.io/techdocs-ref](https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref) annotation
 -  [x] a [mkdocs.yaml](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/mkdocs.yml) configuration file
 -  [x] a [docs](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs) directory where all your documentation lives
+-  [x] a [workflow](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/.github/workflows/publish-documentation.yml) or [Github Action](https://github.com/department-of-veterans-affairs/lighthouse-github-actions) to generate and publish Techdocs
 
 More info about [Entity Descriptor files](https://backstage.io/docs/features/software-catalog/descriptor-format#overall-shape-of-an-entity)
 
