@@ -10,6 +10,9 @@ The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/
 
 ## Techdocs Prerequisites
 The root directory of your repository contains:
+- [x] a [catalog-info.yaml](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/catalog-info.yaml)<a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/catalog-info.yaml">`catalog-info.yaml`</a> with a <a href="https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref">backstage.io/techdocs-ref</a> annotation
+- [x] a [mkdocs.yaml](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/mkdocs.yml)<a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/mkdocs.yml">`mkdocs.yaml`</a> configuration file
+- [x] a [docs/](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs)<a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs">`docs`</a> directory where all your documentation lives
 - [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/catalog-info.yaml">`catalog-info.yaml`</a> with a <a href="https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref">backstage.io/techdocs-ref</a> annotation
 - [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/mkdocs.yml">`mkdocs.yaml`</a> configuration file
 - [x] a <a href="https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs">`docs`</a> directory where all your documentation lives
@@ -50,9 +53,9 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 <!-- end usage -->
 
 # Examples
-- [Create standlone workflow](#Create-standalone-workflow)
+- [Create standlone workflow with Github Actions](#Create-standalone-workflow-with-github-actions)
 
-## Create standalone workflow
+## Create standalone workflow with Github Actions
 
 ```yaml
 # Example workflow
@@ -60,7 +63,7 @@ name: Publish Documentation
 on:
   push:
     branches: [main]
-    paths: ['docs/*']
+    paths: ['**/docs/*']
 jobs:
   create-techdocs:
     runs-on: ubuntu-latest
@@ -70,7 +73,6 @@ jobs:
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs-webhook@main
         with:
           repository: ${{ github.repository }}
-          descriptor-file: 'catalog-info.yaml'
           namespace: 'lighthouse-bandicoot'
           token: ${{ secrets.WEBHOOK_PAT }}
 ```
