@@ -58,7 +58,7 @@ name: Publish Documentation
 on:
   push:
     branches: [main]
-    paths: ['**/docs/*']
+    paths: ['**/docs/*', '**/mkdocs.yaml']
 jobs:
   create-techdocs:
     runs-on: ubuntu-latest
