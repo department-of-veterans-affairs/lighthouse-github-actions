@@ -5,6 +5,7 @@ on:
 jobs:
   create-techdocs:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.env }} == 'Development'
     strategy:
       matrix:
         env: [Development, Production]
