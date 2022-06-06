@@ -46,7 +46,7 @@
   ],
   // Use 'postCreateCommand' to run commands after the container is created.
   // Install dependencies and give permission to use docker
-  "postStartCommand": "bash -c './scripts/start_up.sh'",
+  // "postStartCommand": "bash -c './scripts/start_up.sh'",
   // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "codespace"
 }
