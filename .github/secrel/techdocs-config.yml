@@ -1,0 +1,10 @@
+---
+specs:
+  repo-name: lighthouse-developer-portal
+  default-branch: main
+  onboarding-date: 20220310
+  issue-number: 355
+  pipeline-version: v1
+images:
+  - name: techdocs
+    path: "./.techdocscontainer/base.Dockerfile"
