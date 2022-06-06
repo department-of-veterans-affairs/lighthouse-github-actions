@@ -5,16 +5,23 @@ on:
 jobs:
   create-techdocs:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env: [Development, Production]
+    environment:
+      name: ${{ matrix.env }}
     steps:
-    - name: ${{ github.event.client_payload.sha }}
-      run: echo "${{ github.event.client_payload.sha }}"
-    - name: Create techdocs
-      uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
-      with:
-        kubeconfig: ${{ secrets.KUBE_CONFIG }}
-        kube_namespace: 'lighthouse-bandicoot-dev'
-        serviceAccountName: 'bandicoot-sa'
-        repository: ${{ github.event.client_payload.repository }}
-        descriptor-file: ${{ github.event.client_payload.descriptor-file }}
-        namespace: ${{ github.event.client_payload.namespace }}
-        token: ${{ github.event.client_payload.token }}
+      - name: ${{ github.event.client_payload.sha }}
+        run: echo "${{ github.event.client_payload.sha }}"
+        # For production, this can run as a matrix
+      - name: Create techdocs
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+          kube_namespace: "lighthouse-bandicoot-dev"
+          serviceAccountName: "bandicoot-sa"
+          repository: ${{ github.event.client_payload.repository }}
+          descriptor-file: ${{ github.event.client_payload.descriptor-file }}
+          namespace: ${{ github.event.client_payload.namespace }}
+          token: ${{ github.event.client_payload.token }}
+          AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
