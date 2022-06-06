@@ -1,41 +1,37 @@
-name: 'Send Techdocs Webhook'
-description: 'Sends a webhook to trigger repository dispatch event for techdocs workflow'
+name: "Send Techdocs Webhook"
+description: "Sends a webhook to trigger repository dispatch event for techdocs workflow"
 inputs:
   event:
-    description: 'Event trigger'
+    description: "Event trigger"
     required: false
-    default: 'techdocs'
+    default: "techdocs"
   repository:
-    description: 'Name of repository'
+    description: "Name of repository"
     required: true
   descriptor-file:
-    description: 'Name of catalog entity descriptor file'
+    description: "Name of catalog entity descriptor file"
     required: false
   namespace:
-    description: 'Namespace of entity; used as namespace for --entity <namespace/kind/name>'
-    default: 'default'
+    description: "Namespace of entity; used as namespace for --entity <namespace/kind/name>"
+    default: "default"
     required: false
   token:
-    description: 'Personal Access token for webhook'
+    description: "Personal Access token for webhook"
     required: false
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
-    - name: Sanity Check
-      run: |
-        echo ${{ inputs.namespace }}
-      shell: bash
     - name: run test-in-another-repo
       id: get_status
       uses: stinkyfingers/cross-repo-dispatch@52c5ff3cc7277612c058d932896ac665f77ec249
       with:
-        owner: 'department-of-veterans-affairs'
-        repo: 'lighthouse-github-actions'
-        ref: 'main'
+        owner: "department-of-veterans-affairs"
+        repo: "lighthouse-github-actions"
+        ref: "main"
         pat: ${{ inputs.token }}
         user: ${{ github.repository_owner }}
         sha: ${{ github.sha }}
-        event_type: 'techdocs'
+        event_type: "techdocs"
         client_payload: '{ "sha": "${{ github.sha }}","repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "namespace": "${{ inputs.namespace }}", "token": "${{ inputs.token }}" }'
         workflow_status_timeout: 1200
     - name: Display Results
