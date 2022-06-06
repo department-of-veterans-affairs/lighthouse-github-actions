@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sync-s3
+spec:
+  template:
+    metadata:
+      labels:
+        app: sync-s3
+    spec:
+      serviceAccountName: bandicoot-sa
+      containers:
+        - name: sync-s3
+          image: amazon/aws-cli:latest
+          args: ["s3", "ls", "s3://embark-techdocs-storage-prod"]
+          resources:
+            limits:
+              cpu: 100m
+              memory: 150Mi
+      restartPolicy: Never

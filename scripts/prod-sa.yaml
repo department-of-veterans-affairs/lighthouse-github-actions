@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bandicoot-prod-sa
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws-us-gov:iam::461889958881:role/project/project-ldx/ldx-prod-1-bandicoot-customer-role
