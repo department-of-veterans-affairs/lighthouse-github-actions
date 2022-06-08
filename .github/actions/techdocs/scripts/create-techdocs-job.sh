@@ -60,6 +60,7 @@ spec:
       initContainers:
       - name: git-sync
         image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/git-sync:latest
+        command: ['/git-sync']
         args: ${git_sync_args}
         volumeMounts:
           - name: repo
