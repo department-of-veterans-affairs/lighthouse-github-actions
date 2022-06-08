@@ -68,6 +68,8 @@ spec:
           limits:
             cpu: 100m
             memory: 150Mi
+      imagePullSecrets:
+        - name: "${ghcr_secrets}"
       containers:
       - name: techdocs
         image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/techdocs:latest
