@@ -40,6 +40,9 @@ inputs:
     description: "Name of the S3 Bucket to store generated Techdocs"
     default: "embark-techdocs-storage-nonprod"
     required: true
+  PAT:
+    description: "Personal access token for github"
+    required: true
 
 runs:
   using: "composite"
@@ -108,7 +111,7 @@ runs:
         ${{ github.action_path }}/scripts/create-dockerconfigjson.sh
         "${{ inputs.repository }}"
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ inputs.PAT }}
         GITHUB_USER: ${{ github.repository_owner }}
       shell: bash
     - name: Create techdocs Job
