@@ -59,7 +59,7 @@ spec:
       serviceAccountName: ${service_account_name}
       initContainers:
       - name: git-sync
-        image: k8s.gcr.io/git-sync:v3.1.6
+        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/git-sync:latest
         args: ${git_sync_args}
         volumeMounts:
           - name: repo
