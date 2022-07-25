@@ -2,7 +2,6 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: lighthouse-github-actions
-  namespace: lighthouse-bandicoot
   description: Github Actions to generate TechDocs for the Lighthouse Internal Developer Portal
   title: 'Techdocs Repository'
   links:
