@@ -68,11 +68,11 @@ runs:
           echo 'Checking for descriptor-file'
           file=$(ls | grep 'catalog-info')
         fi
-        namespace=$(cat "${file}" | yq .metadata.namespace)
+        namespace="default"
         kind=$(cat "${file}" | yq .kind)
         name="$(cat "${file}" | yq .metadata.name)"
         if [[ -z "${{ inputs.namespace }}" ]]; then
-          echo "Using Entity Namespace from ${file}"
+          echo "Using default Namespace"
           echo "::set-output name=namespace::$namespace"
         else
           echo 'Using Entity Namespace from user input'
