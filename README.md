@@ -34,14 +34,6 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
     # Required: false
     descriptor-file: ''
 
-    # Namespace of the Catalog Entity in the Lighthouse Developer Portal
-    # Default: 'default'
-    # Note: This value should match the 'metadata.namespace' field in the Entity descriptor file.
-    # The 'metadata.namespace' field is arbitrary and does not correspond to an actual Kubernetes namespace.
-    # It is recommended to use your team name for the 'metadata.namespace' field to prevent collisions with
-    # Catalog Entities from other teams.
-    namespace: ''
-
     # Personal Access Token used for Techdocs Webhook
     # Scopes: Repo
     # Required: true
@@ -71,6 +63,5 @@ jobs:
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs-webhook@main
         with:
           repository: ${{ github.repository }}
-          namespace: 'lighthouse-bandicoot'
           token: ${{ secrets.WEBHOOK_PAT }}
 ```
