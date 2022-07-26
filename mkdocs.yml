@@ -3,6 +3,5 @@ repo_url: 'https://github.com/department-of-veterans-affairs/lighthouse-github-a
 nav:
   - Home: index.md
   - Techdocs: techdocs.md
-  - Readme: ../README.md
 plugins:
   - techdocs-core
