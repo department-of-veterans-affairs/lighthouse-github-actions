@@ -85,7 +85,7 @@ runs:
         if [[ "$name" == "null" ]]; then
           echo "Error: cannot create Techdocs with this Entity's Name. Please add a valid Name for the Entity."
         fi
-        echo "Entity's Techdocs Location: "$namespace"/"$kind"/"$name"
+        echo "Entity's Techdocs Location: ${namespace}/${kind}/${name}"
       shell: bash
     - name: Create Dockerconfigjson
       run: >
