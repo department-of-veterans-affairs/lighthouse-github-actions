@@ -17,7 +17,7 @@ check_required_environment() {
 
 set_triplet() {
   local file="${BASE_PATH}/${FILE}"
-  if [[ "${file}" == "./" ]]; then
+  if [[ -z "${file}" ]]; then
     echo 'Checking for descriptor-file'
     file=$(ls | grep 'catalog-info')
   fi
