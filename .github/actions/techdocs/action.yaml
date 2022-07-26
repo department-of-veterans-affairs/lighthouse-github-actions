@@ -48,7 +48,6 @@ runs:
   steps:
     - uses: actions/checkout@v2.4.0
       with:
-        ref: "main"
         repository: ${{ inputs.repository }}
         token: ${{ inputs.token }}
     - name: Set K8s context
