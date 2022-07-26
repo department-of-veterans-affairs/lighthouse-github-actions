@@ -67,8 +67,8 @@ spec:
             mountPath: /tmp/git
         resources:
           limits:
-            cpu: 100m
-            memory: 150Mi
+            cpu: 300m
+            memory: 450Mi
       containers:
       - name: techdocs
         image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/techdocs:latest
