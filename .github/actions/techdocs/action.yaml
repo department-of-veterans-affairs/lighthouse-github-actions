@@ -70,9 +70,11 @@ runs:
       shell: bash
     - name: Setup default branch
       run: |
-        git config --list
-        branch=${{ github.ref }}
-        echo "branch=${branch##*/*/}" >> $GITHUB_ENV
+        branch=$(curl \
+        -H "Accept: application/vnd.github+json" \
+        -H "Authorization: token ${{ inputs.token }}" \
+        https://api.github.com/repos/${{ inputs.repository }} | jq -r '.default_branch')
+        echo "branch=${branch}" >> $GITHUB_ENV
       shell: bash
     - name: Validating Techdocs Location for Catalog Entity
       run: |
