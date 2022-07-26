@@ -8,6 +8,7 @@ TEAM_NAME=${3}
 KIND=${4:-"Component"}
 NAME=${5}
 
+
 export git_sync_args=''
 export techdocs_generate_args=''
 export techdocs_publish_args=''
@@ -28,7 +29,7 @@ set_git_sync_args() {
   repo_name=${1}
   gh_user=${2}
   gh_token=${3}
-  git_sync_args="[\"--repo=https://github.com/${repo_name}\", \"--depth=1\", \"--one-time\", \"--username\", \"${gh_user}\", \"--password\", \"${gh_token}\"]"
+  git_sync_args="[\"--repo=https://github.com/${repo_name}\", \"--branch=\", \"--depth=1\", \"--one-time\", \"--username\", \"${gh_user}\", \"--password\", \"${gh_token}\"]"
 }
 
 set_techdocs_args () {
