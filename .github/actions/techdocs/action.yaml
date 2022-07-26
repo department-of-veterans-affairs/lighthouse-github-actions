@@ -74,7 +74,8 @@ runs:
         echo "$kind"
         echo "$name"
         echo "${{ github.ref }}"
-        echo "branch=${{ github.ref }}" >> $GITHUB_ENV
+        branch=${{ github.ref }}
+        echo "branch=${branch##*/*/}" >> $GITHUB_ENV
       shell: bash
     - name: Validating Techdocs Location for Catalog Entity
       run: |
