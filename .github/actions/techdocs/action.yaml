@@ -60,8 +60,16 @@ runs:
     - name: Set kube namespace
       run: kubectl config set-context --current --namespace=${{ inputs.kube_namespace }}
       shell: bash
-    - name: Get entity path
+    - name: Get entity triplet
       id: entity
+      env:
+        BASE_PATH: ${{ github.workspace }}
+        FILE: ${{ inputs.descriptor-file }}
+      run: >
+        /bin/bash ${{ github.action_path }}/scripts/entity_triplet.sh
+      shell: bash
+    - name: Get entity path
+      id: entity_2
       run: |
         file="./${{ inputs.descriptor-file }}"
         if [[ "${file}" == "./" ]]; then
@@ -93,6 +101,12 @@ runs:
           echo 'Using Entity Name from user input'
           echo "::set-output name=name::${{ inputs.name }}"
         fi
+      shell: bash
+    - name: Check triplet
+      run: |
+        echo "$namespace"
+        echo "$kind"
+        echo "$name"
       shell: bash
     - name: Validating Techdocs Location for Catalog Entity
       run: |
