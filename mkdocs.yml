@@ -1,6 +1,6 @@
 site_name: 'Lighthouse Github Actions Documentation'
 repo_url: 'https://github.com/department-of-veterans-affairs/lighthouse-github-actions'
 nav:
-  - Techdocs: techdocs.md
+  - Home: index.md
 plugins:
   - techdocs-core
