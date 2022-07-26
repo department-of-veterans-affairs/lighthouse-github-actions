@@ -66,6 +66,7 @@ runs:
         BASE_PATH: ${{ github.workspace }}
         FILE: ${{ inputs.descriptor-file }}
         KIND: ${{ inputs.kind }}
+        NAME: ${{ inputs.name }}
       run: >
         /bin/bash ${{ github.action_path }}/scripts/entity-triplet.sh
       shell: bash
