@@ -26,7 +26,7 @@ set_triplet() {
   NAMESPACE=$(cat "${file}" | yq .metadata.namespace)
   file_kind=$(cat "${file}" | yq .kind)
   name="$(cat "${file}" | yq .metadata.name)"
-  if [[ -z "${NAMESPACE}" ]]; then
+  if [[ "${NAMESPACE}" == "null" ]]; then
     echo "namespace=$DEFAULT" >> $GITHUB_ENV
   else
     echo "namespace=$NAMESPACE" >> $GITHUB_ENV
