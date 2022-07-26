@@ -72,12 +72,12 @@ runs:
         namespace=$(cat "${file}" | yq .metadata.namespace)
         kind=$(cat "${file}" | yq .kind)
         name="$(cat "${file}" | yq .metadata.name)"
-        if [[ -z "${namespace}" ]]; then
+        if [[ -z "$namespace" ]]; then
           echo "Using default Namespace"
-          echo "::set-output name=namespace::${DEFAULT}"
+          echo "::set-output name=namespace::$DEFAULT"
         else
           echo 'Using Entity Namespace from user input'
-          echo "::set-output name=namespace::${{ inputs.namespace }}"
+          echo "::set-output name=namespace::${{ namespace }}"
         fi
         if [[ -z "${{ inputs.kind }}" ]]; then
           echo "Using Entity Kind from ${file}"
