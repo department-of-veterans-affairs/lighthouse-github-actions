@@ -70,40 +70,6 @@ runs:
       run: >
         /bin/bash ${{ github.action_path }}/scripts/entity-triplet.sh
       shell: bash
-    - name: Get entity path
-      id: entity_2
-      run: |
-        file="./${{ inputs.descriptor-file }}"
-        if [[ "${file}" == "./" ]]; then
-          echo 'Checking for descriptor-file'
-          file=$(ls | grep 'catalog-info')
-        fi
-        DEFAULT="default"
-        namespace=$(cat "${file}" | yq .metadata.namespace)
-        kind=$(cat "${file}" | yq .kind)
-        name="$(cat "${file}" | yq .metadata.name)"
-        if [[ -z "$namespace" ]]; then
-          echo "Using default Namespace"
-          echo "::set-output name=namespace::$DEFAULT"
-        else
-          echo 'Using Entity Namespace from user input'
-          echo "::set-output name=namespace::$namespace"
-        fi
-        if [[ -z "${{ inputs.kind }}" ]]; then
-          echo "Using Entity Kind from ${file}"
-          echo "::set-output name=kind::$kind"
-        else
-          echo 'Using Entity Kind from user input'
-          echo "::set-output name=kind::${{ inputs.kind }}"
-        fi
-        if [[ -z "${{ inputs.name }}" ]]; then
-          echo "Using Entity Name from ${file}"
-          echo "::set-output name=name::$name"
-        else
-          echo 'Using Entity Name from user input'
-          echo "::set-output name=name::${{ inputs.name }}"
-        fi
-      shell: bash
     - name: Check triplet
       run: |
         echo "$namespace"
