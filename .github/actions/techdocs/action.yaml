@@ -112,13 +112,13 @@ runs:
       shell: bash
     - name: Validating Techdocs Location for Catalog Entity
       run: |
-        if [[ "${{ steps.entity.outputs.namespace }}" == "null" ]]; then
+        if [[ "$namespace" == "null" ]]; then
           echo "Error: cannot create Techdocs with this Entity's namespace. Please add a valid namespace for the Entity."
         fi
-        if [[ "${{ steps.entity.outputs.kind }}" == "null" ]]; then
+        if [[ "$kind" == "null" ]]; then
           echo "Error: cannot create Techdocs with this Entity's Kind. Please add a valid Kind for the Entity."
         fi
-        if [[ "${{ steps.entity.outputs.name }}" == "null" ]]; then
+        if [[ "$name" == "null" ]]; then
           echo "Error: cannot create Techdocs with this Entity's Name. Please add a valid Name for the Entity."
         fi
         echo "Entity's Techdocs Location: ${{ steps.entity.outputs.namespace }}/${{ steps.entity.outputs.kind }}/${{ steps.entity.outputs.name }}"
@@ -136,9 +136,9 @@ runs:
         ${{ github.action_path }}/scripts/create-techdocs-job.sh
         "${{ inputs.serviceAccountName }}"
         "${{ inputs.repository }}"
-        "${{ steps.entity.outputs.namespace }}"
-        "${{ steps.entity.outputs.kind }}"
-        "${{ steps.entity.outputs.name }}"
+        "$namespace""
+        "$kind"
+        "$name"
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
         GITHUB_USER: ${{ inputs.username }}
