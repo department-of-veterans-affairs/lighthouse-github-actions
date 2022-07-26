@@ -68,12 +68,9 @@ runs:
       run: >
         /bin/bash ${{ github.action_path }}/scripts/entity-triplet.sh
       shell: bash
-    - name: Check triplet
+    - name: Setup default branch
       run: |
-        echo "$namespace"
-        echo "$kind"
-        echo "$name"
-        echo "${{ github.ref }}"
+        git config --list
         branch=${{ github.ref }}
         echo "branch=${branch##*/*/}" >> $GITHUB_ENV
       shell: bash
