@@ -32,14 +32,14 @@ set_triplet() {
     echo "namespace=$NAMESPACE" >> $GITHUB_ENV
   fi
   if [[ -z "${KIND}" ]]; then
-    echo "kind=$file_kind" >> GITHUB_ENV
+    echo "kind=$file_kind" >> $GITHUB_ENV
   else
-    echo "kind=$KIND" >> GITHUB_ENV
+    echo "kind=$KIND" >> $GITHUB_ENV
   fi
   if [[ -z "${NAME}" ]]; then
-    echo "name=$name" >> GITHUB_ENV
+    echo "name=$name" >> $GITHUB_ENV
   else
-    echo "name=$NAME" >> GITHUB_ENV
+    echo "name=$NAME" >> $GITHUB_ENV
   fi
 
 }
