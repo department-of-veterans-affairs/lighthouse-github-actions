@@ -34,7 +34,6 @@ inputs:
     required: false
   descriptor-file:
     description: "Name of catalog entity descriptor file"
-    default: "catalog-info.yaml"
     required: false
   AWSBucketName:
     description: "Name of the S3 Bucket to store generated Techdocs"
