@@ -102,7 +102,7 @@ runs:
         ${{ github.action_path }}/scripts/create-techdocs-job.sh
         "${{ inputs.serviceAccountName }}"
         "${{ inputs.repository }}"
-        "$namespace""
+        "$namespace"
         "$kind"
         "$name"
       env:
