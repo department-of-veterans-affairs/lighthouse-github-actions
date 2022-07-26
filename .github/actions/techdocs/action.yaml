@@ -77,7 +77,7 @@ runs:
           echo "::set-output name=namespace::$DEFAULT"
         else
           echo 'Using Entity Namespace from user input'
-          echo "::set-output name=namespace::${{ namespace }}"
+          echo "::set-output name=namespace::$namespace"
         fi
         if [[ -z "${{ inputs.kind }}" ]]; then
           echo "Using Entity Kind from ${file}"
