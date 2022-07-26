@@ -24,7 +24,11 @@ await_job() {
     sleep 15;
     if kubectl get pods | grep "${job_name}" | grep -E "Error|BackOff"; then
         echo "Techdocs error!"
+        sleep 10;
         kubectl logs -f -l app="${job_name}"
+        kubectl describe job.batch/${job_name}
+        
+        
         clean_up "${repo}" "1"
     fi
   done
