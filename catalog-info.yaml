@@ -15,7 +15,7 @@ metadata:
       title: lighthouse-bandicoot slack
       icon: slack
   annotations:
-    backstage.io/techdocs-ref: url:https://github.com/department-of-veterans-affairs/lighthouse-github-actions
+    backstage.io/techdocs-ref: dir:.
     github.com/project-slug: department-of-veterans-affairs/lighthouse-github-actions
 spec:
   type: repository
