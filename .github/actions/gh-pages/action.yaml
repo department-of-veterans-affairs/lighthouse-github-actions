@@ -1,0 +1,33 @@
+name: Publish Github Pages
+description: Uses Mkdocs to generate Github Pages documentation compatible with Backstage TechDocs & PlantUML
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Install PlantUML
+      run: |
+        curl -o plantuml.jar -L http://sourceforge.net/projects/plantuml/files/plantuml.1.2022.4.jar/download
+        echo "246d1ed561ebbcac14b2798b45712a9d018024c0  plantuml.jar" | sha1sum -c -
+        mv plantuml.jar /opt/plantuml.jar
+        mkdir -p "$HOME/.local/bin"
+        echo $'#!/bin/sh\n\njava -jar '/opt/plantuml.jar' ${@}' >> "$HOME/.local/bin/plantuml"
+        chmod +x "$HOME/.local/bin/plantuml"
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+        sudo apt-get install -y graphviz
+      shell: bash
+    - name: Install Mkdocs
+      run: |
+        pip install \
+        --upgrade pip && \
+        pip install \
+        mkdocs-techdocs-core==0.2.3 \
+        mkdocs-monorepo-plugin \
+        mkdocs-material
+      shell: bash
+    - name: Deploy Github Pages
+      run: mkdocs gh-deploy --force
+      shell: bash
