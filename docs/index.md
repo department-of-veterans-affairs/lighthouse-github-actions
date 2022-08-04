@@ -1,20 +1,26 @@
-# Techdocs Action
+# Lighthouse Internal Developer Hub Github Actions
+
+Github Actions that help teams use the Ligthhouse Internal Developer Hub
+
+## Techdocs Action
 
 This action creates a [Kubernetes Job](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/example-techdocs-job.yaml) that will generate and publish your Techdocs for the Lighthouse Internal Developer Portal.
 
-# Overview
-The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/kubernetes/git-sync) container and a `Techdocs` container<sup>[1](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/pkgs/container/lighthouse-github-actions%2Ftechdocs)[2](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/.techdocscontainer/base.Dockerfile)</sup>. The `git-sync` container is an initContainer that pulls a git repository to a shared volume so the Techdocs container has a copy of all markdown files. The `Techdocs` container then uses the [Techdocs-cli](https://backstage.io/docs/features/techdocs/cli) to generate and publish your documentation to the Lighthouse S3 bucket.
+### Overview
 
-## Techdocs Prerequisites
+The Kubernetes Job consists of two containers:  a [git-sync](https://github.com/kubernetes/git-sync) container and a [Techdocs](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/techdocs/Dockerfile.techdocs) container. The `git-sync` container is an initContainer that pulls a git repository to a shared volume so the Techdocs container has a copy of all markdown files. The `Techdocs` container then uses the [Techdocs-cli](https://backstage.io/docs/features/techdocs/cli) to generate and publish your documentation to the Lighthouse S3 bucket.
+
+### Techdocs Prerequisites
+
 The root directory of your repository contains:
 
--  [x] a [catalog-info.yaml](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/catalog-info.yaml) with a [backstage.io/techdocs-ref](https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref) annotation
--  [x] a [mkdocs.yaml](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/mkdocs.yml) configuration file
--  [x] a [docs](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs) directory where all your documentation lives
+* [catalog-info.yaml](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/catalog-info.yaml) with a [backstage.io/techdocs-ref](https://backstage.io/docs/features/software-catalog/well-known-annotations#backstageiotechdocs-ref) annotation
+* [mkdocs.yaml](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/mkdocs.yml) configuration file
+* [docs](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs) directory where all your documentation lives
 
 More info about [Entity Descriptor files](https://backstage.io/docs/features/software-catalog/descriptor-format#overall-shape-of-an-entity)
 
-# Usage
+### Usage
 
 <!-- start usage -->
 ```yaml
@@ -39,10 +45,11 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 ```
 <!-- end usage -->
 
-# Examples
-- [Create standlone workflow with Github Actions](#Create-standalone-workflow-with-github-actions)
+### Examples
 
-## Create standalone workflow with Github Actions
+* [Create standlone workflow with Github Actions](#Create-standalone-workflow-with-github-actions)
+
+#### Create standalone workflow with Github Actions
 
 ```yaml
 # Example workflow
@@ -61,4 +68,26 @@ jobs:
         with:
           repository: ${{ github.repository }}
           token: ${{ secrets.WEBHOOK_PAT }}
+```
+
+## Github Pages Action
+
+This action uses Mkdocs to deploy Github Pages documentation compatible with Backstage TechDocs & PlantUML.
+
+### Example Usage
+
+```yaml
+name: Publish Documentation
+on:
+  push:
+    branches: [main]
+    paths: ['**/*.md', '**/mkdocs.yaml']
+  workflow_dispatch:
+jobs:
+  deploy-gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Publish to github pages
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/gh-pages@main
 ```

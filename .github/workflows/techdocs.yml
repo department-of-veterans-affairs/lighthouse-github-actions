@@ -3,30 +3,13 @@ on:
   repository_dispatch:
     types: [techdocs]
 jobs:
-  create-techdocs-nonprod:
-    runs-on: ubuntu-latest
-    environment:
-      name: Development
-    steps:
-      - name: ${{ github.event.client_payload.sha }}
-        run: echo "${{ github.event.client_payload.sha }}"
-      - name: Create techdocs
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
-        with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
-          kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
-          serviceAccountName: "bandicoot-sa"
-          repository: ${{ github.event.client_payload.repository }}
-          descriptor-file: ${{ github.event.client_payload.descriptor-file }}
-          namespace: ${{ github.event.client_payload.namespace }}
-          token: ${{ github.event.client_payload.token }}
-          AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
-          pat: ${{ secrets.TECHDOCS_PAT }}
   create-techdocs:
     runs-on: ubuntu-latest
-    needs: [create-techdocs-nonprod]
+    strategy:
+      matrix:
+        environment: [Development, Production]
     environment:
-      name: Production
+      name: ${{ matrix.environment }}
     steps:
       - name: ${{ github.event.client_payload.sha }}
         run: echo "${{ github.event.client_payload.sha }}"
@@ -35,7 +18,7 @@ jobs:
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
-          serviceAccountName: "bandicoot-sa"
+          serviceAccountName: bandicoot-sa
           repository: ${{ github.event.client_payload.repository }}
           descriptor-file: ${{ github.event.client_payload.descriptor-file }}
           namespace: ${{ github.event.client_payload.namespace }}
