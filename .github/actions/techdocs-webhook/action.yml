@@ -39,4 +39,6 @@ runs:
         echo "Status: ${{ steps.get_status.outputs.status }}"
         echo "Conclusion: ${{ steps.get_status.outputs.conclusion }}"
         echo "Html url: ${{ steps.get_status.outputs.html_url }}"
+
+        if [ "${{ steps.get_status.outputs.conclusion }}" = "failure" ]; then exit 1; fi
       shell: bash
