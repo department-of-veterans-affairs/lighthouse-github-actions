@@ -53,6 +53,8 @@ runs:
       with:
         repository: ${{ inputs.repository }}
         token: ${{ inputs.token }}
+    - run: ls -aR
+      shell: bash
     - name: Set K8s context
       uses: azure/k8s-set-context@v1
       with:
