@@ -1,0 +1,23 @@
+name: Publish Documentation
+on:
+  push:
+    branches: [main]
+    paths: ['**/*.md', '**/mkdocs.yaml']
+  workflow_dispatch:
+jobs:
+  create-techdocs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Techdocs webhook
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs-webhook@main
+        with:
+          repository: ${{ github.repository }}
+          descriptor-file: catalog-info.yaml
+          token: ${{ secrets.WEBHOOK_PAT }}
+  deploy-gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Publish to github pages
+        uses: ./.github/actions/gh-pages

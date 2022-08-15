@@ -1,13 +1,9 @@
-name: Build & Publish Documentation
+name: Create Techdocs
 on:
-  push:
-    branches: [main]
-    paths: ['**/*.md', '**/mkdocs.yaml']
   repository_dispatch:
     types: [techdocs]
-  workflow_dispatch:
 jobs:
-  build-techdocs:
+  create-techdocs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -17,7 +13,7 @@ jobs:
     steps:
       - name: ${{ github.event.client_payload.sha }}
         run: echo "${{ github.event.client_payload.sha }}"
-      - name: Build techdocs
+      - name: Create techdocs
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
@@ -29,15 +25,3 @@ jobs:
           token: ${{ github.event.client_payload.token }}
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           pat: ${{ secrets.TECHDOCS_PAT }}
-  deploy-gh-pages:
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/techdocs:f03d70070ffd193863255a3d45ee0f331173c254
-      credentials:
-        username: va-lighthouse-developer-hub
-        password: ${{ secrets.TECHDOCS_PAT }}
-    steps:
-      - uses: actions/checkout@v3
-      - name: Deploy Github Pages
-        run: mkdocs gh-deploy --force
-        shell: bash
