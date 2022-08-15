@@ -1,0 +1,45 @@
+name: Build & publish documentation
+on:
+  repository_dispatch:
+    types: [techdocs]
+  push:
+    branches: [main]
+    paths: ['**/*.md', '**/mkdocs.yaml']
+  workflow_dispatch:
+jobs:
+  build-techdocs:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [Development, Production]
+    environment:
+      name: ${{ matrix.environment }}
+    steps:
+      - name: ${{ github.event.client_payload.sha }}
+        run: echo "${{ github.event.client_payload.sha }}"
+      - name: Create techdocs
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+          kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
+          serviceAccountName: bandicoot-sa
+          repository: ${{ github.event.client_payload.repository != '' && github.event.client_payload.repository || github.repository }}
+          descriptor-file: ${{ github.event.client_payload.descriptor-file }}
+          namespace: ${{ github.event.client_payload.namespace != '' &&  github.event.client_payload.namespace || secrets.KUBE_NAMESPACE }}
+          token: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.WEBHOOK_PAT }}
+          AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
+          pat: ${{ secrets.TECHDOCS_PAT }}
+  deploy-gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.client_payload.repository != '' && github.event.client_payload.repository || github.repository }}
+          token: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.WEBHOOK_PAT }}
+      - name: Setup Mkdocs dependencies
+        run: |
+          curl -LOs https://${{ secrets.WEBHOOK_PAT }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-developer-portal/main/scripts/setup_mkdocs.sh
+          /bin/sh ./setup_mkdocs.sh
+      - name: Deploy Github Pages
+        run: mkdocs gh-deploy --force
+        shell: bash
