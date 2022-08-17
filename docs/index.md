@@ -69,25 +69,3 @@ jobs:
           repository: ${{ github.repository }}
           token: ${{ secrets.WEBHOOK_PAT }}
 ```
-
-## Github Pages Action
-
-This action uses Mkdocs to deploy Github Pages documentation compatible with Backstage TechDocs & PlantUML.
-
-### Example Usage
-
-```yaml
-name: Publish Documentation
-on:
-  push:
-    branches: [main]
-    paths: ['**/*.md', '**/mkdocs.yaml']
-  workflow_dispatch:
-jobs:
-  deploy-gh-pages:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Publish to github pages
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/gh-pages@main
-```
