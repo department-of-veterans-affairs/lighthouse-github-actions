@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -euo pipefail
-
-
 check_required_environment() {
   # TODO: check for env variables
   local required_env=""
