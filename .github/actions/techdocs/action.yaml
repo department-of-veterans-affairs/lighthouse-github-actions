@@ -108,5 +108,5 @@ runs:
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
       shell: bash
     - name: Techdocs Job status
-      run: /bin/sh <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/techdocs-job-status.sh) "${{ inputs.repository }}"
+      run: /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/techdocs-job-status.sh) "${{ inputs.repository }}"
       shell: bash
