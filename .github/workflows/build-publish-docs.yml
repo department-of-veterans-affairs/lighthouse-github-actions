@@ -4,7 +4,7 @@ on:
     types: [techdocs]
   push:
     branches: [main]
-    paths: ['**/*.md', '**/mkdocs.yaml']
+    paths: ["**/*.md", "**/mkdocs.yaml"]
   workflow_dispatch:
 jobs:
   build-techdocs:
@@ -23,7 +23,7 @@ jobs:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
-          repository: ${{ github.event.client_payload.repository != '' && github.event.client_payload.repository || github.repository }}
+          repository: ${{ github.event.client_payload.repository }}
           descriptor-file: ${{ github.event.client_payload.descriptor-file }}
           namespace: ${{ github.event.client_payload.namespace != '' &&  github.event.client_payload.namespace || secrets.KUBE_NAMESPACE }}
           token: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.WEBHOOK_PAT }}
