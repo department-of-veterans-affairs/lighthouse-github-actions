@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -euo pipefail
-
 SERVICE_ACCOUNT_NAME=${1}
 REPO_NAME=${2}
 TEAM_NAME=${3}
