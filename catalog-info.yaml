@@ -1,28 +1,69 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: lighthouse-github-actions
-  description: Github Actions to generate TechDocs for the Lighthouse Internal Developer Portal
-  title: 'Techdocs Repository'
-  tags:
-  - lighthouse
-  - documentation
-  - techdocs
-  - docs
-  links:
-    - url: https://github.com/department-of-veterans-affairs/lighthouse-github-actions
-      title: Lighthouse Github Actions
-      icon: web
-    - url: https://github.com/department-of-veterans-affairs/lighthouse-github-actions/issues
-      title: Issues
-      icon: help
-    - url: https://lighthouseva.slack.com/archives/C020ZR4UL8H
-      title: lighthouse-bandicoot slack
-      icon: slack
+  name: vets-api-virus-scan
+  title: Vets API Virus Scan
+  description: A simple service for scanning uploaded files for viruses using ClamAV.
+  # Example for optional annotations
   annotations:
+    github.com/project-slug: department-of-veterans-affairs/vets-api-virus-scan
     backstage.io/techdocs-ref: dir:.
-    github.com/project-slug: department-of-veterans-affairs/lighthouse-github-actions
+  tags:
+    - python
+    - clamav
+    - fastapi
+  links:
+    - url: http://virus-scan-dev.vfs.va.gov/
+      title: Vets Api Virus Scan - Development
+      icon: web
+    - url: http://virus-scan-dev.vfs.va.gov/redoc
+      title: Virus Scan - Development (Redoc)
+      icon: web
+      # Add parameter store
+    - url: https://argocd.vfs.va.gov/applications/vets-api-virus-scan-dev
+      title: Argo CD - Development
+      icon: computer
 spec:
-  type: repository
+  type: service
+  owner: platform-pst-iet
+  system: platform-console
   lifecycle: experimental
-  owner: lighthouse-bandicoot
+  providesApis:
+    - api:default/vets-virus-scan-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  annotations:
+    github.com/project-slug: department-of-veterans-affairs/vets-api-virus-scan
+    backstage.io/edit-url: https://github.com/department-of-veterans-affairs/vets-api-virus-scan/edit/main/catalog-info.yaml
+    backstage.io/source-location: url:https://github.com/department-of-veterans-affairs/vets-api-virus-scan/
+    backstage.io/view-url: https://github.com/department-of-veterans-affairs/vets-api-virus-scan/blob/main/catalog-info.yaml
+  description: API for Scanning Files for Viruses
+  name: vets-virus-scan-api
+  title: Vets Virus Scan API
+spec:
+  definition: |
+    swagger: '2.0'
+    info:
+      version: '1.0.0'
+      title: Vets Virus Scan API
+      description: API for Scanning Files for Viruses
+      contact:
+        name: va.gov team
+    host: virus-scan.vfs.va.gov
+    basePath: /
+    securityDefinitions: {}
+    schemes:
+    - https
+    - http
+    consumes:
+    - application/json
+    produces:
+    - application/json
+  lifecycle: experimental
+  owner: platform-pst-iet
+  system: vets-api
+  type: openapi
+  apiConsumedBy:
+    - component:default/1010cg-application-caregiver-assistance
