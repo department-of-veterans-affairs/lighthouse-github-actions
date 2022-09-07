@@ -60,12 +60,12 @@ runs:
       shell: bash
     - name: Get entity triplet
       id: entity
+      run: /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/entity-triplet.sh)
       env:
         BASE_PATH: ${{ github.workspace }}
         FILE: ${{ inputs.descriptor-file }}
         KIND: ${{ inputs.kind }}
         NAME: ${{ inputs.name }}
-      run: /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/entity-triplet.sh)
       shell: bash
     - name: Setup default branch
       run: |
