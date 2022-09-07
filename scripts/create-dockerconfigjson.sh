@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -euo pipefail
 REPO_NAME=${1}
 
 check_required_environment() {
