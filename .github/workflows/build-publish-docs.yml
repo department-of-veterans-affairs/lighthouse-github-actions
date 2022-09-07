@@ -28,7 +28,7 @@ jobs:
           namespace: ${{ github.event.client_payload.namespace != '' &&  github.event.client_payload.namespace || secrets.KUBE_NAMESPACE }}
           token: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.WEBHOOK_PAT }}
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
-          pat: ${{ secrets.TECHDOCS_PAT }}
+          PAT: ${{ secrets.TECHDOCS_PAT }}
   deploy-gh-pages:
     runs-on: ubuntu-latest
     steps:
