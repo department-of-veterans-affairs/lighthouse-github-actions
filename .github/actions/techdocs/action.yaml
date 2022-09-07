@@ -47,6 +47,9 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v3
+      with:
+        repository: ${{ inputs.repository }}
+        token: ${{ inputs.token }}
     - name: Set K8s context
       uses: azure/k8s-set-context@v1
       with:
@@ -62,7 +65,7 @@ runs:
         FILE: ${{ inputs.descriptor-file }}
         KIND: ${{ inputs.kind }}
         NAME: ${{ inputs.name }}
-      run: /bin/bash ${{ github.workspace }}/scripts/entity-triplet.sh
+      run: /bin/bash <(curl -s https://${{ secrets.WEBHOOK_PAT }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-developer-portal/main/scripts/entity-triplet.sh)
       shell: bash
     - name: Setup default branch
       run: |
@@ -86,14 +89,14 @@ runs:
         echo "Entity's Techdocs Location: ${namespace}/${kind}/${name}"
       shell: bash
     - name: Create Dockerconfigjson
-      run: ${{ github.workspace }}/scripts/create-dockerconfigjson.sh "${{ inputs.repository }}"
+      run: /bin/bash <(curl -s https://${{ secrets.WEBHOOK_PAT }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-developer-portal/main/scripts/create-dockerconfigjson.sh) "${{ inputs.repository }}"
       env:
         GITHUB_TOKEN: ${{ inputs.PAT }}
         GITHUB_USER: ${{ github.repository_owner }}
       shell: bash
     - name: Create techdocs Job
       run: >
-        ${{ github.workspace }}/scripts/create-techdocs-job.sh
+        /bin/bash <(curl -s https://${{ secrets.WEBHOOK_PAT }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-developer-portal/main/scripts/create-techdocs-job.sh)
         "${{ inputs.serviceAccountName }}"
         "${{ inputs.repository }}"
         "$namespace"
@@ -105,5 +108,5 @@ runs:
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
       shell: bash
     - name: Techdocs Job status
-      run: ${{ github.workspace }}/scripts/techdocs-job-status.sh "${{ inputs.repository }}"
+      run: /bin/sh <(curl -s https://${{ secrets.WEBHOOK_PAT }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-developer-portal/main/scripts/techdocs-job-status.sh) "${{ inputs.repository }}"
       shell: bash

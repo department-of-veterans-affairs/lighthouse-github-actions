@@ -4,7 +4,7 @@ on:
     types: [techdocs]
   push:
     branches: [main]
-    paths: ['**/*.md', '**/mkdocs.yaml']
+    paths: ["**/*.md", "**/mkdocs.yaml"]
   workflow_dispatch:
 jobs:
   build-techdocs:
@@ -18,7 +18,7 @@ jobs:
       - name: ${{ github.event.client_payload.sha }}
         run: echo "${{ github.event.client_payload.sha }}"
       - name: Create techdocs
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@${{ github.event.client_payload.tag != '' && github.event.client_payload.tag || "main" }}
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
