@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: ${{ github.event.client_payload.repository != '' && github.event.client_payload.repository || github.repository }}
-          token: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.WEBHOOK_PAT }}
+          token: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.TECHDOCS_PAT }}
       - name: Install GraphViz
         run: sudo apt-get install -y graphviz
       - name: Setup Mkdocs dependencies
