@@ -26,15 +26,24 @@ set_triplet() {
   if [[ "${NAMESPACE}" == "null" ]]; then
     echo "namespace=$DEFAULT" >> $GITHUB_ENV
   else
-    echo "namespace=$NAMESPACE" >> $GITHUB_ENV
+    echo "$NAMESPACE" | while IFS= read -r each_namespace;
+      do
+        echo "namespace=$each_namespace" >> $GITHUB_ENV
+      done
   fi
   if [[ -z "${KIND}" ]]; then
-    echo "kind=$file_kind" >> $GITHUB_ENV
+    echo "$file_kind" | while IFS= read -r each_kind;
+      do
+        echo "kind=$each_kind" >> $GITHUB_ENV
+      done
   else
     echo "kind=$KIND" >> $GITHUB_ENV
   fi
   if [[ -z "${NAME}" ]]; then
-    echo "name=$name" >> $GITHUB_ENV
+    echo "$name" | while IFS= read -r each_name;
+      do
+        echo "name=$each_name" >> $GITHUB_ENV
+      done
   else
     echo "name=$NAME" >> $GITHUB_ENV
   fi
