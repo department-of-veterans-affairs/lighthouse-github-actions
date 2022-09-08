@@ -26,7 +26,7 @@ jobs:
           repository: ${{ github.event.client_payload.repository != '' && github.event.client_payload.repository || github.repository }}
           descriptor-file: ${{ github.event.client_payload.descriptor-file }}
           namespace: ${{ github.event.client_payload.namespace != '' &&  github.event.client_payload.namespace || secrets.KUBE_NAMESPACE }}
-          token: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.WEBHOOK_PAT }}
+          token: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.TECHDOCS_PAT }}
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ secrets.TECHDOCS_PAT }}
   deploy-gh-pages:
