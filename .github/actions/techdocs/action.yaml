@@ -103,7 +103,7 @@ runs:
         "$kind"
         "$name"
       env:
-        GITHUB_TOKEN: ${{ inputs.PAT }}
+        GITHUB_TOKEN: ${{ inputs.token }}
         GITHUB_USER: ${{ inputs.username }}
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
       shell: bash
