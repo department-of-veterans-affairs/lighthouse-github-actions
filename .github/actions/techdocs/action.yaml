@@ -91,7 +91,7 @@ runs:
     - name: Create Dockerconfigjson
       run: /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-dockerconfigjson.sh) "${{ inputs.repository }}"
       env:
-        GITHUB_TOKEN: ${{ inputs.token }}
+        GITHUB_TOKEN: ${{ inputs.PAT }}
         GITHUB_USER: ${{ github.repository_owner }}
       shell: bash
     - name: Create techdocs Job
@@ -103,7 +103,7 @@ runs:
         "$kind"
         "$name"
       env:
-        GITHUB_TOKEN: ${{ inputs.token }}
+        GITHUB_TOKEN: ${{ inputs.PAT }}
         GITHUB_USER: ${{ inputs.username }}
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
       shell: bash
