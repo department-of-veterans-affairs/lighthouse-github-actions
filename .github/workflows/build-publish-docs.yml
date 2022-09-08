@@ -27,10 +27,10 @@ jobs:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
-          repository: $REPO
+          repository: ${{ env.REPO }}
           descriptor-file: ${{ github.event.client_payload.descriptor-file }}
-          namespace: $NAMESPACE
-          token: $TOKEN
+          namespace: ${{ env.NAMESPACE }}
+          token: ${{ env.TOKEN }}
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ secrets.TECHDOCS_PAT }}
   deploy-gh-pages:
@@ -38,12 +38,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: $REPO
-          token: $TOKEN
+          repository: ${{ env.REPO }}
+          token: ${{ env.TOKEN }}
       - name: Install GraphViz
         run: sudo apt-get install -y graphviz
       - name: Setup Mkdocs dependencies
         run: /bin/sh <(curl -s https://${{ secrets.WEBHOOK_PAT }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-developer-portal/main/scripts/setup_mkdocs.sh)
       - name: Deploy Github Pages
-        run: mkdocs gh-deploy --force -r https://$TOKEN@github.com/$REPO.git
+        run: mkdocs gh-deploy --force -r https://${{ env.TOKEN }}@github.com/${{ env.REPO }}.git
         shell: bash
