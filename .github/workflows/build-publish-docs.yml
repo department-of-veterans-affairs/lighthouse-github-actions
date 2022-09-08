@@ -34,6 +34,7 @@ jobs:
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ secrets.TECHDOCS_PAT }}
   deploy-gh-pages:
+    if: ${{ github.event.client_payload.gh-pages != '' &&  github.event.client_payload.gh-pages || true }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
