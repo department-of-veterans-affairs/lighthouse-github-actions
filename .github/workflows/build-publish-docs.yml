@@ -34,14 +34,9 @@ jobs:
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ secrets.TECHDOCS_PAT }}
   deploy-gh-pages:
-    if: ${{ (github.event.client_payload.gh-pages != '' &&  github.event.client_payload.gh-pages) || github.event_name != 'repository_dispatch'  }}
+    if: github.event.client_payload.gh-pages || github.event_name != 'repository_dispatch'
     runs-on: ubuntu-latest
     steps:
-      - name: debug
-        run: |
-          echo "${{ (github.event.client_payload.gh-pages != '' &&  github.event.client_payload.gh-pages) || github.event_name != 'repository_dispatch'  }}"
-          echo "${{ github.event.client_payload.gh-pages }}"
-          echo "${{ github.event_name }}"
       - uses: actions/checkout@v3
         with:
           repository: ${{ env.REPO }}
