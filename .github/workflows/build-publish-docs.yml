@@ -26,7 +26,7 @@ jobs:
           repository: ${{ github.event.client_payload.repository != '' && github.event.client_payload.repository || github.repository }}
           descriptor-file: ${{ github.event.client_payload.descriptor-file }}
           namespace: ${{ github.event.client_payload.namespace != '' &&  github.event.client_payload.namespace || secrets.KUBE_NAMESPACE }}
-          token: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.WEBHOOK_PAT }}
+          token: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.TECHDOCS_PAT }}
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ secrets.TECHDOCS_PAT }}
   deploy-gh-pages:
@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: ${{ github.event.client_payload.repository != '' && github.event.client_payload.repository || github.repository }}
-          token: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.WEBHOOK_PAT }}
+          token: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.TECHDOCS_PAT }}
       - name: Install GraphViz
         run: sudo apt-get install -y graphviz
       - name: Setup Mkdocs dependencies

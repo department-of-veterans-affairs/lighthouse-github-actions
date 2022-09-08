@@ -16,25 +16,38 @@ set_triplet() {
   local file="${BASE_PATH}/${FILE}"
   if [[ -z "${FILE}" ]]; then
     echo 'Checking for descriptor-file'
-    file+=$(ls ${BASE_PATH} | grep 'catalog-info')
+    file_name+=$(ls ${BASE_PATH} | grep 'catalog-info')
   fi
-  echo "$file"
+  echo "$file_name"
+  file_contents="$(cat "${file_name}" | yq -f backstage.io/techdocs-ref)"
+  echo "$file_contents"
   DEFAULT="default"
-  NAMESPACE=$(cat "${file}" | yq -N '.metadata.namespace')
-  file_kind=$(cat "${file}" | yq -N '.kind')
-  name="$(cat "${file}" | yq -N '.metadata.name')"
+  NAMESPACE=$(echo "${file_contents}" | yq -N '.metadata.namespace')
+  file_kind=$(echo "${file_contents}" | yq -N '.kind')
+  name="$(echo "${file_contents}" | yq -N '.metadata.name')"
+
+
   if [[ "${NAMESPACE}" == "null" ]]; then
     echo "namespace=$DEFAULT" >> $GITHUB_ENV
   else
-    echo "namespace=$NAMESPACE" >> $GITHUB_ENV
+    echo "$NAMESPACE" | while IFS= read -r each_namespace;
+      do
+        echo "namespace=$each_namespace" >> $GITHUB_ENV
+      done
   fi
   if [[ -z "${KIND}" ]]; then
-    echo "kind=$file_kind" >> $GITHUB_ENV
+    echo "$file_kind" | while IFS= read -r each_kind;
+      do
+        echo "kind=$each_kind" >> $GITHUB_ENV
+      done
   else
     echo "kind=$KIND" >> $GITHUB_ENV
   fi
   if [[ -z "${NAME}" ]]; then
-    echo "name=$name" >> $GITHUB_ENV
+    echo "$name" | while IFS= read -r each_name;
+      do
+        echo "name=$each_name" >> $GITHUB_ENV
+      done
   else
     echo "name=$NAME" >> $GITHUB_ENV
   fi
@@ -49,5 +62,5 @@ run_main() {
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
 then
-  run_main 
+  run_main
 fi
