@@ -3,8 +3,8 @@ description: "Sends a webhook to trigger repository dispatch event for techdocs 
 inputs:
   event:
     description: "Event trigger"
-    required: false
     default: "techdocs"
+    required: false
   repository:
     description: "Name of repository"
     required: true
@@ -20,12 +20,12 @@ inputs:
     required: false
   tag:
     description: "Tag or Commit sha for techdocs job version"
-    required: false
     default: "main"
-  gh-pages:
-    description: "Flag used to enable gh-page deployment"
     required: false
-    default: false
+  gh-pages:
+    description: "Flag used to enable gh-pages deployment"
+    default: ""
+    required: false
 runs:
   using: "composite"
   steps:
