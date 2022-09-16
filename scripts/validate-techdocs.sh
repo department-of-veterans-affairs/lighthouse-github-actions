@@ -17,7 +17,5 @@ main() {
   setup_mkdocs || exit 1
   results+="$(build_with_mkdocs)"
   results+="$(build_with_techdocs)"
-  echo "$results"
+  echo "RESULTS=${results}" >> $GITHUB_ENV
 }
-
-echo "::set-output name=results::$(main)"

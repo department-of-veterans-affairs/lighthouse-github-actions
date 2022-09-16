@@ -28,5 +28,7 @@ runs:
         ENTITY_FILE: ${{ inputs.descriptor-file }}
         NAMESPACE: ${{ inputs.namespace }}
         TOKEN: ${{ inputs.token }}
-      run: /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/API-19475-validate-techdocs/scripts/validate-techdocs.sh)
+      run: |
+        /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/API-19475-validate-techdocs/scripts/validate-techdocs.sh)
+        echo "::set-output name=results::${RESULTS}"
       shell: bash
