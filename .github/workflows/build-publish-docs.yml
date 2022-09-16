@@ -16,6 +16,10 @@ jobs:
     steps:
       - name: ${{ github.event.client_payload.sha }} # Used to return success or fail to the source repo
         run: echo "${{ github.event.client_payload.sha }}"
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ env.REPO }}
+          token: ${{ env.TOKEN }}
       - name: Validate techdocs
         id: validation
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@API-19475-validate-techdocs
@@ -24,8 +28,9 @@ jobs:
           descriptor-file: ${{ github.event.client_payload.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
           token: ${{ env.TOKEN }}
-      - name: return signal
-        run: exit ${{ steps.validation.output.exit-code }}
+      - name: Validation results
+        run: |
+          echo "${{ steps.validation.outputs.results }}"
   build-techdocs:
     needs: [validate-techdocs]
     runs-on: ubuntu-latest
