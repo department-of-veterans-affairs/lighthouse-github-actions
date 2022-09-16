@@ -19,3 +19,5 @@ main() {
   results+="$(build_with_techdocs)"
   echo "RESULTS=${results}" >> $GITHUB_ENV
 }
+
+main
