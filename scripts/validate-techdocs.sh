@@ -9,8 +9,7 @@ build_with_mkdocs() {
 }
 
 build_with_techdocs() {
-  build_techdocs=$(techdocs-cli generate --no-docker -v)
-  echo "${build_techdocs}"
+  echo "$(techdocs-cli generate --no-docker -v)"
 }
 
 main() {
