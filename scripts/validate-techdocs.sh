@@ -5,8 +5,7 @@ setup_mkdocs() {
 }
 
 build_with_mkdocs() {
-  build_mkdocs=$(mkdocs build --strict)
-  echo "${build_mkdocs}"
+  echo "`mkdocs build --strict 2>&1`"
 }
 
 build_with_techdocs() {
@@ -17,8 +16,9 @@ build_with_techdocs() {
 main() {
   local results
   setup_mkdocs || exit 1
-  results+=$(build_with_mkdocs)
-  results+=$(build_with_techdocs)
+  results+="$(build_with_mkdocs)"
+  results+="$(build_with_techdocs)"
+  echo "$results"
   echo "::set-output name=results::${results}"
 }
 
