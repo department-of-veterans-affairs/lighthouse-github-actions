@@ -15,7 +15,11 @@ build_with_techdocs() {
 main() {
   local results
   setup_mkdocs || exit 1
+  results+="$(echo 'Running Mkdocs validation...\n')"
+  results+="$(echo 'Mkdocs results:\n')"
   results+="$(build_with_mkdocs)"
+  results+="$(echo 'Running techdocs-cli validation...\n')"
+  results+="$(echo 'Techdocs-cli results:\n')"
   results+="$(build_with_techdocs)"
   RESULTS="$(echo "${results}")"
   RESULTS="${RESULTS//'%'/'%25'}"
