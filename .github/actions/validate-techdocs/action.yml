@@ -17,7 +17,10 @@ inputs:
 outputs:
   results:
     description: "Results of validation script"
-    value: "${{ steps.validation.outputs.results }}"
+    value: ${{ steps.validation.outputs.results }}
+  test:
+    description: "testing"
+    value: ${{ steps.validation.outputs.test }}
 runs:
   using: "composite"
   steps:
@@ -28,8 +31,8 @@ runs:
         ENTITY_FILE: ${{ inputs.descriptor-file }}
         NAMESPACE: ${{ inputs.namespace }}
         TOKEN: ${{ inputs.token }}
-        RESULTS:
       run: |
         /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/API-19475-validate-techdocs/scripts/validate-techdocs.sh)
-        echo "::set-output name=results::${{ env.RESULTS }}"
+        echo "::set-output name=results::${RESULTS}"
+        echo "::set-output name=test::'this is a test'"
       shell: bash

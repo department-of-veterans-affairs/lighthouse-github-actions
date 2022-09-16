@@ -18,7 +18,7 @@ main() {
   results+="$(build_with_mkdocs)"
   results+="$(build_with_techdocs)"
   RESULTS+="$(echo "${results}")"
-  echo "$RESULTS"
+  echo "RESULTS="${RESULTS}"" >> $GITHUB_ENV
 }
 
 main
