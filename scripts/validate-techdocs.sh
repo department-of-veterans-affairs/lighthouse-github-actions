@@ -18,7 +18,10 @@ main() {
   results+="$(build_with_mkdocs)"
   results+="$(build_with_techdocs)"
   RESULTS+="$(echo "${results}")"
-  echo "RESULTS=${RESULTS}" >> $GITHUB_ENV
+  RESULTS="${RESULTS//'%'/'%25'}"
+  RESULTS="${RESULTS//$'\n'/'%0A'}"
+  RESULTS="${RESULTS//$'\r'/'%0D'}"
+  echo "::set-output name=results::${RESULTS}"
 }
 
 main

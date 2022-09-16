@@ -1,3 +1,7 @@
+        echo "::set-output name=results::${RESULTS}"
+        echo "::set-output name=test::'this is a test'"
+      shell: bash
+
 name: "Validate Techdocs"
 description: "Runs validation against mkdocs and techdocs to ensure documentation can be created"
 inputs:
@@ -17,7 +21,7 @@ inputs:
 outputs:
   results:
     description: "Results of validation script"
-    value: ${{ steps.validation.env.RESULTS }}
+    value: ${{ steps.validation.outputs.RESULTS }}
   test:
     description: "testing"
     value: ${{ steps.validation.outputs.test }}
@@ -33,6 +37,3 @@ runs:
         TOKEN: ${{ inputs.token }}
       run: |
         /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/API-19475-validate-techdocs/scripts/validate-techdocs.sh)
-        echo "::set-output name=results::${RESULTS}"
-        echo "::set-output name=test::'this is a test'"
-      shell: bash
