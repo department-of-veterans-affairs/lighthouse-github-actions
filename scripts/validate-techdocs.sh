@@ -17,7 +17,8 @@ main() {
   setup_mkdocs || exit 1
   results+="$(build_with_mkdocs)"
   results+="$(build_with_techdocs)"
-  RESULTS+="${results}"
+  RESULTS+="$(echo "${results}")"
+  echo "$RESULTS"
 }
 
 main
