@@ -31,7 +31,6 @@ jobs:
       - name: Validation results
         run: |
           echo "${{ steps.validation.outputs.results }}"
-          echo "${{ steps.validation.outputs.test }}"
   build-techdocs:
     needs: [validate-techdocs]
     runs-on: ubuntu-latest
