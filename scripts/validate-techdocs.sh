@@ -18,7 +18,6 @@ main() {
   results+="$(build_with_mkdocs)"
   results+="$(build_with_techdocs)"
   echo "$results"
-  echo "::set-output name=results::${results}"
 }
 
-main
+echo "::set-output name=results::$(main)"
