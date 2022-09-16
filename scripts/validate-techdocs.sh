@@ -17,7 +17,7 @@ main() {
   setup_mkdocs || exit 1
   results+="$(build_with_mkdocs)"
   results+="$(build_with_techdocs)"
-  echo "RESULTS=${results}" >> $GITHUB_ENV
+  RESULTS+="${results}"
 }
 
 main
