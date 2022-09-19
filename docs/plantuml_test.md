@@ -1,6 +1,3 @@
-[LC] -d-> Codespaces
-```
-
 ```plantuml
 package "Local Computer" {
         component LC as "VS Code remote"
@@ -32,3 +29,5 @@ cloud "Microsoft Azure" {
         }
     }
 }
+[LC] -d-> Codespaces
+```
