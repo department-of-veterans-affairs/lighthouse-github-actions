@@ -22,7 +22,7 @@ jobs:
           token: ${{ env.TOKEN }}
       - name: Validate techdocs
         id: validation
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@API-19475-validate-techdocs
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@main
         with:
           repository: ${{ env.REPO }}
           descriptor-file: ${{ github.event.client_payload.descriptor-file }}
@@ -43,7 +43,7 @@ jobs:
       - name: ${{ github.event.client_payload.sha }}
         run: echo "${{ github.event.client_payload.sha }}"
       - name: Create techdocs
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@API-19475-validate-techdocs
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
