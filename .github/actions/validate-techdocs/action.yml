@@ -31,9 +31,12 @@ runs:
       run: |
         /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/API-19475-validate-techdocs/scripts/validate-techdocs.sh)
       shell: bash
-    - name: Check for error
+    - name: Check for errors
       run: |
         if echo "${{ steps.validation.outputs.RESULTS }}" | grep -i "error"; then
+          if echo "${{ steps.validation.outputs.RESULTS }}" | grep -i "failed to run plantuml"; then
+            echo "An error occurred with Plantuml."
+          fi
           exit 1;
         fi
       shell: bash
