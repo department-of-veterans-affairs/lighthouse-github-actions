@@ -17,6 +17,7 @@ main() {
   setup_mkdocs || exit 1
   results+="$(build_with_mkdocs)"
   results+="$(build_with_techdocs)"
+  # Need this for handling newlines for Github Action variables
   RESULTS="$(echo "${results}")"
   RESULTS="${RESULTS//'%'/'%25'}"
   RESULTS="${RESULTS//$'\n'/'%0A'}"
