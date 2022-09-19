@@ -6,4 +6,4 @@ markdown_extensions:
       check_paths: true
 nav:
   - "": "index.md"
-  - Test: plantuml_test.yaml
+  - Test: plantuml_test.md
