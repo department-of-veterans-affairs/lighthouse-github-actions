@@ -33,7 +33,7 @@ runs:
       shell: bash
     - name: Check for error
       run: |
-        if echo ${{ steps.validation.outputs.RESULTS }} | grep -i "error";then
+        if echo "${{ steps.validation.outputs.RESULTS }}" | grep -i "error"; then
           exit 1;
         fi
       shell: bash
