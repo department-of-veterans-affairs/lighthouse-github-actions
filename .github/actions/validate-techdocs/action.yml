@@ -31,3 +31,9 @@ runs:
       run: |
         /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/API-19475-validate-techdocs/scripts/validate-techdocs.sh)
       shell: bash
+    - name: Check for error
+      run: |
+        if echo ${{ steps.validation.outputs.RESULTS }} | grep -i "error";then
+          exit 1;
+        fi
+      shell: bash
