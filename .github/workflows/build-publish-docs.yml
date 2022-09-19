@@ -11,7 +11,28 @@ env:
   TOKEN: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.TECHDOCS_PAT }}
   NAMESPACE: ${{ github.event.client_payload.namespace != '' &&  github.event.client_payload.namespace || secrets.KUBE_NAMESPACE }}
 jobs:
+  validate-techdocs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ${{ github.event.client_payload.sha }} # Used to return success or fail to the source repo
+        run: echo "${{ github.event.client_payload.sha }}"
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ env.REPO }}
+          token: ${{ env.TOKEN }}
+      - name: Validate techdocs
+        id: validation
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@main
+        with:
+          repository: ${{ env.REPO }}
+          descriptor-file: ${{ github.event.client_payload.descriptor-file }}
+          namespace: ${{ env.NAMESPACE }}
+          token: ${{ env.TOKEN }}
+      - name: Validation results
+        run: |
+          echo "${{ steps.validation.outputs.results }}"
   build-techdocs:
+    needs: [validate-techdocs]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,6 +56,7 @@ jobs:
           PAT: ${{ secrets.TECHDOCS_PAT }}
   deploy-gh-pages:
     if: ${{ github.event.client_payload.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
+    needs: [validate-techdocs]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

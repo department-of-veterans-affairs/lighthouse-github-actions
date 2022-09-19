@@ -1,0 +1,42 @@
+name: "Validate Techdocs"
+description: "Runs validation against mkdocs and techdocs to ensure documentation can be created"
+inputs:
+  repository:
+    description: "Name of repository"
+    required: true
+  descriptor-file:
+    description: "Name of catalog entity descriptor file"
+    required: false
+  namespace:
+    description: "Namespace of entity; used as namespace for --entity <namespace/kind/name>"
+    default: "default"
+    required: false
+  token:
+    description: "Personal Access token to pull source repository"
+    required: false
+outputs:
+  results:
+    description: "Results of validation script"
+    value: ${{ steps.validation.outputs.RESULTS }}
+runs:
+  using: "composite"
+  steps:
+    - name: Run validation script
+      id: validation
+      env:
+        REPO: ${{ inputs.repository }}
+        ENTITY_FILE: ${{ inputs.descriptor-file }}
+        NAMESPACE: ${{ inputs.namespace }}
+        TOKEN: ${{ inputs.token }}
+      run: |
+        /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/validate-techdocs.sh)
+      shell: bash
+    - name: Check for errors
+      run: |
+        if echo "${{ steps.validation.outputs.RESULTS }}" | grep -i "error"; then
+          if echo "${{ steps.validation.outputs.RESULTS }}" | grep -i "failed to run plantuml"; then
+            echo -e "An error occurred with Plantuml.\nMake sure to use the @startuml and @enduml notation."
+          fi
+          exit 1;
+        fi
+      shell: bash
