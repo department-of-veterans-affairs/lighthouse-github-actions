@@ -28,6 +28,7 @@ jobs:
           descriptor-file: ${{ github.event.client_payload.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
           token: ${{ env.TOKEN }}
+          strict-mode: ${{ github.event.client_payload.strict-mode != '' && github.event.client_payload.strict-mode || 'true' }}
       - name: Validation results
         run: |
           echo "${{ steps.validation.outputs.results }}"
