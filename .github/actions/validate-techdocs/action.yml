@@ -29,9 +29,10 @@ runs:
       id: args
       run: |
         local args
-        if [[ ${{ inputs.strict-mode == 'true' }} ]]; then
+        if [[ "${{ inputs.strict-mode }}" == "true" ]]; then
           args+="--strict "
         fi
+        echo "${args}"
         echo "::set-output name=args::${args}"
       shell: bash
     - name: Run validation script
