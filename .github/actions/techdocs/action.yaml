@@ -75,7 +75,7 @@ runs:
         https://api.github.com/repos/${{ inputs.repository }} | jq -r '.default_branch')
         echo "branch=${branch}" >> $GITHUB_ENV
       shell: bash
-    - name: Validating Techdocs Location for Catalog Entity
+    - name: S3 Location for Catalog Entity
       run: |
         if [[ "$namespace" == "null" ]]; then
           echo "Error: cannot create Techdocs with this Entity's namespace. Please add a valid namespace for the Entity."
@@ -86,7 +86,7 @@ runs:
         if [[ "$name" == "null" ]]; then
           echo "Error: cannot create Techdocs with this Entity's Name. Please add a valid Name for the Entity."
         fi
-        echo "Entity's Techdocs Location: ${namespace}/${kind}/${name}"
+        echo "Entity's S3 Location: .../${namespace}/${kind}/${name}"
       shell: bash
     - name: Create Dockerconfigjson
       run: /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-dockerconfigjson.sh) "${{ inputs.repository }}"
