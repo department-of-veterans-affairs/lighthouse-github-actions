@@ -28,7 +28,7 @@ runs:
     - name: Setup validation args
       id: args
       run: |
-        local args
+        args=""
         if [[ ${{ inputs.strict-mode == 'true' }} ]]; then
           args+="--strict "
         fi
