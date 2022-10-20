@@ -35,9 +35,6 @@ runs:
         echo "${args}"
         echo "::set-output name=args::${args}"
       shell: bash
-    - name: check contexts
-      run: echo "${{ github }}"
-      shell: bash
     - name: Run validation script
       id: validation
       env:
