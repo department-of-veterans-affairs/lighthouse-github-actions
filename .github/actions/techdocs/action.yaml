@@ -60,7 +60,7 @@ runs:
       shell: bash
     - name: Get entity triplet
       id: entity
-      run: /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/entity-triplet.sh)
+      run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/entity-triplet.sh)
       env:
         BASE_PATH: ${{ github.workspace }}
         FILE: ${{ inputs.descriptor-file }}
@@ -89,14 +89,14 @@ runs:
         echo "Entity's S3 Location: .../${namespace}/${kind}/${name}"
       shell: bash
     - name: Create Dockerconfigjson
-      run: /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-dockerconfigjson.sh) "${{ inputs.repository }}"
+      run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-dockerconfigjson.sh) "${{ inputs.repository }}"
       env:
         GITHUB_TOKEN: ${{ inputs.PAT }}
         GITHUB_USER: ${{ github.repository_owner }}
       shell: bash
     - name: Create techdocs Job
       run: >
-        /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-techdocs-job.sh)
+        bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-techdocs-job.sh)
         "${{ inputs.serviceAccountName }}"
         "${{ inputs.repository }}"
         "$namespace"
@@ -108,5 +108,5 @@ runs:
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
       shell: bash
     - name: Techdocs Job status
-      run: /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/techdocs-job-status.sh) "${{ inputs.repository }}"
+      run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/techdocs-job-status.sh) "${{ inputs.repository }}"
       shell: bash
