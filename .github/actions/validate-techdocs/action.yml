@@ -35,6 +35,9 @@ runs:
         echo "${args}"
         echo "::set-output name=args::${args}"
       shell: bash
+    - name: check contexts
+      run: echo "${{ github }}"
+      shell: bash
     - name: Run validation script
       id: validation
       env:
@@ -43,7 +46,7 @@ runs:
         NAMESPACE: ${{ inputs.namespace }}
         TOKEN: ${{ inputs.token }}
         ARGS: ${{ steps.args.outputs.args }}
-      run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/blob/da773d0b4b81af8dfe41693199909c134d4e7496/scripts/validate-techdocs.sh)
+      run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/validate-techdocs.sh)
       shell: bash
     - name: Check for errors
       run: |
