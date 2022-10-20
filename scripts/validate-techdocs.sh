@@ -1,7 +1,7 @@
 #!/bin/bash
 
 setup_mkdocs() {
-  /bin/bash <(curl -s https://${TOKEN}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/da773d0b4b81af8dfe41693199909c134d4e7496/scripts/setup_mkdocs.sh)
+  /bin/bash <(curl -s https://${TOKEN}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/setup_mkdocs.sh)
 }
 
 build_with_mkdocs() {
