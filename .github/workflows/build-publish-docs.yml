@@ -35,7 +35,7 @@ jobs:
           echo "${{ steps.validation.outputs.results }}"
   build-techdocs:
     needs: [validate-techdocs]
-    if: ${{ env.name }} == 'Development' || (${{ github.event.client_payload.inputs.enable-production }} != 'false' && ${{ env.name }} == 'Production' )
+    if: ${{ github.env.name }} == 'Development' || (${{ github.event.client_payload.inputs.enable-production }} != 'false' && ${{ github.env.name }} == 'Production' )
     runs-on: ubuntu-latest
     strategy:
       matrix:
