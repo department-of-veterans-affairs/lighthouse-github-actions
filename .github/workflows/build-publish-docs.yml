@@ -7,16 +7,16 @@ on:
     paths: ["**/*.md", "**/mkdocs.yaml"]
   workflow_dispatch:
 env:
-  REPO: ${{ github.event.client_payload.repository != '' && github.event.client_payload.repository || github.repository }}
-  TOKEN: ${{ github.event.client_payload.token != '' && github.event.client_payload.token || secrets.TECHDOCS_PAT }}
-  NAMESPACE: ${{ github.event.client_payload.namespace != '' &&  github.event.client_payload.namespace || secrets.KUBE_NAMESPACE }}
+  REPO: ${{ github.event.client_payload.github.repository != '' && github.event.client_payload.github.repository || github.repository }}
+  TOKEN: ${{ github.event.client_payload.github.token != '' && github.event.client_payload.github.token || secrets.TECHDOCS_PAT }}
+  NAMESPACE: ${{ github.event.client_payload.github.namespace != '' &&  github.event.client_payload.github.namespace || secrets.KUBE_NAMESPACE }}
 jobs:
   validate-techdocs:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.event.client_payload.github }}
-      - name: ${{ github.event.client_payload.sha }} # Used to return success or fail to the source repo
-        run: echo "${{ github.event.client_payload.sha }}"
+      - run: echo ${{ github.event.client_payload.github.sha }}
+      - name: ${{ github.event.client_payload.github.sha }} # Used to return success or fail to the source repo
+        run: echo "${{ github.event.client_payload.github.sha }}"
       - uses: actions/checkout@v3
         with:
           repository: ${{ env.REPO }}
@@ -26,10 +26,10 @@ jobs:
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@main
         with:
           repository: ${{ env.REPO }}
-          descriptor-file: ${{ github.event.client_payload.descriptor-file }}
+          descriptor-file: ${{ github.event.client_payload.github.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
           token: ${{ env.TOKEN }}
-          strict-mode: ${{ github.event.client_payload.strict-mode != '' && github.event.client_payload.strict-mode || 'true' }}
+          strict-mode: ${{ github.event.client_payload.github.strict-mode != '' && github.event.client_payload.github.strict-mode || 'true' }}
       - name: Validation results
         run: |
           echo "${{ steps.validation.outputs.results }}"
@@ -42,8 +42,8 @@ jobs:
     environment:
       name: ${{ matrix.environment }}
     steps:
-      - name: ${{ github.event.client_payload.sha }}
-        run: echo "${{ github.event.client_payload.sha }}"
+      - name: ${{ github.event.client_payload.github.sha }}
+        run: echo "${{ github.event.client_payload.github.sha }}"
       - name: Create techdocs
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
         with:
@@ -51,13 +51,13 @@ jobs:
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
           repository: ${{ env.REPO }}
-          descriptor-file: ${{ github.event.client_payload.descriptor-file }}
+          descriptor-file: ${{ github.event.client_payload.github.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
           token: ${{ env.TOKEN }}
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ secrets.TECHDOCS_PAT }}
   deploy-gh-pages:
-    if: ${{ github.event.client_payload.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
+    if: ${{ github.event.client_payload.github.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
     needs: [validate-techdocs]
     runs-on: ubuntu-latest
     steps:
