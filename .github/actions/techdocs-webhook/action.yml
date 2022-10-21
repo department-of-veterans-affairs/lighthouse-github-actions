@@ -30,6 +30,10 @@ inputs:
     description: "Flag used to enable or disable strict mode"
     default: "true"
     required: false
+  enable-production:
+    description: "Flag used to enable or disable techdocs for production"
+    default: "true"
+    required: false
 runs:
   using: "composite"
   steps:
