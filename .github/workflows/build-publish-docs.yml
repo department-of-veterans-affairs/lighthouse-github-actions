@@ -14,6 +14,7 @@ jobs:
   validate-techdocs:
     runs-on: ubuntu-latest
     steps:
+      - run: echo ${{ github.event.client_payload }}
       - name: ${{ github.event.client_payload.sha }} # Used to return success or fail to the source repo
         run: echo "${{ github.event.client_payload.sha }}"
       - uses: actions/checkout@v3

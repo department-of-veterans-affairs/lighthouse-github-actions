@@ -30,6 +30,10 @@ inputs:
     description: "Flag used to enable or disable strict mode"
     default: "true"
     required: false
+  enable-production:
+    description: "Flag used to enable or disable techdocs for production"
+    default: "true"
+    required: false
 runs:
   using: "composite"
   steps:
@@ -44,7 +48,8 @@ runs:
         user: ${{ github.repository_owner }}
         sha: ${{ github.sha }}
         event_type: "techdocs"
-        client_payload: '{ "sha": "${{ github.sha }}", "repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "namespace": "${{ inputs.namespace }}", "token": "${{ inputs.token }}", "tag": "${{ inputs.tag }}", "gh-pages": "${{ inputs.gh-pages }}", "strict-mode": "${{ inputs.strict-mode }}" }'
+        client_payload: '{"github": ${{ toJson(github) }}}'
+        #client_payload: '{ "sha": "${{ github.sha }}", "repository": "${{ inputs.repository }}", "descriptor-file": "${{ inputs.descriptor-file }}", "namespace": "${{ inputs.namespace }}", "token": "${{ inputs.token }}", "tag": "${{ inputs.tag }}", "gh-pages": "${{ inputs.gh-pages }}", "strict-mode": "${{ inputs.strict-mode }}", "" }'
         workflow_status_timeout: 1200
     - name: Display Results
       run: |
