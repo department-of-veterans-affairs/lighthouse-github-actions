@@ -27,7 +27,7 @@ set_git_sync_args() {
   repo_name=${1}
   gh_user=${2}
   gh_token=${3}
-  git_sync_args="[\"--repo=https://github.com/${repo_name}\", \"--branch=$branch\", \"--depth=1\", \"--one-time\", \"--username\", \"${gh_user}\", \"--password\", \"${gh_token}\"]"
+  git_sync_args="[\"--repo=https://github.com/${repo_name}\", \"--branch=$branch\", \"--depth=1\", \"--one-time\", \"--username\", \"${gh_user}\", \"--password\", \"${gh_token}\", \"--root\", \"/tmp/${branch}/git\"]"
 }
 
 set_techdocs_args () {
@@ -76,7 +76,6 @@ spec:
         args:
         - -c
         - |
-          cp -r
           cd /tmp/${branch}/git/${repo} || exit 1
           sed -i 's/backstage.io\/techdocs-ref: dir:.\//backstage.io\/techdocs-ref: dir:./g' catalog-info.yaml
           ${techdocs_generate_args}
