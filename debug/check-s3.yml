@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: eks-read-s3
+spec:
+  template:
+    metadata:
+      labels:
+        app: eks-read-s3
+    spec:
+      serviceAccountName: bandicoot-sa
+      containers:
+        - name: read-from-s3
+          image: amazon/aws-cli:latest
+          args:
+            [
+              "s3",
+              "ls",
+              "s3://embark-techdocs-storage-nonprod",
+              "--summarize",
+              "--recursive",
+            ]
+          resources:
+            limits:
+              cpu: 100m
+              memory: 150Mi
+      restartPolicy: Never

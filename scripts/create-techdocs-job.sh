@@ -110,13 +110,13 @@ run_main() {
     kind=${4}
     name=${5}
 
-    check_required_environment "${service_account_name}" "${repo_name}" "${team_name}" "${kind}" "${name}" || exit 1
+    check_required_environment "${service_account_name}" "${repo_name}" "${namespace}" "${kind}" "${name}" || exit 1
     set_git_sync_args "${repo_name}" "${GITHUB_USER}" "${GITHUB_TOKEN}" || exit 1
-    set_techdocs_args "${repo_name}" "${team_name}" "${kind}" "${name}" || exit 1
+    set_techdocs_args "${repo_name}" "${namespace}" "${kind}" "${name}" || exit 1
     create_job "${service_account_name}" "${repo_name}" || exit 1
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
 then
-  run_main "${SERVICE_ACCOUNT_NAME}" "${REPO_NAME}" "${TEAM_NAME}" "${KIND}" "${NAME}"
+  run_main "${SERVICE_ACCOUNT_NAME}" "${REPO_NAME}" "${namespace}" "${KIND}" "${NAME}"
 fi
