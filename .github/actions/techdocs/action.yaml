@@ -49,9 +49,22 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Setup branch
+      run: |
+        if [ "${{ inputs.branch }}" == "" ]; then
+          branch=$(curl \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: token ${{ inputs.token }}" \
+          https://api.github.com/repos/${{ inputs.repository }} | jq -r '.default_branch')
+        else
+          branch="${{ inputs.branch }}"
+        fi
+        echo "branch=${branch}" >> $GITHUB_ENV
+      shell: bash
     - uses: actions/checkout@v3
       with:
         repository: ${{ inputs.repository }}
+        ref: "$branch"
         token: ${{ inputs.token }}
     - name: Set K8s context
       uses: azure/k8s-set-context@v1
@@ -69,18 +82,6 @@ runs:
         FILE: ${{ inputs.descriptor-file }}
         KIND: ${{ inputs.kind }}
         NAME: ${{ inputs.name }}
-      shell: bash
-    - name: Setup branch
-      run: |
-        if [ "${{ inputs.branch }}" == "" ]; then
-          branch=$(curl \
-          -H "Accept: application/vnd.github+json" \
-          -H "Authorization: token ${{ inputs.token }}" \
-          https://api.github.com/repos/${{ inputs.repository }} | jq -r '.default_branch')
-        else
-          branch="${{ inputs.branch }}"
-        fi
-        echo "branch=${branch}" >> $GITHUB_ENV
       shell: bash
     - name: S3 Location for Catalog Entity
       run: |
@@ -100,6 +101,7 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.PAT }}
         GITHUB_USER: ${{ github.repository_owner }}
+        branch: "$branch"
       shell: bash
     - name: Create techdocs Job
       run: >
