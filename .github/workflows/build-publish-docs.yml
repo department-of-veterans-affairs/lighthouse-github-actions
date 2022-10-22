@@ -14,7 +14,6 @@ jobs:
   validate-techdocs:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.event.client_payload.github.sha }}
       - name: ${{ github.event.client_payload.github.sha }} # Used to return success or fail to the source repo
         run: echo "${{ github.event.client_payload.github.sha }}"
       - name: Setup branch
