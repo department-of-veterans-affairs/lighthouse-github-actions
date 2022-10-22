@@ -19,15 +19,14 @@ jobs:
       - name: Setup branch
         id: get-branch
         run: |
-          if [ "${{ github.event.client_payload.branch }}" == "" ]; then
+          branch="${{ github.event.client_payload.inputs.branch }}"
+          if [ "$branch" == "" ]; then
             branch=$(curl \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: token ${{ inputs.token }}" \
             https://api.github.com/repos/${{ inputs.repository }} | jq -r '.default_branch')
-          else
-            branch="${{ github.event.client_payload.inputs.branch }}"
           fi
-          echo "branch=${branch}" >> $GITHUB_OUTPUT
+          echo "branch=$branch" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v3
         with:
           repository: ${{ env.REPO }}
