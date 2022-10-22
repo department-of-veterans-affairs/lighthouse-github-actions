@@ -16,7 +16,7 @@ check_required_environment() {
 
 await_job() {
   repo=$1
-  local job_name="lighthouse-techdocs-${repo}"
+  local job_name="lighthouse-techdocs-${repo}-${branch}"
   while ! bash -c "kubectl get job.batch/${job_name} | grep \"1/1\"" > /dev/null 2>&1; do
     kubectl logs -f -l app=${job_name}
     sleep 15;
@@ -36,7 +36,7 @@ await_job() {
 clean_up() {
   repo_name=${1}
   exit_code=${2:-0}
-  local job_name="lighthouse-techdocs-${repo}"
+  local job_name="lighthouse-techdocs-${repo}-${branch}"
   echo "Cleaning up resources..."
   kubectl delete secret lighthouse-techdocs-${repo_name}-secrets
   kubectl delete job.batch/${job_name}

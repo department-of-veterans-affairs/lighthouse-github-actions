@@ -64,7 +64,7 @@ jobs:
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
           repository: ${{ env.REPO }}
-          branch: ${{ jobs.validate-techdocs.outputs.branch }}
+          branch: ${{ needs.validate-techdocs.outputs.branch }}
           descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
           token: ${{ env.TOKEN }}
