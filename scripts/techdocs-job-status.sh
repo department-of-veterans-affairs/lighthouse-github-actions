@@ -16,7 +16,7 @@ check_required_environment() {
 
 await_job() {
   repo=$1
-  local job_name="lighthouse-techdocs-${repo}-${branch}"
+  local job_name="td-${repo}-${branch}"
   while ! bash -c "kubectl get job.batch/${job_name} | grep \"1/1\"" > /dev/null 2>&1; do
     kubectl logs -f -l app=${job_name}
     sleep 15;
@@ -26,20 +26,20 @@ await_job() {
         kubectl logs -f -l app="${job_name}"
         kubectl describe job.batch/${job_name}
         
-        
-        clean_up "${repo}" "1"
+        clean_up "1" "${repo}"
     fi
   done
   echo "Techdocs Job complete"
 }
 
 clean_up() {
-  repo_name=${1}
-  exit_code=${2:-0}
-  local job_name="lighthouse-techdocs-${repo}-${branch}"
+  exit_code="${1:-$?}"
+  repo_name=${2}
+
+  local job_name="td-${repo}-${branch}"
   echo "Cleaning up resources..."
-  kubectl delete secret lighthouse-techdocs-${repo_name}-secrets
-  kubectl delete job.batch/${job_name}
+  kubectl delete secret td-${repo}-${branch}-secrets || true
+  kubectl delete job.batch/${job_name} || true
   echo "Clean up complete"
   exit ${exit_code}
 }
@@ -47,8 +47,9 @@ clean_up() {
 run_main() {
   repo=${1##*/}
 
+  trap clean_up EXIT
   await_job "${repo}" || exit 1
-  clean_up "${repo}" "0" || exit 1
+  clean_up "0" "${repo}" || exit 1
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]

@@ -32,27 +32,27 @@ set_git_sync_args() {
 
 set_techdocs_args () {
   repo=${1##*/}
-  techdocs_generate_args="techdocs-cli generate --source-dir /tmp/git/${repo} --output-dir /tmp/git/techdocs/${repo} --no-docker -v --legacyCopyReadmeMdToIndexMd"
-  techdocs_publish_args="techdocs-cli publish --publisher-type awsS3 --storage-name ${S3_BUCKET_NAME} --entity ${team_name}/${kind}/${name} --directory /tmp/git/techdocs/${repo}"
+  techdocs_generate_args="techdocs-cli generate --source-dir /tmp/git/${repo}/${branch} --output-dir /tmp/git/techdocs/${repo}/${branch} --no-docker -v --legacyCopyReadmeMdToIndexMd"
+  techdocs_publish_args="techdocs-cli publish --publisher-type awsS3 --storage-name ${S3_BUCKET_NAME} --entity ${team_name}/${kind}/${name} --directory /tmp/git/techdocs/${repo}/${branch}"
 }
 
 create_job() {
   service_account_name=${1}
   repo=${2##*/}
   local ghcr_secrets
-  ghcr_secrets="lighthouse-techdocs-${repo}-${branch}-secrets"
+  ghcr_secrets="td-${repo}-${branch}-secrets"
 
 cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: lighthouse-techdocs-${repo}-${branch}
+  name: td-${repo}-${branch}
 spec:
   ttlSecondsAfterFinished: 100
   template:
     metadata:
       labels:
-        app: lighthouse-techdocs-${repo}-${branch}
+        app: td-${repo}-${branch}
         sidecar.istio.io/inject: "false"
     spec:
       serviceAccountName: ${service_account_name}
@@ -76,7 +76,7 @@ spec:
         args:
         - -c
         - |
-          cd /tmp/git/${repo} || exit 1
+          cd /tmp/git/${repo}/${branch} || exit 1
           sed -i 's/backstage.io\/techdocs-ref: dir:.\//backstage.io\/techdocs-ref: dir:./g' catalog-info.yaml
           ${techdocs_generate_args}
           ${techdocs_publish_args}
