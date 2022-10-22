@@ -50,21 +50,22 @@ runs:
   using: "composite"
   steps:
     - name: Setup branch
+      id: get-branch
       run: |
+        branch="${{ inputs.branch }}"
         if [ "${{ inputs.branch }}" == "" ]; then
           branch=$(curl \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: token ${{ inputs.token }}" \
           https://api.github.com/repos/${{ inputs.repository }} | jq -r '.default_branch')
-        else
-          branch="${{ inputs.branch }}"
         fi
         echo "branch=${branch}" >> $GITHUB_ENV
+        echo "branch=${branch}" >> $GITHUB_OUTPUT
       shell: bash
     - uses: actions/checkout@v3
       with:
         repository: ${{ inputs.repository }}
-        ref: "$branch"
+        ref: ${{ steps.get-branch.outputs.branch }}
         token: ${{ inputs.token }}
     - name: Set K8s context
       uses: azure/k8s-set-context@v1
@@ -101,7 +102,6 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.PAT }}
         GITHUB_USER: ${{ github.repository_owner }}
-        branch: "$branch"
       shell: bash
     - name: Create techdocs Job
       run: >
