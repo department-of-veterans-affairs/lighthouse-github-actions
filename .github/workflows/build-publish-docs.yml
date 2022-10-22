@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: ${{ env.REPO }}
-          ref: "${{ steps.get-branch.output.branch }}"
+          ref: ${{ steps.get-branch.outputs.branch }}
           token: ${{ env.TOKEN }}
       - name: Validate techdocs
         id: validation
@@ -63,7 +63,7 @@ jobs:
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
           repository: ${{ env.REPO }}
-          branch: ${{ github.event.client_payload.inputs.branch }}
+          branch: ${{ steps.get-branch.outputs.branch }}
           descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
           token: ${{ env.TOKEN }}
