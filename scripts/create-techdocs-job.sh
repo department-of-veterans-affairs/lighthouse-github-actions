@@ -32,8 +32,8 @@ set_git_sync_args() {
 
 set_techdocs_args () {
   repo=${1##*/}
-  techdocs_generate_args="techdocs-cli generate --source-dir /tmp/${branch}/git/${repo} --output-dir /tmp/git/techdocs/${repo}/${branch} --no-docker -v --legacyCopyReadmeMdToIndexMd"
-  techdocs_publish_args="techdocs-cli publish --publisher-type awsS3 --storage-name ${S3_BUCKET_NAME} --entity ${namespace}/${kind}/${name} --directory /tmp/git/techdocs/${repo}/${branch}"
+  techdocs_generate_args="techdocs-cli generate --source-dir /tmp/${branch}/git/${repo} --output-dir /tmp/git/techdocs/${repo}-${branch} --no-docker -v --legacyCopyReadmeMdToIndexMd"
+  techdocs_publish_args="techdocs-cli publish --publisher-type awsS3 --storage-name ${S3_BUCKET_NAME} --entity ${namespace}/${kind}/${name} --directory /tmp/git/techdocs/${repo}-${branch}"
 }
 
 create_job() {
