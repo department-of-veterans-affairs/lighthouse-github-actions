@@ -67,9 +67,9 @@ jobs:
           branch: ${{ needs.validate-techdocs.outputs.branch }}
           descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
-          token: ${{ env.TOKEN }}
+          token: ${{ secrets.TECHDOCS_PAT }}
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
-          PAT: ${{ secrets.TECHDOCS_PAT }}
+          PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
     if: ${{ github.event.client_payload.github.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
     needs: [validate-techdocs]
