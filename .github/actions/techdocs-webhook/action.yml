@@ -8,6 +8,9 @@ inputs:
   repository:
     description: "Name of repository"
     required: true
+  branch:
+    description: "Branch of repository"
+    required: false
   descriptor-file:
     description: "Name of catalog entity descriptor file"
     required: false
