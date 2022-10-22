@@ -29,7 +29,6 @@ jobs:
           descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
           token: ${{ env.TOKEN }}
-          strict-mode: ${{ github.event.client_payload.inputs.strict-mode != '' && github.event.client_payload.inputs.strict-mode || 'true' }}
       - name: Validation results
         run: |
           echo "${{ steps.validation.outputs.results }}"
@@ -52,6 +51,7 @@ jobs:
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
           repository: ${{ env.REPO }}
+          branch: ${{ github.event.client_payload.inputs.branch }}
           descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
           token: ${{ env.TOKEN }}
