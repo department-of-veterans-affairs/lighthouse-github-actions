@@ -17,6 +17,7 @@ jobs:
       - name: ${{ github.event.client_payload.github.sha }} # Used to return success or fail to the source repo
         run: echo "${{ github.event.client_payload.github.sha }}"
       - name: Setup branch
+        id: get-branch
         run: |
           if [ "${{ github.event.client_payload.branch }}" == "" ]; then
             branch=$(curl \
@@ -26,11 +27,11 @@ jobs:
           else
             branch="${{ github.event.client_payload.inputs.branch }}"
           fi
-          echo "branch=${branch}" >> $GITHUB_ENV
+          echo "branch=${branch}" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v3
         with:
           repository: ${{ env.REPO }}
-          ref: "$branch"
+          ref: ${{ steps.get-branch.outputs.branch }}
           token: ${{ env.TOKEN }}
       - name: Validate techdocs
         id: validation
@@ -62,7 +63,7 @@ jobs:
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
           repository: ${{ env.REPO }}
-          branch: ${{ github.event.client_payload.inputs.branch }}
+          branch: ${{ steps.get-branch.outputs.branch }}
           descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
           token: ${{ env.TOKEN }}
