@@ -14,12 +14,23 @@ jobs:
   validate-techdocs:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.event.client_payload.github.sha }}
       - name: ${{ github.event.client_payload.github.sha }} # Used to return success or fail to the source repo
         run: echo "${{ github.event.client_payload.github.sha }}"
+      - name: Setup branch
+        run: |
+          if [ "${{ github.event.client_payload.branch }}" == "" ]; then
+            branch=$(curl \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: token ${{ inputs.token }}" \
+            https://api.github.com/repos/${{ inputs.repository }} | jq -r '.default_branch')
+          else
+            branch="${{ github.event.client_payload.inputs.branch }}"
+          fi
+          echo "branch=${branch}" >> $GITHUB_ENV
       - uses: actions/checkout@v3
         with:
           repository: ${{ env.REPO }}
+          ref: "$branch"
           token: ${{ env.TOKEN }}
       - name: Validate techdocs
         id: validation

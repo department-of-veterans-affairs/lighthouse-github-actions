@@ -40,19 +40,19 @@ create_job() {
   service_account_name=${1}
   repo=${2##*/}
   local ghcr_secrets
-  ghcr_secrets="lighthouse-techdocs-${repo}-secrets"
+  ghcr_secrets="lighthouse-techdocs-${repo}-${branch}-secrets"
 
 cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: lighthouse-techdocs-${repo}
+  name: lighthouse-techdocs-${repo}-${branch}
 spec:
   ttlSecondsAfterFinished: 100
   template:
     metadata:
       labels:
-        app: lighthouse-techdocs-${repo}
+        app: lighthouse-techdocs-${repo}-${branch}
         sidecar.istio.io/inject: "false"
     spec:
       serviceAccountName: ${service_account_name}
