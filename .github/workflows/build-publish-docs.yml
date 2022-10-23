@@ -25,8 +25,8 @@ jobs:
           if [ "$branch" == "" ]; then
             branch=$(curl \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: token ${{ inputs.token }}" \
-            https://api.github.com/repos/${{ inputs.repository }} | jq -r '.default_branch')
+            -H "Authorization: token ${{ env.TOKEN }}" \
+            https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
           fi
           echo "branch=$branch" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v3
