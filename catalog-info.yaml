@@ -3,7 +3,7 @@ kind: Component
 metadata:
   name: lighthouse-github-actions
   description: Github Actions to generate TechDocs for the Lighthouse Internal Developer Portal
-  title: "Techdocs Repository"
+  title: "TechDocs Repository"
   tags:
     - lighthouse
     - documentation
