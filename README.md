@@ -2,15 +2,15 @@
 
 Github Actions that help teams use the Ligthhouse Internal Developer Hub
 
-## Techdocs Action
+## TechDocs Action
 
-This action creates a [Kubernetes Job](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/example-techdocs-job.yaml) that will generate and publish your Techdocs for the Lighthouse Internal Developer Portal.
+This action creates a [Kubernetes Job](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/example-techdocs-job.yaml) that will generate and publish your TechDocs for the Lighthouse Internal Developer Portal.
 
 ### Overview
 
-The Kubernetes Job consists of two containers: a [git-sync](https://github.com/kubernetes/git-sync) container and a [Techdocs](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/techdocs/Dockerfile.techdocs) container. The `git-sync` container is an initContainer that pulls a git repository to a shared volume so the Techdocs container has a copy of all markdown files. The `Techdocs` container then uses the [Techdocs-cli](https://backstage.io/docs/features/techdocs/cli) to generate and publish your documentation to the Lighthouse S3 bucket.
+The Kubernetes Job consists of two containers: a [git-sync](https://github.com/kubernetes/git-sync) container and a [TechDocs](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/techdocs/Dockerfile.techdocs) container. The `git-sync` container is an initContainer that pulls a git repository to a shared volume so the TechDocs container has a copy of all markdown files. The `TechDocs` container then uses the [TechDocs-cli](https://backstage.io/docs/features/techdocs/cli) to generate and publish your documentation to the Lighthouse S3 bucket.
 
-### Techdocs Prerequisites
+### TechDocs Prerequisites
 
 The root directory of your repository contains:
 
@@ -25,7 +25,7 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 <!-- start usage -->
 
 ```yaml
-- name: Create Techdocs Job
+- name: Create TechDocs Job
   uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
   with:
     # Owner and repository where the documentation lives (e.g. department-of-veterans-affairs/lighthouse-developer-portal)
@@ -38,7 +38,7 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
     # Required: false
     descriptor-file: ""
 
-    # Personal Access Token used for Techdocs Webhook
+    # Personal Access Token used for TechDocs Webhook
     # Scopes: Repo
     # Required: true
     token: ""
@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Techdocs webhook
+      - name: TechDocs webhook
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs-webhook@main
         with:
           repository: ${{ github.repository }}
