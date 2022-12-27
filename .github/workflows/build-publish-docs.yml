@@ -3,7 +3,7 @@ on:
   repository_dispatch:
     types: [techdocs]
   push:
-    branches: [main]
+    branches: [API-22542-prevent-broken-markdown-links]
     paths: ["**/*.md", "**/mkdocs.yaml"]
   workflow_dispatch:
 env:
