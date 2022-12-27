@@ -45,6 +45,8 @@ jobs:
           strict-mode: ${{ github.event.client_payload.inputs.strict-mode }}
       - name: Check Markdown Links
         uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-verbose-mode: 'yes'
       - name: Validation results
         run: |
           echo "${{ steps.validation.outputs.results }}"
