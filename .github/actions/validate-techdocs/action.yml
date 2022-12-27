@@ -25,6 +25,10 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Check Markdown Links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-verbose-mode: 'yes'
     - name: Setup validation args
       id: args
       run: |
@@ -52,7 +56,7 @@ runs:
           echo -e "Validation Error:\n${{ steps.validation.outputs.RESULTS }}";
           exit 1;
         fi
-      shell: bash  
+      shell: bash
     - name: Check for errors
       run: |
         if echo "${{ steps.validation.outputs.RESULTS }}" | grep -i "error"; then
