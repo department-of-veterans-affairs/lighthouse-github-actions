@@ -16,11 +16,6 @@ jobs:
     outputs:
       branch: ${{ steps.get-branch.outputs.branch }}
     steps:
-      - name: Check Techdoc Links
-        id: check-links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          use-verbose-mode: 'yes'
       - name: ${{ github.event.client_payload.github.sha }} # Used to return success or fail to the source repo
         run: echo "${{ github.event.client_payload.github.sha }}"
       - name: Setup branch
@@ -39,6 +34,10 @@ jobs:
           repository: ${{ env.REPO }}
           ref: ${{ steps.get-branch.outputs.branch }}
           token: ${{ env.TOKEN }}
+      - name: Check Techdoc Links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-verbose-mode: 'yes'
       - name: Validate techdocs
         id: validation
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@main
