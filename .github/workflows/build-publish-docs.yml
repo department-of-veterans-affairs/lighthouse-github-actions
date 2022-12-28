@@ -3,7 +3,7 @@ on:
   repository_dispatch:
     types: [techdocs]
   push:
-    branches: [API-22542-prevent-broken-markdown-links]
+    branches: [main]
     paths: ["**/*.md", "**/mkdocs.yaml"]
   workflow_dispatch:
 env:
@@ -16,6 +16,11 @@ jobs:
     outputs:
       branch: ${{ steps.get-branch.outputs.branch }}
     steps:
+      - name: Check Techdoc Links
+        id: check-links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-verbose-mode: 'yes'
       - name: ${{ github.event.client_payload.github.sha }} # Used to return success or fail to the source repo
         run: echo "${{ github.event.client_payload.github.sha }}"
       - name: Setup branch
