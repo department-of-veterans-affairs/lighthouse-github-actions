@@ -25,6 +25,11 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Check Techdoc Links
+      id: checkmd
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-verbose-mode: 'yes'
     - name: Setup validation args
       id: args
       run: |
