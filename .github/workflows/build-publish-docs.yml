@@ -34,10 +34,6 @@ jobs:
           repository: ${{ env.REPO }}
           ref: ${{ steps.get-branch.outputs.branch }}
           token: ${{ env.TOKEN }}
-       - name: Check Techdoc Links
-         uses: gaurav-nelson/github-action-markdown-link-check@v1
-         with:
-           use-verbose-mode: 'yes'
       - name: Validate techdocs
         id: validation
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@API-22542-prevent-broken-markdown-links
