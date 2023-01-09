@@ -25,9 +25,11 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Checkout Actions Repo
+      uses: actions/checkout@v3
     - name: Create Link Checker Config
       run: |
-        curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/mlc_config.json | jq `.httpHeaders[] .headers.Authorization=${{inputs.token}}` > mlc_config.json
+        cat mlc_config.json | jq '.httpHeaders[] .headers.Authorization=${{inputs.token}}' > mlc_config.json
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
