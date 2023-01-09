@@ -27,11 +27,12 @@ runs:
   steps:
     - name: Checkout Actions Repo
       uses: actions/checkout@v3
-    - name: Create Link Checker Config
+    - name: Use JQ
       uses: sergeysova/jq-action@v2
       id: settoken
       with:
         cmd: "jq '.httpHeaders[] .headers.Authorization=${{inputs.token}}'"
+    - name: Create Link Checker Config
       run: |
         cat mlc_config.json | ${{ steps.settoken.outputs.value }} > mlc_config.json
       shell: bash
