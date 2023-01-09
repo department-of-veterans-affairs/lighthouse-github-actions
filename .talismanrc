@@ -1,3 +1,6 @@
+allowed_patterns:
+  - '\$\{\{ secrets.MLC_CONFIG_JSON \}\}'
+
 fileignoreconfig:
 - filename: .github/actions/techdocs/scripts/create-dockerconfigjson.sh
   checksum: ef1368b1f165b4ab4501954373a6aea182cce04bea6b771965e71cfa2b7678fd

@@ -25,6 +25,9 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Create Link Checker Config
+      run: |
+        echo ${{ secrets.MLC_CONFIG_JSON }} | base64 -d > mlc_config.json
     - name: Check Techdoc Links
       id: checkmd
       uses: gaurav-nelson/github-action-markdown-link-check@v1
