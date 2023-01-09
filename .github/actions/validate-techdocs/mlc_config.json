@@ -1,0 +1,16 @@
+{
+  "httpHeaders": [
+    {
+      "headers": {
+        "Accept-Encoding": "zstd, br, gzip, deflate",
+        "Authorization": "${{inputs.token}}"
+      },
+      "urls": [
+        "https://github.com/",
+        "https://guides.github.com/",
+        "https://help.github.com/",
+        "https://docs.github.com/"
+      ]
+    }
+  ]
+}
