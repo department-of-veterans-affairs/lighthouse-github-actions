@@ -31,7 +31,7 @@ runs:
       uses: sergeysova/jq-action@v2
       id: settoken
       with:
-        cmd: "jq '.httpHeaders[] .headers.Authorization=${{ inputs.token }}' mlc_config.json"
+        cmd: "jq --arg v "${{ inputs.token }}" '.httpHeaders[] .headers.Authorization=$v' mlc_config.json"
         multiline: true
     - name: Create Link Checker Config
       run: |
