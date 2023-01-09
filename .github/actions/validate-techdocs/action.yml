@@ -31,11 +31,11 @@ runs:
       uses: sergeysova/jq-action@v2
       id: settoken
       with:
-        cmd: "jq '.httpHeaders[] .headers.Authorization=${{ inputs.token }}'"
+        cmd: "jq '.httpHeaders[] .headers.Authorization=${{ inputs.token }}' mlc_config.json"
         multiline: true
     - name: Create Link Checker Config
       run: |
-        cat mlc_config.json | ${{ steps.settoken.outputs.value }} > mlc_config.json
+        echo ${{ steps.settoken.outputs.value }} > mlc_config.json
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
