@@ -29,13 +29,13 @@ runs:
       uses: actions/checkout@v3
     - name: Use JQ
       uses: sergeysova/jq-action@v2
-      id: settoken
+      id: set-token
       with:
         cmd: "jq --arg v '${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' mlc_config.json"
         multiline: true
     - name: Create Link Checker Config
       run: |
-        echo "${{ steps.settoken.outputs.value }}" > mlc_config.json
+        echo "${{ steps.set-token.outputs.value }}" > mlc_config.json
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
