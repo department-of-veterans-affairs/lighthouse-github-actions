@@ -32,10 +32,10 @@ runs:
       id: set-token
       with:
         cmd: "jq --arg v '${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' mlc_config.json"
-        multiline: true
-    # - name: Create Link Checker Config
-    #   run: |
-    #     echo "${{ steps.set-token.outputs.value }}" > mlc_config.json
+        multiline: false
+    - name: Create Link Checker Config
+      run: |
+        echo "${{ steps.set-token.outputs.value }}" > mlc_config.json
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
