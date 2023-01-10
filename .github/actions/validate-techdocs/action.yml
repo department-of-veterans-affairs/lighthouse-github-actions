@@ -42,8 +42,6 @@ runs:
       uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
         use-verbose-mode: 'yes'
-        folder-path: '/'
-      continue-on-error: true
     - name: Setup validation args
       id: args
       run: |
