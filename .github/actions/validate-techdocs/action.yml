@@ -14,12 +14,12 @@ inputs:
   token:
     description: "Personal Access token to pull source repository"
     required: false
+  repo_token:
+    description: "Personal Access token to view LIDH repository"
+    required: false
   strict-mode:
     description: "Used to enable or disables strict flag for validation"
     default: "true"
-    required: false
-  repo_token:
-    description: "Personal Access token to view LIDH and GH Actions repositories"
     required: false
 outputs:
   results:

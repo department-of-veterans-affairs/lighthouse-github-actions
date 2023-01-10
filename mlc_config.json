@@ -2,14 +2,21 @@
   "httpHeaders": [
     {
       "headers": {
-        "Accept-Encoding": "zstd, br, gzip, deflate",
-        "Authorization": "${{inputs.token}}"
+        "Accept-Encoding": "zstd, br, gzip, deflate"
       },
       "urls": [
         "https://github.com/",
         "https://guides.github.com/",
         "https://help.github.com/",
         "https://docs.github.com/"
+      ]
+    },
+    {
+      "headers": {
+        "Authorization": "TOKEN"
+      },
+      "urls": [
+        "https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/"
       ]
     }
   ]
