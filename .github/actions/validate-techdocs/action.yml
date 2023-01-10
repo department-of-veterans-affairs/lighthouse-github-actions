@@ -18,6 +18,9 @@ inputs:
     description: "Used to enable or disables strict flag for validation"
     default: "true"
     required: false
+  repo_token:
+    description: "Personal Access token to view LIDH and GH Actions repositories"
+    required: false
 outputs:
   results:
     description: "Results of validation script"
@@ -31,7 +34,7 @@ runs:
       uses: sergeysova/jq-action@v2
       id: set-token
       with:
-        cmd: "jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r mlc_config.json"
+        cmd: "jq --arg v 'token ${{ inputs.repo_token }}' '.httpHeaders[] .headers.Authorization=$v' -r mlc_config.json"
         multiline: true
     - name: Create Link Checker Config
       run: |
