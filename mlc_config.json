@@ -14,11 +14,11 @@
   ],
   "replacementPatterns": [
     {
-      "pattern": "^https://github.com",
-      "replacement": "https://raw.githubusercontent.com"
+      "pattern": "^https://github.com/department-of-veterans-affairs",
+      "replacement": "https://raw.githubusercontent.com/department-of-veterans-affairs"
     },
     {
-      "pattern": "^/blob",
+      "pattern": "/blob",
       "replacement": ""
     }
   ]
