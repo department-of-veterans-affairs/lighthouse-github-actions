@@ -24,7 +24,7 @@
   ],
   "replacementPatterns": [
     {
-      "pattern": "github.com/department-of-veterans-affairs/(?!.+/blob/.+)",
+      "pattern": "github.com/department-of-veterans-affairs/(?!.+/)",
       "replacement": "api.github.com/repos/department-of-veterans-affairs/"
     },
     {
