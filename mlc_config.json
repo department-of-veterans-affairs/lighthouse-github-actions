@@ -13,7 +13,7 @@
     },
     {
       "headers": {
-        "Accept": "application/vnd.github.v3+json",
+        "Accept": "application/vnd.github+json",
         "Authorization": "token TOKEN"
       },
       "urls": [
@@ -24,8 +24,8 @@
   ],
   "replacementPatterns": [
     {
-      "pattern": "github.com/department-of-veterans-affairs/(?!.+/blob/.+)",
-      "replacement": "api.github.com/repos/department-of-veterans-affairs/"
+      "pattern": "github.com/department-of-veterans-affairs/lighthouse-developer-portal/(?!.+/blob/.+)",
+      "replacement": "api.github.com/repos/department-of-veterans-affairs/lighthouse-developer-portal/contents/"
     },
     {
       "pattern": "github.com/department-of-veterans-affairs/(?=.+/blob/.+)",
