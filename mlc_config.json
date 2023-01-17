@@ -10,14 +10,16 @@
         "https://help.github.com/",
         "https://docs.github.com/"
       ]
+    }
+  ],
+  "replacementPatterns": [
+    {
+      "pattern": "^https://github.com",
+      "replacement": "https://raw.githubusercontent.com"
     },
     {
-      "headers": {
-        "Authorization": "TOKEN"
-      },
-      "urls": [
-        "https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/"
-      ]
+      "pattern": "^/blob",
+      "replacement": ""
     }
   ]
 }
