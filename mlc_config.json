@@ -10,12 +10,25 @@
         "https://help.github.com/",
         "https://docs.github.com/"
       ]
+    },
+    {
+      "headers": {
+        "Authorization": "token TOKEN"
+      },
+      "urls": [
+        "https://api.github.com",
+        "https://raw.githubusercontent.com"
+      ]
     }
   ],
   "replacementPatterns": [
     {
-      "pattern": "^https://github.com/department-of-veterans-affairs",
-      "replacement": "https://raw.githubusercontent.com/department-of-veterans-affairs"
+      "pattern": "github.com/department-of-veterans-affairs/(?!.+/)",
+      "replacement": "api.github.com/repos/department-of-veterans-affairs/"
+    },
+    {
+      "pattern": "github.com/department-of-veterans-affairs/(?=.+/blob/.+)",
+      "replacement": "raw.githubusercontent.com/department-of-veterans-affairs/"
     },
     {
       "pattern": "/blob",
