@@ -13,10 +13,7 @@
     },
     {
       "headers": {
-        "Accept": [
-          "application/vnd.github+json",
-          "application/vnd.github.object"
-        ],
+        "Accept": "application/vnd.github+json, application/vnd.github.object",
         "Authorization": "token TOKEN"
       },
       "urls": [
