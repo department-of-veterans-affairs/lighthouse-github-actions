@@ -32,6 +32,10 @@
       "replacement": "$1contents/"
     },
     {
+      "pattern": "(?<=department-of-veterans-affairs)([/]+[a-zA-Z-_.]+)$",
+      "replacement": "$1contents/"
+    },
+    {
       "pattern": "github.com/department-of-veterans-affairs/(?=.+/blob/.+)",
       "replacement": "raw.githubusercontent.com/department-of-veterans-affairs/"
     },
