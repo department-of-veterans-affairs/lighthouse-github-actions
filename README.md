@@ -4,7 +4,7 @@ Github Actions that help teams use the Ligthhouse Internal Developer Hub
 
 ## TechDocs Action
 
-This action creates a [Kubernetes Job](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/example-techdocs-job.yaml) that will generate and publish your TechDocs for the Lighthouse Internal Developer Portal.
+This action creates a [Kubernetes Job](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/scripts/create-techdocs-job.sh) that will generate and publish your TechDocs for the Lighthouse Internal Developer Portal.
 
 ### Overview
 
