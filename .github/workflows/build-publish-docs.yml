@@ -42,7 +42,6 @@ jobs:
           descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
           token: ${{ env.TOKEN }}
-          repo_token: ${{ secrets.REPO_ACCESS_TOKEN }}
           strict-mode: ${{ github.event.client_payload.inputs.strict-mode }}
       - name: Validation results
         run: |
