@@ -36,8 +36,6 @@ runs:
     - name: Create Link Checker Config
       run: |
         echo '${{ steps.set-token.outputs.value }}' > mlc_config.json
-        cat mlc_config.json
-        ls -a
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
