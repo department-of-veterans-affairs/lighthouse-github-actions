@@ -25,9 +25,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Set AuthZ header
-      uses: actions/checkout@v3
-    - name: Set token in link checker config
+    - name: Set AuthZ token in link checker config
       uses: sergeysova/jq-action@v2
       id: set-token
       with:
