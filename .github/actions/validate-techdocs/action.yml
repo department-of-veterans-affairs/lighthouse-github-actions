@@ -25,6 +25,21 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Set AuthZ token in link checker config
+      uses: sergeysova/jq-action@v2
+      id: set-token
+      with:
+        cmd: "jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r mlc_config.json"
+        multiline: true
+    - name: Create Link Checker Config
+      run: |
+        echo '${{ steps.set-token.outputs.value }}' > mlc_config.json
+      shell: bash
+    - name: Check Techdoc Links
+      id: checkmd
+      uses: gaurav-nelson/github-action-markdown-link-check@1.0.13
+      with:
+        use-verbose-mode: 'yes'
     - name: Setup validation args
       id: args
       run: |
@@ -52,7 +67,7 @@ runs:
           echo -e "Validation Error:\n${{ steps.validation.outputs.RESULTS }}";
           exit 1;
         fi
-      shell: bash  
+      shell: bash
     - name: Check for errors
       run: |
         if echo "${{ steps.validation.outputs.RESULTS }}" | grep -i "error"; then
