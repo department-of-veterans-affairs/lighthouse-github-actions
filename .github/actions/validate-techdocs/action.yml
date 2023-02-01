@@ -32,7 +32,8 @@ runs:
         path: department-of-veterans-affairs/lighthouse-github-actions
     - name: Check directory
       run: |
-        ls
+        echo "PATH CHECK"
+        ls department-of-veterans-affairs/lighthouse-github-actions
       shell: bash
     - name: Set AuthZ token in link checker config
       uses: sergeysova/jq-action@v2
