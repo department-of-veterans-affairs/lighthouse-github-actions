@@ -30,15 +30,18 @@ runs:
       with:
         repository: department-of-veterans-affairs/lighthouse-github-actions
         path: department-of-veterans-affairs/lighthouse-github-actions
+    - name: Check directory
+      run: |
+        ls
+      shell: bash
     - name: Set AuthZ token in link checker config
       uses: sergeysova/jq-action@v2
       id: set-token
       with:
-        cmd: "jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r mlc_config.json"
+        cmd: "jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json"
         multiline: true
     - name: Create Link Checker Config
       run: |
-        ls
         echo '${{ steps.set-token.outputs.value }}' > department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
       shell: bash
     - name: Check Techdoc Links
