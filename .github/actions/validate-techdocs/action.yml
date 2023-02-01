@@ -25,6 +25,11 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Checkout Github Actions Repo
+      uses: actions/checkout@v3
+      with:
+        repository: department-of-veterans-affairs/lighthouse-github-actions
+        path: department-of-veterans-affairs/lighthouse-github-actions
     - name: Set AuthZ token in link checker config
       uses: sergeysova/jq-action@v2
       id: set-token
@@ -34,7 +39,7 @@ runs:
     - name: Create Link Checker Config
       run: |
         ls
-        echo '${{ steps.set-token.outputs.value }}' > mlc_config.json
+        echo '${{ steps.set-token.outputs.value }}' > department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
