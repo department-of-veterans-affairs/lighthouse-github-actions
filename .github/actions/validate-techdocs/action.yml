@@ -50,6 +50,7 @@ runs:
       uses: gaurav-nelson/github-action-markdown-link-check@1.0.13
       with:
         use-verbose-mode: 'yes'
+        config-file: 'department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json'
     - name: Setup validation args
       id: args
       run: |
