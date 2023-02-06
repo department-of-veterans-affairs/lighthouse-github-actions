@@ -25,21 +25,28 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Checkout Github Actions Repo
+      uses: actions/checkout@v3
+      with:
+        repository: department-of-veterans-affairs/lighthouse-github-actions
+        path: department-of-veterans-affairs/lighthouse-github-actions
+      shell: bash
     - name: Set AuthZ token in link checker config
       uses: sergeysova/jq-action@v2
       id: set-token
       with:
-        cmd: "jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r mlc_config.json"
+        cmd: "jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json"
         multiline: true
     - name: Create Link Checker Config
       run: |
-        echo '${{ steps.set-token.outputs.value }}' > mlc_config.json
+        echo '${{ steps.set-token.outputs.value }}' > department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
       uses: gaurav-nelson/github-action-markdown-link-check@1.0.13
       with:
         use-verbose-mode: 'yes'
+        config-file: 'department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json'
     - name: Setup validation args
       id: args
       run: |

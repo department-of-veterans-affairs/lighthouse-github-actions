@@ -34,6 +34,7 @@ jobs:
           repository: ${{ env.REPO }}
           ref: ${{ steps.get-branch.outputs.branch }}
           token: ${{ env.TOKEN }}
+          path: ${{ env.REPO }}
       - name: Validate techdocs
         id: validation
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@main
