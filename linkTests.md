@@ -1,6 +1,6 @@
 # Lighthouse Internal Developer Hub Github Actions
 
-Github Actions that help teams use the Lighthouse Internal Developer Hub
+Github Actions that help teams use the Ligthhouse Internal Developer Hub
 
 ## TechDocs Action
 

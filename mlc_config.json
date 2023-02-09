@@ -22,6 +22,11 @@
       ]
     }
   ],
+  "ignorePatterns": [
+    {
+      "pattern": "localhost"
+    }
+  ],
   "replacementPatterns": [
     {
       "pattern": "github.com/department-of-veterans-affairs/(?!.+/blob/.+)",
