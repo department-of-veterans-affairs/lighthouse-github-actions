@@ -1,4 +1,7 @@
 {
+  "aliveStatusCodes": [
+    403
+  ],
   "httpHeaders": [
     {
       "headers": {
@@ -37,8 +40,12 @@
       "replacement": "$1/contents/"
     },
     {
-      "pattern": "github.com/department-of-veterans-affairs/(?=.+/blob/.+)",
+      "pattern": "github.com/department-of-veterans-affairs/(?!.+/pkgs/.+)(?=.+/blob/.+)",
       "replacement": "raw.githubusercontent.com/department-of-veterans-affairs/"
+    },
+    {
+      "pattern": "github.com/([a-zA-Z-_.]+)(?=.+/blob/.+)",
+      "replacement": "raw.githubusercontent.com/$1"
     },
     {
       "pattern": "tree/main/",
