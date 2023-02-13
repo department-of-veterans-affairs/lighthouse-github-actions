@@ -33,7 +33,7 @@
   ],
   "replacementPatterns": [
     {
-      "pattern": "github.com/department-of-veterans-affairs/(?!.+/pkgs/.+)(?!.+/blob/.+)",
+      "pattern": "github.com/department-of-veterans-affairs/(?!.+/pull/.+)(?!.+/pkgs/.+)(?!.+/blob/.+)",
       "replacement": "api.github.com/repos/department-of-veterans-affairs/"
     },
     {
@@ -49,8 +49,16 @@
       "replacement": "raw.githubusercontent.com/$1"
     },
     {
+      "pattern": "tree/([a-zA-Z0-9-_.]+)$",
+      "replacement": "branches/$1"
+    },
+    {
       "pattern": "tree/main/",
       "replacement": "contents/"
+    },
+    {
+      "pattern": "/files$",
+      "replacement": ""
     },
     {
       "pattern": "/blob",
