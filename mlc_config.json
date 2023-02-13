@@ -1,6 +1,7 @@
 {
   "aliveStatusCodes": [
-    403
+    403,
+    200
   ],
   "httpHeaders": [
     {
