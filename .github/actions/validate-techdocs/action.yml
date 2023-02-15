@@ -42,7 +42,7 @@ runs:
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
-      uses: gaurav-nelson/github-action-markdown-link-check@1.0.13
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
         use-verbose-mode: 'yes'
         config-file: 'department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json'
