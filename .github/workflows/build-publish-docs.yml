@@ -28,6 +28,8 @@ jobs:
             -H "Authorization: token ${{ env.TOKEN }}" \
             https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
           fi
+          echo ${{ env.REPO }}
+          ls ./
           echo "branch=$branch" >> $GITHUB_OUTPUT
       - name: Check out target repository
         if: ${{ env.REPO != 'lighthouse-github-actions' }}
