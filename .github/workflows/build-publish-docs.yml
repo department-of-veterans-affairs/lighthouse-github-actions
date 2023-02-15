@@ -29,10 +29,12 @@ jobs:
             https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
           fi
           echo "branch=$branch" >> $GITHUB_OUTPUT
-      - uses: actions/checkout@v3
+      - name: Check out target repository
+        if: ${{ env.REPO != "lighthouse-github-actions" }}
+        uses: actions/checkout@v3
         with:
           repository: ${{ env.REPO }}
-          ref: "API-22542-ignore-link-patterns"
+          ref: ${{ steps.get-branch.outputs.branch }}
           token: ${{ env.TOKEN }}
           path: ${{ env.REPO }}
       - name: Validate techdocs
