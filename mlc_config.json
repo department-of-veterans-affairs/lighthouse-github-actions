@@ -1,4 +1,8 @@
 {
+  "aliveStatusCodes": [
+    403,
+    200
+  ],
   "httpHeaders": [
     {
       "headers": {
@@ -14,7 +18,8 @@
     {
       "headers": {
         "Accept": "application/vnd.github+json, application/vnd.github.object",
-        "Authorization": "token TOKEN"
+        "Authorization": "token TOKEN",
+        "X-Github-Api-Version": "2022-11-28"
       },
       "urls": [
         "https://api.github.com",
@@ -22,13 +27,22 @@
       ]
     }
   ],
+  "ignorePatterns": [
+    {
+      "pattern": "localhost"
+    }
+  ],
   "replacementPatterns": [
+    {
+      "pattern": "github.com/([a-zA-Z0-9-_.]+)/([a-zA-Z0-9-_.]+)/pkgs",
+      "replacement": "api.github.com/orgs/$1/packages"
+    },
     {
       "pattern": "github.com/department-of-veterans-affairs/(?!.+/blob/.+)",
       "replacement": "api.github.com/repos/department-of-veterans-affairs/"
     },
     {
-      "pattern": "(?<=department-of-veterans-affairs)([/]+[a-zA-Z-_.]+)[/]?$",
+      "pattern": "(?<=department-of-veterans-affairs)([/]+[a-zA-Z0-9-_.]+)[/]?$",
       "replacement": "$1/contents/"
     },
     {
@@ -36,8 +50,20 @@
       "replacement": "raw.githubusercontent.com/department-of-veterans-affairs/"
     },
     {
+      "pattern": "github.com/([a-zA-Z0-9-_.]+)(?=.+/blob/.+)",
+      "replacement": "raw.githubusercontent.com/$1"
+    },
+    {
+      "pattern": "tree/([a-zA-Z0-9-_.]+)$",
+      "replacement": "branches/$1"
+    },
+    {
       "pattern": "tree/main/",
       "replacement": "contents/"
+    },
+    {
+      "pattern": "pull/([0-9]+)/files$",
+      "replacement": "pulls/$1"
     },
     {
       "pattern": "/blob",
