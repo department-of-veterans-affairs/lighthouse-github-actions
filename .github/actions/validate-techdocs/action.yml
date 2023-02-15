@@ -14,6 +14,9 @@ inputs:
   token:
     description: "Personal Access token to pull source repository"
     required: false
+  test-token:
+    description: "Test token for package permissions"
+    required: false
   strict-mode:
     description: "Used to enable or disables strict flag for validation"
     default: "true"
@@ -35,7 +38,7 @@ runs:
       uses: sergeysova/jq-action@v2.2.1
       id: set-token
       with:
-        cmd: "jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json"
+        cmd: "jq --arg v 'token ${{ inputs.test-token }}' '.httpHeaders[] .headers.Authorization=$v' -r department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json"
         multiline: true
     - name: Create Link Checker Config
       run: |
