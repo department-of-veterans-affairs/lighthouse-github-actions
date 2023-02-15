@@ -29,10 +29,10 @@ jobs:
             https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
           fi
           echo ${{ env.REPO }}
-          ls ./
+          ls /
           echo "branch=$branch" >> $GITHUB_OUTPUT
       - name: Check out target repository
-        if: ${{ env.REPO != 'lighthouse-github-actions' }}
+        if: ${{ env.REPO != 'department-of-veterans-affairs/lighthouse-github-actions' }}
         uses: actions/checkout@v3
         with:
           repository: ${{ env.REPO }}
