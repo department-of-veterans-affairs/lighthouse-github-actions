@@ -34,7 +34,7 @@
   ],
   "replacementPatterns": [
     {
-      "pattern": "github.com/([a-zA-Z0-9-_]+)/([a-zA-Z0-9-_]+)/pkgs",
+      "pattern": "github.com/([a-zA-Z0-9-_.]+)/([a-zA-Z0-9-_.]+)/pkgs",
       "replacement": "api.github.com/orgs/$1/packages"
     },
     {
