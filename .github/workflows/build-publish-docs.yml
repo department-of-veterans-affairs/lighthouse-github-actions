@@ -30,7 +30,7 @@ jobs:
           fi
           echo "branch=$branch" >> $GITHUB_OUTPUT
       - name: Check out target repository
-        if: ${{ env.REPO != "lighthouse-github-actions" }}
+        if: ${{ env.REPO != 'lighthouse-github-actions' }}
         uses: actions/checkout@v3
         with:
           repository: ${{ env.REPO }}
