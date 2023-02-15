@@ -30,6 +30,9 @@
   "ignorePatterns": [
     {
       "pattern": "localhost"
+    },
+    {
+      "pattern": "github.com/department-of-veterans-affairs/(?=.+/settings/.+)"
     }
   ],
   "replacementPatterns": [
