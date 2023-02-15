@@ -3,7 +3,7 @@
 Markdown Link Checker Test Cases
 
 ## Links to Check
-[broken](http://github.com/nonexistent/file.txt)
+[broken](http://justabrokenlink.com)
 [Localhost](http://localhost:3000/provider-dashboard)
 [Outside DoVA](https://github.com/changesets/changesets/blob/main/docs/common-questions.md)
 [GH Packages Container](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/pkgs/container/lighthouse-developer-portal%2Fdevcontainer)
