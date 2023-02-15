@@ -28,11 +28,8 @@ jobs:
             -H "Authorization: token ${{ env.TOKEN }}" \
             https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
           fi
-          echo ${{ env.REPO }}
-          ls /
           echo "branch=$branch" >> $GITHUB_OUTPUT
       - name: Check out target repository
-        if: ${{ env.REPO != 'department-of-veterans-affairs/lighthouse-github-actions' }}
         uses: actions/checkout@v3
         with:
           repository: ${{ env.REPO }}
