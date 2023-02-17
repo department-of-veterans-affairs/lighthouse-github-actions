@@ -9,6 +9,7 @@ Markdown Link Checker Test Cases
 [Target Container Link](https://api.github.com/orgs/department-of-veterans-affairs/packages/container/lighthouse-github-actions%2Ftechdocs)
 [Target Container Link](https://api.github.com/orgs/department-of-veterans-affairs/packages/container/lighthouse-github-actions%252Ftechdocs)
 [Target Container Link](https://api.github.com/orgs/department-of-veterans-affairs/packages/container/lighthouse-github-actions/techdocs)
+[Test](https://api.github.com/users/department-of-veterans-affairs/packages/container/lighthouse-github-actions%2Ftechdocs)
 [Test](https%3A%2F%2Fapi.github.com%2Forgs%2Fdepartment-of-veterans-affairs%2Fpackages%2Fcontainer%2Flighthouse-github-actions%252Ftechdocs)
 [Branch](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/API-21492-releases-example)
 [Other branch](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/pull/328/files)
