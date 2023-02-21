@@ -32,13 +32,12 @@
     },
     {
       "pattern": "github.com/department-of-veterans-affairs/(?=.+/settings/.+)"
+    },
+    {
+      "pattern": "github.com/([a-zA-Z0-9-_.]+)/([a-zA-Z0-9-_.]+)/pkgs"
     }
   ],
   "replacementPatterns": [
-    {
-      "pattern": "github.com/([a-zA-Z0-9-_.]+)/([a-zA-Z0-9-_.]+)/pkgs",
-      "replacement": "api.github.com/orgs/$1/packages"
-    },
     {
       "pattern": "github.com/department-of-veterans-affairs/(?!.+/blob/.+)",
       "replacement": "api.github.com/repos/department-of-veterans-affairs/"
