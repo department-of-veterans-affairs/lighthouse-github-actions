@@ -67,6 +67,10 @@
       "replacement": "pulls/$1"
     },
     {
+      "pattern": "pull/([0-9]+)",
+      "replacement": "pulls/$1"
+    },
+    {
       "pattern": "/blob",
       "replacement": ""
     }
