@@ -16,5 +16,5 @@
 [org](https://github.com/department-of-veterans-affairs)
 [org2](https://github.com/dependabot/)
 [top-level repo](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal)
-[top-level repo /](https://github.com/department-of-veterans-affairs/lighthouse-developer-repo/)
+[top-level repo /](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/)
 [broke](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs/doesnt/exist)
