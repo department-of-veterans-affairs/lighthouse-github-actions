@@ -8,4 +8,4 @@ Github Actions that help teams use the Lighthouse Internal Developer Hub
 [pull](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/pull/206)
 [action](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/actions)
 [non-DOVA](https://github.com/bitnami/containers/tree/main/bitnami/memcached)
-[broke](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/scripts/broke/create-techdocs-job.sh)
+[broke](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/scripts/broke/create-techdocs-no-job.sh)
