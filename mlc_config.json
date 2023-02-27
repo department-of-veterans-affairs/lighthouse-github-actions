@@ -42,8 +42,8 @@
   ],
   "replacementPatterns": [
     {
-      "pattern": "github.com/department-of-veterans-affairs/(?!.+/blob/.+)",
-      "replacement": "api.github.com/repos/department-of-veterans-affairs/"
+      "pattern": "github.com/([a-zA-Z0-9-_.]+/)(?!.+/blob/.+)",
+      "replacement": "api.github.com/repos/$1"
     },
     {
       "pattern": "(?<=department-of-veterans-affairs)([/]+[a-zA-Z0-9-_.]+)[/]?$",
