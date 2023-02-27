@@ -46,7 +46,7 @@ runs:
       with:
         owner: "department-of-veterans-affairs"
         repo: "lighthouse-github-actions"
-        ref: ${{ github.ref }}
+        ref: "API-22542-add-replacement-patterns"
         pat: ${{ inputs.token }}
         user: ${{ github.repository_owner }}
         sha: ${{ github.sha }}

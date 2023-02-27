@@ -44,7 +44,7 @@ jobs:
           repository: department-of-veterans-affairs/lighthouse-github-actions
           path: department-of-veterans-affairs/lighthouse-github-actions
           token: ${{ secrets.TECHDOCS_PAT }}
-          ref: main
+          ref: API-22542-add-replacement-patterns
       - name: Validate techdocs
         id: validation
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@API-22542-add-replacement-patterns
