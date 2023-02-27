@@ -25,6 +25,11 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Check condition
+      if: ${{ inputs.repository }} != 'department-of-veterans-affairs/lighthouse-github-actions'
+      run: |
+        echo ${{ inputs.repository }}
+      shell: bash
     - name: Checkout Github Actions Repo
       if: inputs.repository != 'department-of-veterans-affairs/lighthouse-github-actions'
       uses: actions/checkout@v3
