@@ -36,6 +36,13 @@ jobs:
           ref: ${{ steps.get-branch.outputs.branch }}
           token: ${{ env.TOKEN }}
           path: ${{ env.REPO }}
+      - name: Check out Github Actions repository
+        if: ${{ inputs.repository }} != 'department-of-veterans-affairs/lighthouse-github-actions'
+        uses: actions/checkout@v3
+        with:
+          repository: department-of-veterans-affairs/lighthouse-github-actions
+          path: department-of-veterans-affairs/lighthouse-github-actions
+          ref: API-22542-add-replacement-patterns
       - name: Validate techdocs
         id: validation
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@API-22542-add-replacement-patterns
