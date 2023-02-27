@@ -58,8 +58,8 @@
       "replacement": "$1/contents$2"
     },
     {
-      "pattern": "(?<=department-of-veterans-affairs)([/]+[a-zA-Z0-9-_.]+)[/]?$",
-      "replacement": "$1/contents/"
+      "pattern": "(api.github.com/repos/[a-zA-Z_-]+[/]+[a-zA-Z0-9-_.]+)[/]?$",
+      "replacement": "$1/contents"
     },
     {
       "pattern": "tree/([a-zA-Z0-9-_.]+)$",

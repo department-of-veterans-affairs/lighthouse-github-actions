@@ -14,5 +14,7 @@
 [settings](https://github.com/settings/codespaces)
 [features](https://github.com/features/codespaces)
 [org](https://github.com/department-of-veterans-affairs)
-[org2](https://github.com/dependabot)
+[org2](https://github.com/dependabot/)
+[top-level repo](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal)
+[top-level repo /](https://github.com/department-of-veterans-affairs/lighthouse-developer-repo/)
 [broke](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs/doesnt/exist)
