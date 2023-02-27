@@ -7,4 +7,6 @@
 [test5](https://github.com/backstage/backstage/tree/master/plugins/api-docs#custom-api-renderings)
 [test6](https://github.com/jsdoc/jsdoc)
 [test7](https://github.com/backstage/backstage/tree/master/plugins/catalog-import)
+[test8](https://github.com/changesets/changesets/blob/main/docs/common-questions.md)
+[test9](https://github.com/changesets/changesets)
 [broke](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/tree/main/docs/doesnt/exist)

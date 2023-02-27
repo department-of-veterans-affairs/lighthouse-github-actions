@@ -50,12 +50,8 @@
       "replacement": "$1/contents/"
     },
     {
-      "pattern": "github.com/department-of-veterans-affairs/(?=.+/blob/.+)",
-      "replacement": "raw.githubusercontent.com/department-of-veterans-affairs/"
-    },
-    {
-      "pattern": "github.com/([a-zA-Z0-9-_.]+)(?=.+/blob/.+)",
-      "replacement": "raw.githubusercontent.com/$1"
+      "pattern": "https://github.com/((?!orgs|repos)[a-zA-Z0-9_-]+)(?=.+/blob/.+)",
+      "replacement": "https://raw.githubusercontent.com/$1"
     },
     {
       "pattern": "tree/([a-zA-Z0-9-_.]+)$",
@@ -66,11 +62,7 @@
       "replacement": "contents/"
     },
     {
-      "pattern": "pull/([0-9]+)/files$",
-      "replacement": "pulls/$1"
-    },
-    {
-      "pattern": "pull/([0-9]+)",
+      "pattern": "pull/([0-9]+).*",
       "replacement": "pulls/$1"
     },
     {
