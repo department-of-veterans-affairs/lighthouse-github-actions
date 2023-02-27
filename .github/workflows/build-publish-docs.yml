@@ -37,7 +37,7 @@ jobs:
           token: ${{ env.TOKEN }}
           path: ${{ env.REPO }}
       - name: Check out Github Actions repository
-        if: ${{ inputs.repository }} != 'department-of-veterans-affairs/lighthouse-github-actions'
+        if: ${{ env.REPO }} != 'department-of-veterans-affairs/lighthouse-github-actions'
         uses: actions/checkout@v3
         with:
           repository: department-of-veterans-affairs/lighthouse-github-actions
