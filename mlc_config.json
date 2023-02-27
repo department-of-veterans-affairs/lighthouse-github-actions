@@ -62,7 +62,7 @@
       "replacement": "branches/$1"
     },
     {
-      "pattern": "tree/main/",
+      "pattern": "tree/(main|master)/",
       "replacement": "contents/"
     },
     {
