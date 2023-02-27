@@ -42,15 +42,19 @@
   ],
   "replacementPatterns": [
     {
-      "pattern": "https://github.com/((?!orgs|repos)[a-zA-Z0-9_-]+)(?!.+/blob/.+)",
+      "pattern": "https://github.com/((?!orgs|repos|marketplace|enterprise|settings|features)[a-zA-Z0-9_-]+)(?!.+/blob/.+)",
       "replacement": "https://api.github.com/repos/$1"
+    },
+    {
+      "pattern": "https://api.github.com/(?=[a-zA-Z-_.]+/*$)",
+      "replacement": "https://api.github.com/orgs"
     },
     {
       "pattern": "(?<=department-of-veterans-affairs)([/]+[a-zA-Z0-9-_.]+)[/]?$",
       "replacement": "$1/contents/"
     },
     {
-      "pattern": "https://github.com/((?!orgs|repos)[a-zA-Z0-9_-]+)(?=.+/blob/.+)",
+      "pattern": "https://github.com/((?!orgs|repos|marketplace|enterprise|settings|features)[a-zA-Z0-9_-]+)(?=.+/blob/.+)",
       "replacement": "https://raw.githubusercontent.com/$1"
     },
     {
@@ -58,8 +62,12 @@
       "replacement": "branches/$1"
     },
     {
-      "pattern": "tree/(main|master)/",
+      "pattern": "tree/(main|master|trunk)/",
       "replacement": "contents/"
+    },
+    {
+      "pattern": "/commit/",
+      "replacement": "/commits/"
     },
     {
       "pattern": "pull/([0-9]+).*",
