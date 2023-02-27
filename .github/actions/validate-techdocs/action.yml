@@ -25,13 +25,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout Github Actions Repo
-      if: ${{ inputs.repository != 'department-of-veterans-affairs/lighthouse-github-actions' }}
-      uses: actions/checkout@v3
-      with:
-        repository: department-of-veterans-affairs/lighthouse-github-actions
-        path: department-of-veterans-affairs/lighthouse-github-actions
-        ref: main
     - name: Set AuthZ token in link checker config
       uses: sergeysova/jq-action@v2.2.1
       id: set-token

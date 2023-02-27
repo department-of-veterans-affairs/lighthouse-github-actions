@@ -34,36 +34,35 @@
       "pattern": "github.com/department-of-veterans-affairs/(?=.+/settings/.+)"
     },
     {
-      "pattern": "github.com/([a-zA-Z0-9-_.]+)/([a-zA-Z0-9-_.]+)/pkgs"
+      "pattern": "github.com(?=.+/pkgs)"
+    },
+    {
+      "pattern": "github.com(?=.+/actions$)"
     }
   ],
   "replacementPatterns": [
     {
-      "pattern": "github.com/department-of-veterans-affairs/(?!.+/blob/.+)",
-      "replacement": "api.github.com/repos/department-of-veterans-affairs/"
+      "pattern": "https://github.com/((?!orgs|repos)[a-zA-Z0-9_-]+)(?!.+/blob/.+)",
+      "replacement": "https://api.github.com/repos/$1"
     },
     {
       "pattern": "(?<=department-of-veterans-affairs)([/]+[a-zA-Z0-9-_.]+)[/]?$",
       "replacement": "$1/contents/"
     },
     {
-      "pattern": "github.com/department-of-veterans-affairs/(?=.+/blob/.+)",
-      "replacement": "raw.githubusercontent.com/department-of-veterans-affairs/"
-    },
-    {
-      "pattern": "github.com/([a-zA-Z0-9-_.]+)(?=.+/blob/.+)",
-      "replacement": "raw.githubusercontent.com/$1"
+      "pattern": "https://github.com/((?!orgs|repos)[a-zA-Z0-9_-]+)(?=.+/blob/.+)",
+      "replacement": "https://raw.githubusercontent.com/$1"
     },
     {
       "pattern": "tree/([a-zA-Z0-9-_.]+)$",
       "replacement": "branches/$1"
     },
     {
-      "pattern": "tree/main/",
+      "pattern": "tree/(main|master)/",
       "replacement": "contents/"
     },
     {
-      "pattern": "pull/([0-9]+)/files$",
+      "pattern": "pull/([0-9]+).*",
       "replacement": "pulls/$1"
     },
     {
