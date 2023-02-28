@@ -1,7 +1,8 @@
 {
   "aliveStatusCodes": [
     403,
-    200
+    200,
+    503
   ],
   "httpHeaders": [
     {
@@ -42,7 +43,7 @@
   ],
   "replacementPatterns": [
     {
-      "pattern": "https://github.com/([a-zA-Z-_.]+)/?$",
+      "pattern": "https://github.com/((?!orgs|repos|marketplace|enterprise|settings|features)[a-zA-Z0-9-_.]+)/?$",
       "replacement": "https://api.github.com/orgs/$1"
     },
     {
