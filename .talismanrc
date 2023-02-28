@@ -1,3 +1,3 @@
 fileignoreconfig:
-- filename: .github/actions/techdocs/scripts/create-dockerconfigjson.sh
-  checksum: ef1368b1f165b4ab4501954373a6aea182cce04bea6b771965e71cfa2b7678fd
+- filename: linktests.md
+  checksum: 8de703c443efb0fc77f3d3c93a482be812f183cf6036c765f6615f556eb3ec65
