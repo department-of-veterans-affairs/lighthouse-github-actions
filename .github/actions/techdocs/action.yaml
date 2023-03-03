@@ -123,7 +123,7 @@ runs:
         repository: department-of-veterans-affairs/lighthouse-developer-portal
         path: department-of-veterans-affairs/lighthouse-developer-portal
         ref: main
-        token: ${{ secrets.TECHDOCS_PAT }}
+        token: ${{ inputs.token }}
     - name: Get Techdocs Job status
       uses: department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success@main
       with:
