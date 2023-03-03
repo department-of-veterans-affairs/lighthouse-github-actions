@@ -117,6 +117,7 @@ runs:
         GITHUB_USER: ${{ inputs.username }}
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
       shell: bash
-    - name: Techdocs Job status
-      run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/techdocs-job-status.sh) "${{ inputs.repository }}"
-      shell: bash
+    - name: Get Techdocs Job status
+      uses: department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success@main
+      with:
+        job-name: 'td-${{ github.repository }}-${{ github.ref_head }}'
