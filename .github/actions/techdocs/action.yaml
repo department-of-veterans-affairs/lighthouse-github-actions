@@ -1,3 +1,8 @@
+    - name: Get Techdocs Job status
+      uses: department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success@main
+      with:
+        job-name: 'td-${{ github.repository }}-main'
+
 name: "Publish Techdocs"
 description: "Generates and publishes techdocs using kubernetes job"
 inputs:
@@ -117,14 +122,3 @@ runs:
         GITHUB_USER: ${{ inputs.username }}
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
       shell: bash
-    - name: Checkout lighthouse-developer-portal
-      uses: actions/checkout@v3
-      with:
-        repository: department-of-veterans-affairs/lighthouse-developer-portal
-        path: department-of-veterans-affairs/lighthouse-developer-portal
-        ref: main
-        token: ${{ inputs.token }}
-    - name: Get Techdocs Job status
-      uses: department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success@main
-      with:
-        job-name: 'td-${{ github.repository }}-${{ github.ref_head }}'
