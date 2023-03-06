@@ -124,10 +124,10 @@ runs:
         repository: department-of-veterans-affairs/lighthouse-developer-portal
         path: department-of-veterans-affairs/lighthouse-developer-portal
         ref: main
-        token: ${{ inputs.TOKEN }}
+        token: ${{ inputs.token }}
     - name: Get repo name
       run: |
-        echo "REPO_NAME=${{ env.REPO#*/ }}" >> $GITHUB_ENV
+        echo "REPO_NAME=${{ inputs.repository#*/ }}" >> $GITHUB_ENV
       shell: bash
     - name: Await K8s job success
       uses: ./department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success
