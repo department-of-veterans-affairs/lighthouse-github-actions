@@ -98,7 +98,7 @@ jobs:
           ref: main
           token: ${{ secrets.TECHDOCS_PAT }}
       - name: Await K8s job success
-        uses: ./department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success@main
+        uses: ../../department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success@main
         with:
           job-name: 'td-${{ github.repository }}-main'
   deploy-gh-pages:
