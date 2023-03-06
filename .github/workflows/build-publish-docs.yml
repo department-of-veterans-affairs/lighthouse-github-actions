@@ -83,7 +83,7 @@ jobs:
           PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
     if: ${{ github.event.client_payload.inputs.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
-    needs: [get-techdocs-job-status]
+    needs: [build-techdocs]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
