@@ -58,7 +58,7 @@ spec:
       serviceAccountName: ${service_account_name}
       initContainers:
       - name: git-sync
-        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/git-sync:23.02.3
+        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/git-sync:edge
         command: ['/git-sync']
         args: ${git_sync_args}
         volumeMounts:
