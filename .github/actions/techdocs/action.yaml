@@ -104,6 +104,10 @@ runs:
         GITHUB_USER: ${{ github.repository_owner }}
         branch: ${{ steps.get-branch.outputs.branch }}
       shell: bash
+    - name: Delete existing K8s jobs
+      uses: ./department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/delete-existing-k8s-job
+      with:
+        job-name: 'td-${{ env.REPO_NAME }}-${{ steps.get-branch.outputs.branch }}'
     - name: Create techdocs Job
       run: >
         bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/api-24511-refactor-techdocs-job-status/scripts/create-techdocs-job.sh)
@@ -128,10 +132,6 @@ runs:
       run: |
         echo "REPO_NAME=$(basename ${{ inputs.repository }})" >> $GITHUB_ENV
       shell: bash
-    - name: Delete existing K8s jobs
-      uses: ./department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/delete-existing-k8s-job
-      with:
-        job-name: 'td-${{ env.REPO_NAME }}-${{ steps.get-branch.outputs.branch }}'
     - name: Await K8s job success
       uses: ./department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success
       with:
