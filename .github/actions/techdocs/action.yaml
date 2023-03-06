@@ -117,7 +117,6 @@ runs:
         GITHUB_USER: ${{ inputs.username }}
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
       shell: bash
-        get-techdocs-job-status:
     - name: Checkout lighthouse-developer-portal
       uses: actions/checkout@v3
       with:
