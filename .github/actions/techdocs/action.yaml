@@ -104,6 +104,13 @@ runs:
         GITHUB_USER: ${{ github.repository_owner }}
         branch: ${{ steps.get-branch.outputs.branch }}
       shell: bash
+    - name: Checkout lighthouse-developer-portal
+      uses: actions/checkout@v3
+      with:
+        repository: department-of-veterans-affairs/lighthouse-developer-portal
+        path: department-of-veterans-affairs/lighthouse-developer-portal
+        ref: main
+        token: ${{ inputs.token }}
     - name: Delete existing K8s jobs
       uses: ./department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/delete-existing-k8s-job
       with:
@@ -121,13 +128,6 @@ runs:
         GITHUB_USER: ${{ inputs.username }}
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
       shell: bash
-    - name: Checkout lighthouse-developer-portal
-      uses: actions/checkout@v3
-      with:
-        repository: department-of-veterans-affairs/lighthouse-developer-portal
-        path: department-of-veterans-affairs/lighthouse-developer-portal
-        ref: main
-        token: ${{ inputs.token }}
     - name: Get repo name
       run: |
         echo "REPO_NAME=$(basename ${{ inputs.repository }})" >> $GITHUB_ENV
