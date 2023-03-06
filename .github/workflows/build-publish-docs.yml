@@ -46,7 +46,7 @@ jobs:
           ref: main
       - name: Validate techdocs
         id: validation
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@main
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@api-24511-refactor-techdocs-job-status
         with:
           repository: ${{ env.REPO }}
           descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
@@ -56,6 +56,7 @@ jobs:
       - name: Validation results
         run: |
           echo "${{ steps.validation.outputs.results }}"
+          echo "${{ steps.get-branch.outputs.branch }}"
   build-techdocs:
     needs: [validate-techdocs]
     runs-on: ubuntu-latest
