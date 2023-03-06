@@ -36,13 +36,6 @@ jobs:
           ref: ${{ steps.get-branch.outputs.branch }}
           token: ${{ env.TOKEN }}
           path: ${{ env.REPO }}
-      - name: Checkout lighthouse-developer-portal
-        uses: actions/checkout@v3
-        with:
-          repository: department-of-veterans-affairs/lighthouse-developer-portal
-          path: department-of-veterans-affairs/lighthouse-developer-portal
-          ref: main
-          token: ${{ secrets.TECHDOCS_PAT }}
       - name: Check out Github Actions repository
         if: ${{ env.REPO != 'department-of-veterans-affairs/lighthouse-github-actions' }}
         uses: actions/checkout@v3
@@ -97,8 +90,15 @@ jobs:
     environment:
       name: ${{ matrix.environment}}
     steps:
+      - name: Checkout lighthouse-developer-portal
+        uses: actions/checkout@v3
+        with:
+          repository: department-of-veterans-affairs/lighthouse-developer-portal
+          path: department-of-veterans-affairs/lighthouse-developer-portal
+          ref: main
+          token: ${{ secrets.TECHDOCS_PAT }}
       - name: Await K8s job success
-        uses: department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success@main
+        uses: ./department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success@main
         with:
           job-name: 'td-${{ github.repository }}-main'
   deploy-gh-pages:
