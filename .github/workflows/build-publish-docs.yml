@@ -88,9 +88,22 @@ jobs:
           token: ${{ secrets.TECHDOCS_PAT }}
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ env.TOKEN }}
+  get-techdocs-job-status:
+    needs: [build-techdocs]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [Development, Production]
+      environment:
+        name: ${{ matrix.environment}}
+      steps:
+        - name: Await K8s job success
+          uses: department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success@main
+          with:
+            job-name: 'td-${{ github.repository }}-main'
   deploy-gh-pages:
     if: ${{ github.event.client_payload.inputs.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
-    needs: [validate-techdocs]
+    needs: [get-techdocs-job-status]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

@@ -117,7 +117,3 @@ runs:
         GITHUB_USER: ${{ inputs.username }}
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
       shell: bash
-    - name: Get Techdocs Job status
-      uses: department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success@main
-      with:
-        job-name: 'td-${{ github.repository }}-main'
