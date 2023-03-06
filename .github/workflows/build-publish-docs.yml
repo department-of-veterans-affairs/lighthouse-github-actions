@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        environment: [Development, Production]
+        environment: [Development]
     environment:
       name: ${{ matrix.environment }}
     steps:
