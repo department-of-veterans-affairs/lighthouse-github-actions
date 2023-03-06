@@ -6,7 +6,7 @@ install_jquery_techdocs_cli() {
 }
 
 install_mkdocs() {
-  pip install --no-cache-dir --upgrade pip==22.2.2 && pip install \
+  pip install --upgrade 'pip>=23.0.1' && pip install \
     'mkdocs>=1.3.1' \
     'mkdocs-material>=8.1.11' \
     'mkdocs-monorepo-plugin>=1.0.3' \

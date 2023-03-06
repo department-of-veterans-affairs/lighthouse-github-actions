@@ -69,8 +69,13 @@ spec:
             cpu: 300m
             memory: 450Mi
       containers:
+<<<<<<< HEAD
       - name: techdocs
         image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/techdocs:9d372eafca1258904d4a589c61f07726c3dd9f6f
+=======
+      - name: td-${repo}-${branch}
+        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/techdocs:23.02.3
+>>>>>>> [API-24511] Upgraded pip version
         imagePullPolicy: Always
         command: ['/bin/sh']
         args:
