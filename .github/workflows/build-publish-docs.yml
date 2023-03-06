@@ -3,7 +3,7 @@ on:
   repository_dispatch:
     types: [techdocs]
   push:
-    branches: [main]
+    branches: [main, api-24511-refactor-techdocs-job-status]
     paths: ["**/*.md", "**/mkdocs.yaml"]
   workflow_dispatch:
 env:
