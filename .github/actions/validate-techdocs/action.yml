@@ -51,6 +51,9 @@ runs:
         echo "${args}"
         echo "::set-output name=args::${args}"
       shell: bash
+    - name: Check for mkdocs.yml
+      run: |
+        ls department-of-veterans-affairs/lighthouse-github-actions | grep mkdocs
     - name: Run validation script
       id: validation
       env:
