@@ -53,7 +53,9 @@ runs:
       shell: bash
     - name: Check for mkdocs.yml
       run: |
+        echo ${{ inputs.repository }}
         cd ${{ inputs.repository }}
+        ls
       shell: bash
     - name: Run validation script
       id: validation
