@@ -79,6 +79,7 @@ runs:
       shell: bash
     - name: Check for errors
       run: |
+        echo "${{ steps.validation.outputs.RESULTS }}"
         if echo "${{ steps.validation.outputs.RESULTS }}" | grep -i "error"; then
           if echo "${{ steps.validation.outputs.RESULTS }}" | grep -i "failed to run plantuml"; then
             echo -e "Validation Error: Unable to create diagram with Plantuml.\nMake sure to use the @startuml and @enduml notation."
