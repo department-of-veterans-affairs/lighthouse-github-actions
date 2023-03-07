@@ -53,7 +53,7 @@ runs:
       shell: bash
     - name: Check for mkdocs.yml
       run: |
-        ls department-of-veterans-affairs/lighthouse-github-actions | grep mkdocs
+        cd ${{ inputs.repository }}
       shell: bash
     - name: Run validation script
       id: validation
