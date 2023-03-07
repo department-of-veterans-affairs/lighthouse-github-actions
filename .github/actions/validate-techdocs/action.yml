@@ -54,6 +54,7 @@ runs:
     - name: Check for mkdocs.yml
       run: |
         ls department-of-veterans-affairs/lighthouse-github-actions | grep mkdocs
+      shell: bash
     - name: Run validation script
       id: validation
       env:
