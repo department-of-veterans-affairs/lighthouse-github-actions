@@ -138,3 +138,4 @@ runs:
       uses: ./department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success
       with:
         job-name: 'td-${{ env.REPO_NAME }}-${{ steps.get-branch.outputs.branch }}'
+        container-name: techdocs
