@@ -1,6 +1,5 @@
 plugins: [techdocs-core]
 repo_url: https://github.com/department-of-veterans-affairs/lighthouse-github-actions
-docs_dir: /department-of-veterans-affairs/lighthouse-github-actions/docs
 site_name: Lighthouse Github Actions Documentation
 markdown_extensions:
   - pymdownx.snippets:
