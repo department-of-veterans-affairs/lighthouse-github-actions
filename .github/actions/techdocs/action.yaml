@@ -111,6 +111,10 @@ runs:
         path: department-of-veterans-affairs/lighthouse-developer-portal
         ref: main
         token: ${{ inputs.token }}
+    - name: Get repo name
+      run: |
+        echo "REPO_NAME=$(basename ${{ inputs.repository }})" >> $GITHUB_ENV
+      shell: bash
     - name: Delete existing K8s jobs
       id: delete-jobs
       uses: ./department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/delete-existing-k8s-job
@@ -129,10 +133,6 @@ runs:
         GITHUB_TOKEN: ${{ inputs.token }}
         GITHUB_USER: ${{ inputs.username }}
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
-      shell: bash
-    - name: Get repo name
-      run: |
-        echo "REPO_NAME=$(basename ${{ inputs.repository }})" >> $GITHUB_ENV
       shell: bash
     - name: Await K8s job success
       uses: ./department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success
