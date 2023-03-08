@@ -64,6 +64,7 @@ runs:
         TOKEN: ${{ inputs.token }}
         ARGS: ${{ steps.args.outputs.args }}
       run: |
+        cd ${{ inputs.repository }}
         /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/api-24511-refactor-techdocs-job-status/scripts/validate-techdocs.sh)
         pip list | grep mkdocs
       shell: bash
