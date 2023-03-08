@@ -51,10 +51,6 @@ runs:
         echo "${args}"
         echo "::set-output name=args::${args}"
       shell: bash
-    - name: Check for mkdocs.yml
-      run: |
-        cp ${{ inputs.repository }}/mkdocs.yml ./
-      shell: bash
     - name: Run validation script
       id: validation
       env:
@@ -64,6 +60,7 @@ runs:
         TOKEN: ${{ inputs.token }}
         ARGS: ${{ steps.args.outputs.args }}
       run: |
+        cp ${{ inputs.repository }}/mkdocs.yml ./
         cd ${{ inputs.repository }}
         /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/api-24511-refactor-techdocs-job-status/scripts/validate-techdocs.sh)
         pip list | grep mkdocs
