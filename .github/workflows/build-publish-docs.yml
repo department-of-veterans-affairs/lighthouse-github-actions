@@ -6,7 +6,7 @@ on:
     branches:
       - main
       - api-24511-refactor-techdocs-job-status
-    paths: ["**/*.md", "**/mkdocs.yaml"]
+    paths: ["**/*.md", "**/mkdocs.yml"]
   workflow_dispatch:
 env:
   REPO: ${{ github.event.client_payload.inputs.repository != '' && github.event.client_payload.inputs.repository || github.repository }}
