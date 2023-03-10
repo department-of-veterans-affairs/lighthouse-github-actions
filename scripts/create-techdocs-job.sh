@@ -90,7 +90,6 @@ spec:
         - -c
         - |
           cd /tmp/git/${repo} || exit 1
-          sed -i 's/backstage.io\/techdocs-ref: dir:.\//backstage.io\/techdocs-ref: dir:./g' catalog-info.yaml
           ${techdocs_generate_args}
           ${techdocs_publish_args}
         volumeMounts:
