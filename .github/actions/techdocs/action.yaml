@@ -79,7 +79,7 @@ runs:
       id: entity
       run: |
         bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/entity-triplet.sh)
-        echo "${namespace}/${kind}/${name}""
+        echo "${namespace}/${kind}/${name}"
       env:
         BASE_PATH: ${{ github.workspace }}
         FILE: ${{ inputs.descriptor-file }}
