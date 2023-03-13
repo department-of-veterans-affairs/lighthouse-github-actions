@@ -18,7 +18,6 @@ create_ghcr_secrets() {
   repo_name=${1##*/}
   gh_user=${2}
   gh_token=${3}
-  echo "$repo_name $gh_user"
   local secret_args
   secret_args="td-${repo_name}-${branch}-secrets --save-config --dry-run=client --docker-server=ghcr.io --docker-username=${gh_user} --docker-password=${gh_token}"
   kubectl create secret docker-registry ${secret_args} -o yaml | kubectl apply -f -
