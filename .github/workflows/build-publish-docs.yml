@@ -4,7 +4,7 @@ on:
     types: [techdocs]
   push:
     branches: [main]
-    paths: ["**/*.md", "**/mkdocs.yaml"]
+    paths: ["**/*.md", "**/*.yaml"]
   workflow_dispatch:
 env:
   REPO: ${{ github.event.client_payload.inputs.repository != '' && github.event.client_payload.inputs.repository || github.repository }}
@@ -22,8 +22,13 @@ jobs:
         id: get-branch
         run: |
           branch="${{ github.event.client_payload.inputs.branch }}"
-          if [ "$branch" == "" ]; then "branch=${{ github.event.client_payload.github.event.repository.default_branch }}"; fi
-          echo "branch=${branch}" >> $GITHUB_OUTPUT
+          if [ "$branch" == "" ]; then
+            branch=$(curl \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: token ${{ env.TOKEN }}" \
+            https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
+          fi
+          echo "branch=$branch" >> $GITHUB_OUTPUT
         shell: bash
       - name: Check out target repository
         uses: actions/checkout@v3
