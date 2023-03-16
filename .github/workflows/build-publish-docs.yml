@@ -3,7 +3,7 @@ on:
   repository_dispatch:
     types: [techdocs]
   push:
-    branches: [main]
+    branches: [main, API-25012_refactor-techdocs-actions]
     paths: ["**/*.md", "**/*.yaml"]
   workflow_dispatch:
 env:
@@ -66,8 +66,7 @@ jobs:
     environment:
       name: ${{ matrix.environment }}
     steps:
-      - name: ${{ github.event.client_payload.github.sha }}
-        run: echo "${{ github.event.client_payload.github.sha }}"
+      - uses: actions/checkout@v3
       - name: Create techdocs
         if: ${{ matrix.environment == 'Development' || ( github.event.client_payload.inputs.enable-production != 'false' && matrix.environment == 'Production' ) }}
         uses: ./.github/actions/techdocs
