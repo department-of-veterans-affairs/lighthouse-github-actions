@@ -11,54 +11,54 @@ env:
   TOKEN: ${{ github.event.client_payload.inputs.token != '' && github.event.client_payload.inputs.token || secrets.TECHDOCS_PAT }}
   NAMESPACE: ${{ github.event.client_payload.inputs.namespace != '' &&  github.event.client_payload.inputs.namespace || secrets.KUBE_NAMESPACE }}
 jobs:
-  validate-techdocs:
-    runs-on: ubuntu-latest
-    outputs:
-      branch: ${{ steps.get-branch.outputs.branch }}
-    steps:
-      - name: ${{ github.event.client_payload.github.sha }} # Used to return success or fail to the source repo
-        run: echo "${{ github.event.client_payload.github.sha }}"
-      - name: Setup branch
-        id: get-branch
-        run: |
-          branch="${{ github.event.client_payload.inputs.branch }}"
-          if [ "$branch" == "" ]; then
-            branch=$(curl \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: token ${{ env.TOKEN }}" \
-            https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
-          fi
-          echo "branch=$branch" >> $GITHUB_OUTPUT
-        shell: bash
-      - name: Check out target repository
-        uses: actions/checkout@v3
-        with:
-          repository: ${{ env.REPO }}
-          ref: ${{ steps.get-branch.outputs.branch }}
-          token: ${{ env.TOKEN }}
-          path: ${{ env.REPO }}
-      - name: Check out Github Actions repository
-        if: ${{ env.REPO != 'department-of-veterans-affairs/lighthouse-github-actions' }}
-        uses: actions/checkout@v3
-        with:
-          repository: department-of-veterans-affairs/lighthouse-github-actions
-          path: department-of-veterans-affairs/lighthouse-github-actions
-          token: ${{ secrets.TECHDOCS_PAT }}
-          ref: main
-      - name: Validate techdocs
-        id: validation
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@main
-        with:
-          repository: ${{ env.REPO }}
-          descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
-          namespace: ${{ env.NAMESPACE }}
-          token: ${{ env.TOKEN }}
-          strict-mode: ${{ github.event.client_payload.inputs.strict-mode }}
-      - name: Validation results
-        run: |
-          echo "${{ steps.validation.outputs.results }}"
+  # validate-techdocs:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     branch: ${{ steps.get-branch.outputs.branch }}
+  #   steps:
+  #     - name: ${{ github.event.client_payload.github.sha }} # Used to return success or fail to the source repo
+  #       run: echo "${{ github.event.client_payload.github.sha }}"
+  #     - name: Setup branch
+  #       id: get-branch
+  #       run: |
+  #         branch="${{ github.event.client_payload.inputs.branch }}"
+  #         if [ "$branch" == "" ]; then
+  #           branch=$(curl \
+  #           -H "Accept: application/vnd.github+json" \
+  #           -H "Authorization: token ${{ env.TOKEN }}" \
+  #           https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
+  #         fi
+  #         echo "branch=$branch" >> $GITHUB_OUTPUT
+  #       shell: bash
+  #     - name: Check out target repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         repository: ${{ env.REPO }}
+  #         ref: ${{ steps.get-branch.outputs.branch }}
+  #         token: ${{ env.TOKEN }}
+  #         path: ${{ env.REPO }}
+  #     - name: Check out Github Actions repository
+  #       if: ${{ env.REPO != 'department-of-veterans-affairs/lighthouse-github-actions' }}
+  #       uses: actions/checkout@v3
+  #       with:
+  #         repository: department-of-veterans-affairs/lighthouse-github-actions
+  #         path: department-of-veterans-affairs/lighthouse-github-actions
+  #         token: ${{ secrets.TECHDOCS_PAT }}
+  #         ref: main
+  #     - name: Validate techdocs
+  #       id: validation
+  #       uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@main
+  #       with:
+  #         repository: ${{ env.REPO }}
+  #         descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
+  #         namespace: ${{ env.NAMESPACE }}
+  #         token: ${{ env.TOKEN }}
+  #         strict-mode: ${{ github.event.client_payload.inputs.strict-mode }}
+  #     - name: Validation results
+  #       run: |
+  #         echo "${{ steps.validation.outputs.results }}"
   build-techdocs:
-    needs: [validate-techdocs]
+    # needs: [validate-techdocs]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -77,7 +77,6 @@ jobs:
           descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
-          namespace: ${{ env.NAMESPACE }}
           PAT: ${{ env.TOKEN }}
           repo-short-name: ${{ github.event.repository.name }}
           repository: ${{ env.REPO }}
@@ -85,7 +84,7 @@ jobs:
           token: ${{ secrets.TECHDOCS_PAT }}
   deploy-gh-pages:
     if: ${{ github.event.client_payload.inputs.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
-    needs: [validate-techdocs]
+    # needs: [validate-techdocs]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

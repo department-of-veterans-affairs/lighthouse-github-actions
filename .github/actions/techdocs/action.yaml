@@ -63,17 +63,17 @@ runs:
       id: get-entity-kind
       uses: mikefarah/yq@master
       with:
-        cmd: yq '.kind' ${{ inputs.descriptor-file }}
+        cmd: yq eval '.kind' ${{ inputs.descriptor-file }}
     - name: Get entity name
       id: get-entity-name
       uses: mikefarah/yq@master
       with:
-        cmd: yq '.metadata.name' ${{ inputs.descriptor-file }}
+        cmd: yq eval '.metadata.name' ${{ inputs.descriptor-file }}
     - name: Get entity name
       id: get-entity-namespace
       uses: mikefarah/yq@master
       with:
-        cmd: yq '.metadata.namespace' ${{ inputs.descriptor-file }}
+        cmd: yq eval '.metadata.namespace' ${{ inputs.descriptor-file }}
     - name: Create Dockerconfigjson
       run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-dockerconfigjson.sh) "${{ inputs.repository }}"
       env:
