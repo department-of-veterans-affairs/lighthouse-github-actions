@@ -119,7 +119,7 @@ runs:
       id: delete-jobs
       uses: ./department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/delete-existing-k8s-job
       with:
-        job-name: 'td-${{ env.REPO_NAME }}-${{ steps.get-branch.outputs.branch }}'
+        job-name: 'td-${{ env.REPO_NAME }}'
     - name: Create techdocs Job
       if: ${{ steps.delete-jobs.outcome == 'success'}}
       run: >
@@ -137,5 +137,5 @@ runs:
     - name: Await K8s job success
       uses: ./department-of-veterans-affairs/lighthouse-developer-portal/.github/actions/await-k8s-job-success
       with:
-        job-name: 'td-${{ env.REPO_NAME }}-${{ steps.get-branch.outputs.branch }}'
+        job-name: 'td-${{ env.REPO_NAME }}'
         container-name: techdocs

@@ -46,13 +46,13 @@ cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: td-${repo}-${branch}
+  name: techdocs-${repo}
 spec:
   ttlSecondsAfterFinished: 100
   template:
     metadata:
       labels:
-        app: td-${repo}-${branch}
+        app: techdocs-${repo}
         sidecar.istio.io/inject: "false"
     spec:
       serviceAccountName: ${service_account_name}
