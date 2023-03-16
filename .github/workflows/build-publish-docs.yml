@@ -7,7 +7,7 @@ on:
     paths: ["**/*.md", "**/mkdocs.yaml"]
   workflow_dispatch:
 env:
-  REPO: ${{ github.event.client_payload.inputs.repository != '' && github.event.client_payload.inputs.repository || github.event.repository.name }}
+  REPO: ${{ github.event.client_payload.inputs.repository != '' && github.event.client_payload.inputs.repository || github.repository }}
   TOKEN: ${{ github.event.client_payload.inputs.token != '' && github.event.client_payload.inputs.token || secrets.TECHDOCS_PAT }}
   NAMESPACE: ${{ github.event.client_payload.inputs.namespace != '' &&  github.event.client_payload.inputs.namespace || secrets.KUBE_NAMESPACE }}
 jobs:
@@ -22,13 +22,9 @@ jobs:
         id: get-branch
         run: |
           branch="${{ github.event.client_payload.inputs.branch }}"
-          if [ "$branch" == "" ]; then
-            branch=$(curl \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: token ${{ env.TOKEN }}" \
-            https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
-          fi
-          echo "branch=$branch" >> $GITHUB_OUTPUT
+          if [ "$branch" == "" ]; then "branch=${{ github.event.client_payload.github.event.repository.default_branch }}"; fi
+          echo "branch=${branch}" >> $GITHUB_OUTPUT
+        shell: bash
       - name: Check out target repository
         uses: actions/checkout@v3
         with:
@@ -69,7 +65,7 @@ jobs:
         run: echo "${{ github.event.client_payload.github.sha }}"
       - name: Create techdocs
         if: ${{ matrix.environment == 'Development' || ( github.event.client_payload.inputs.enable-production != 'false' && matrix.environment == 'Production' ) }}
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
+        uses: ./.github/actions/techdocs
         with:
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           branch: ${{ needs.validate-techdocs.outputs.branch }}
@@ -79,6 +75,7 @@ jobs:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           namespace: ${{ env.NAMESPACE }}
           PAT: ${{ env.TOKEN }}
+          repo-short-name: ${{ github.event.repository.name }}
           repository: ${{ env.REPO }}
           serviceAccountName: bandicoot-sa
           token: ${{ secrets.TECHDOCS_PAT }}

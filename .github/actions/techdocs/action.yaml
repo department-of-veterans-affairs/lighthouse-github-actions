@@ -17,8 +17,11 @@ inputs:
   kubeconfig:
     description: Kubernetes context -- config file usually located at ~/.kube/config
     required: true
+  repo-short-name:
+    description: Name of repo without owner
+    required: true
   repository:
-    description: Name of repository
+    description: Full name of repository
     required: true
   serviceAccountName:
     description: Service account name
@@ -86,7 +89,7 @@ runs:
         KIND: ${{ steps.get-entity-kind.outputs.result }}
         NAME: ${{ steps.get-entity-name.outputs.result }}
         NAMESPACE: ${{ steps.get-entity-namespace.outputs.result }} || default
-        REPOSITORY: ${{ inputs.repository }}
+        REPOSITORY: ${{ inputs.repo-short-name }}
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
         SERVICE_ACCOUNT_NAME: ${{ inputs.serviceAccountName }}
       shell: bash
