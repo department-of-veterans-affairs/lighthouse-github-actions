@@ -16,7 +16,7 @@ check_required_environment() {
 
 await_job() {
   repo=$1
-  local job_name="td-${repo}-${branch}"
+  local job_name="techdocs-${repo}-${branch}"
   while ! bash -c "kubectl get job.batch/${job_name} | grep \"1/1\"" > /dev/null 2>&1; do
     kubectl logs -f -l app=${job_name}
     sleep 15;
@@ -36,9 +36,9 @@ clean_up() {
   exit_code="${1:-$?}"
   repo_name=${2}
 
-  local job_name="td-${repo}-${branch}"
+  local job_name="techdocs-${repo}-${branch}"
   echo "Cleaning up resources..."
-  kubectl delete secret td-${repo}-${branch}-secrets || true
+  kubectl delete secret techdocs-${repo}-${branch}-secrets || true
   kubectl delete job.batch/${job_name} || true
   echo "Clean up complete"
   exit ${exit_code}

@@ -39,20 +39,18 @@ set_techdocs_args () {
 create_job() {
   service_account_name=${1}
   repo=${2##*/}
-  local ghcr_secrets
-  ghcr_secrets="td-${repo}-${branch}-secrets"
 
 cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: td-${repo}-${branch}
+  name: techdocs-${repo}-${branch}
 spec:
   ttlSecondsAfterFinished: 100
   template:
     metadata:
       labels:
-        app: td-${repo}-${branch}
+        app: techdocs-${repo}-${branch}
         sidecar.istio.io/inject: "false"
     spec:
       serviceAccountName: ${service_account_name}
@@ -95,7 +93,7 @@ spec:
             cpu: 500m
             memory: 1024Mi
       imagePullSecrets:
-        - name: "${ghcr_secrets}"
+        - name: docker-registry-creds
       restartPolicy: Never
       volumes:
       - name: repo
