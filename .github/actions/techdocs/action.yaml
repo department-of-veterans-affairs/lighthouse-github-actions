@@ -111,7 +111,7 @@ runs:
         path: department-of-veterans-affairs/lighthouse-developer-portal
         ref: main
         token: ${{ inputs.token }}
-    - name: Get repo name
+    - name: Get repo name # extracted from org/repo_name
       run: |
         echo "REPO_NAME=$(basename ${{ inputs.repository }})" >> $GITHUB_ENV
       shell: bash
