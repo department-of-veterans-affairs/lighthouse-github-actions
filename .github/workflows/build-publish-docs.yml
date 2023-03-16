@@ -58,7 +58,6 @@ jobs:
       - name: Validation results
         run: |
           echo "${{ steps.validation.outputs.results }}"
-          echo "${{ steps.get-branch.outputs.branch }}"
   build-techdocs:
     needs: [validate-techdocs]
     runs-on: ubuntu-latest
