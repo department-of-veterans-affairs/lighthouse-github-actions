@@ -40,7 +40,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: run test-in-another-repo
+    - name: Dispatch TechDocs workflow for ${{ github.event.repository.name }}
       id: get_status
       uses: stinkyfingers/cross-repo-dispatch@52c5ff3cc7277612c058d932896ac665f77ec249
       with:

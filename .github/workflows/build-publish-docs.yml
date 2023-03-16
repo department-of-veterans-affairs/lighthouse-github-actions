@@ -2,14 +2,10 @@ name: Build & publish documentation
 on:
   repository_dispatch:
     types: [techdocs]
-  push:
-    branches: [main, API-25012_refactor-techdocs-actions]
-    paths: ["**/*.md", "**/*.yml", "**/*.yaml"]
-  workflow_dispatch:
 env:
-  REPO: ${{ github.event.client_payload.inputs.repository != '' && github.event.client_payload.inputs.repository || github.repository }}
-  TOKEN: ${{ github.event.client_payload.inputs.token != '' && github.event.client_payload.inputs.token || secrets.TECHDOCS_PAT }}
-  NAMESPACE: ${{ github.event.client_payload.inputs.namespace != '' &&  github.event.client_payload.inputs.namespace || secrets.KUBE_NAMESPACE }}
+  NAMESPACE: ${{ github.event.client_payload.inputs.namespace  }}
+  REPO: ${{ github.event.client_payload.inputs.repository }}
+  TOKEN: ${{ github.event.client_payload.inputs.token }}
 jobs:
   # validate-techdocs:
   #   runs-on: ubuntu-latest
