@@ -11,6 +11,7 @@ inputs:
     required: true
   descriptor-file:
     description: Name of catalog entity descriptor file
+    default: catalog-info.yaml
   kube_namespace:
     description: Namespace to use for Kubernetes job
     default: default
