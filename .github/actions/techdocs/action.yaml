@@ -43,7 +43,7 @@ runs:
       id: get-branch
       run: |
         branch="${{ inputs.branch }}"
-        if [ "$branch" == "" ]; then "branch=${{ inputs.default-branch }}"; fi
+        if [ "$branch" == "" ]; then branch="${{ inputs.default-branch }}"; fi
         echo "branch=${branch}" >> $GITHUB_OUTPUT
       shell: bash
     - uses: actions/checkout@v3

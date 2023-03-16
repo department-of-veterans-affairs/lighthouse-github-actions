@@ -4,7 +4,7 @@ on:
     types: [techdocs]
   push:
     branches: [main, API-25012_refactor-techdocs-actions]
-    paths: ["**/*.md", "**/*.yaml"]
+    paths: ["**/*.md", "**/*.yml", "**/*.yaml"]
   workflow_dispatch:
 env:
   REPO: ${{ github.event.client_payload.inputs.repository != '' && github.event.client_payload.inputs.repository || github.repository }}
@@ -73,7 +73,7 @@ jobs:
         with:
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           branch: ${{ needs.validate-techdocs.outputs.branch }}
-          default-branch: ${{ github.event.client_payload.github.event.repository.default_branch }}
+          default-branch: ${{ github.event.client_payload.github.event.repository.default_branch != '' && github.event.client_payload.github.event.repository.default_branch || github.event.repository.default_branch }}
           descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
@@ -82,19 +82,19 @@ jobs:
           repository: ${{ env.REPO }}
           serviceAccountName: bandicoot-sa
           token: ${{ secrets.TECHDOCS_PAT }}
-  deploy-gh-pages:
-    if: ${{ github.event.client_payload.inputs.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
-    # needs: [validate-techdocs]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: ${{ env.REPO }}
-          token: ${{ env.TOKEN }}
-      - name: Install GraphViz
-        run: sudo apt-get install -y graphviz
-      - name: Setup Mkdocs dependencies
-        run: /bin/sh <(curl -s https://${{ secrets.WEBHOOK_PAT }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/setup_mkdocs.sh)
-      - name: Deploy Github Pages
-        run: mkdocs gh-deploy --force -r https://${{ env.TOKEN }}@github.com/${{ env.REPO }}.git
-        shell: bash
+  # deploy-gh-pages:
+  #   if: ${{ github.event.client_payload.inputs.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
+  #   needs: [validate-techdocs]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         repository: ${{ env.REPO }}
+  #         token: ${{ env.TOKEN }}
+  #     - name: Install GraphViz
+  #       run: sudo apt-get install -y graphviz
+  #     - name: Setup Mkdocs dependencies
+  #       run: /bin/sh <(curl -s https://${{ secrets.WEBHOOK_PAT }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/setup_mkdocs.sh)
+  #     - name: Deploy Github Pages
+  #       run: mkdocs gh-deploy --force -r https://${{ env.TOKEN }}@github.com/${{ env.REPO }}.git
+  #       shell: bash
