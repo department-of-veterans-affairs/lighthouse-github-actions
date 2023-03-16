@@ -62,7 +62,6 @@ runs:
       run: |
         cd ${{ inputs.repository }}
         /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/validate-techdocs.sh)
-        pip list | grep mkdocs
       shell: bash
     - name: Check for warnings
       if: ${{ inputs.strict-mode == 'true' }}
