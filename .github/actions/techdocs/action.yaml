@@ -59,7 +59,6 @@ runs:
           -H "Authorization: token ${{ inputs.PAT }}" \
           https://api.github.com/repos/${{ inputs.repository }} | jq -r '.default_branch')
         fi
-        echo "branch=${branch}" >> $GITHUB_ENV
         echo "branch=${branch}" >> $GITHUB_OUTPUT
       shell: bash
     - uses: actions/checkout@v3
@@ -102,21 +101,22 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
         GITHUB_USER: ${{ github.repository_owner }}
-        branch: ${{ steps.get-branch.outputs.branch }}
       shell: bash
     - name: Create techdocs Job
-      run: >
-        bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-techdocs-job.sh)
-        "${{ inputs.serviceAccountName }}"
-        "${{ inputs.repository }}"
-        "$namespace"
-        "$kind"
-        "$name"
+      run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-techdocs-job.sh)
       env:
+        BRANCH: ${{ steps.get-branch.outputs.branch }}
         GITHUB_TOKEN: ${{ inputs.token }}
         GITHUB_USER: ${{ inputs.username }}
+        KIND: ${{ inputs.kind }}
+        NAME: ${{ inputs.name }}
+        NAMESPACE: ${{ inputs.namespace }}
+        REPOSITORY: ${{ inputs.repository }}
         S3_BUCKET_NAME: ${{ inputs.AWSBucketName }}
+        SERVICE_ACCOUNT_NAME: ${{ inputs.serviceAccountName }}
       shell: bash
     - name: Techdocs Job status
       run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/techdocs-job-status.sh) "${{ inputs.repository }}"
       shell: bash
+      env:
+        branch: ${{ steps.format-branch.outputs.lowercase }}
