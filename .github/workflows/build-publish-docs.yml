@@ -4,7 +4,7 @@ on:
     types: [techdocs]
   push:
     branches: [main]
-    paths: ["**/*.md", "**/*.yaml"]
+    paths: ["**/*.md", "**/mkdocs.yaml"]
   workflow_dispatch:
 env:
   REPO: ${{ github.event.client_payload.inputs.repository != '' && github.event.client_payload.inputs.repository || github.repository }}
@@ -29,7 +29,6 @@ jobs:
             https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
           fi
           echo "branch=$branch" >> $GITHUB_OUTPUT
-        shell: bash
       - name: Check out target repository
         uses: actions/checkout@v3
         with:
@@ -70,20 +69,18 @@ jobs:
         run: echo "${{ github.event.client_payload.github.sha }}"
       - name: Create techdocs
         if: ${{ matrix.environment == 'Development' || ( github.event.client_payload.inputs.enable-production != 'false' && matrix.environment == 'Production' ) }}
-        uses: ./.github/actions/techdocs
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
         with:
-          AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
-          branch: ${{ needs.validate-techdocs.outputs.branch }}
-          default-branch: ${{ github.event.client_payload.github.event.repository.default_branch }}
-          descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
-          kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
-          namespace: ${{ env.NAMESPACE }}
-          PAT: ${{ env.TOKEN }}
-          repo-short-name: ${{ github.event.repository.name }}
-          repository: ${{ env.REPO }}
+          kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
+          repository: ${{ env.REPO }}
+          branch: ${{ needs.validate-techdocs.outputs.branch }}
+          descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
+          namespace: ${{ env.NAMESPACE }}
           token: ${{ secrets.TECHDOCS_PAT }}
+          AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
+          PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
     if: ${{ github.event.client_payload.inputs.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
     needs: [validate-techdocs]

@@ -1,5 +1,16 @@
 #!/bin/bash
 
+SERVICE_ACCOUNT_NAME=${1}
+REPO_NAME=${2}
+namespace=${3}
+KIND=${4:-"Component"}
+NAME=${5}
+
+
+export git_sync_args=''
+export techdocs_generate_args=''
+export techdocs_publish_args=''
+
 check_required_environment() {
   # TODO: check for env variables
   local required_env=""
@@ -12,36 +23,47 @@ check_required_environment() {
   done
 }
 
+set_git_sync_args() {
+  repo_name=${1}
+  gh_user=${2}
+  gh_token=${3}
+  git_sync_args="[\"--repo=https://github.com/${repo_name}\", \"--branch=$branch\", \"--depth=1\", \"--one-time\", \"--username\", \"${gh_user}\", \"--password\", \"${gh_token}\", \"--root\", \"/tmp/${branch}/git\"]"
+}
+
+set_techdocs_args () {
+  repo=${1##*/}
+  techdocs_generate_args="techdocs-cli generate --source-dir /tmp/${branch}/git/${repo} --output-dir /tmp/git/techdocs/${repo}-${branch} --no-docker -v --legacyCopyReadmeMdToIndexMd"
+  techdocs_publish_args="techdocs-cli publish --publisher-type awsS3 --storage-name ${S3_BUCKET_NAME} --entity ${namespace}/${kind}/${name} --directory /tmp/git/techdocs/${repo}-${branch}"
+}
+
 create_job() {
-  cat << EOF | kubectl apply -f -
+  service_account_name=${1}
+  repo=${2##*/}
+  local ghcr_secrets
+  ghcr_secrets="td-${repo}-${branch}-secrets"
+
+cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: techdocs-$REPOSITORY
+  name: td-${repo}-${branch}
 spec:
   ttlSecondsAfterFinished: 100
   template:
     metadata:
       labels:
-        app: techdocs-$REPOSITORY
+        app: td-${repo}-${branch}
         sidecar.istio.io/inject: "false"
     spec:
-      serviceAccountName: $SERVICE_ACCOUNT_NAME
+      serviceAccountName: ${service_account_name}
       initContainers:
       - name: git-sync
         image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/git-sync:23.02.3
         command: ['/git-sync']
-        args:
-          - --repo=https://github.com/$REPOSITORY
-          - --branch=$BRANCH
-          - --depth=1
-          - --one-time
-          - --username=$GITHUB_USER
-          - --password=$GITHUB_TOKEN
-          - --root=/tmp/git
+        args: ${git_sync_args}
         volumeMounts:
           - name: repo
-            mountPath: /tmp/git
+            mountPath: /tmp/${branch}/git
         resources:
           limits:
             cpu: 300m
@@ -54,22 +76,13 @@ spec:
         args:
         - -c
         - |
-          cd /tmp/git/$REPOSITORY || exit 1
+          cd /tmp/${branch}/git/${repo} || exit 1
           sed -i 's/backstage.io\/techdocs-ref: dir:.\//backstage.io\/techdocs-ref: dir:./g' catalog-info.yaml
-          techdocs-cli generate \
-            --source-dir /tmp/git/$REPOSITORY \
-            --output-dir /tmp/git/techdocs/$REPOSITORY \
-            --no-docker \
-            -v \
-            --legacyCopyReadmeMdToIndexMd
-          techdocs-cli publish \
-            --publisher-type awsS3 \
-            --storage-name $S3_BUCKET_NAME \
-            --entity $NAMESPACE/$KIND/$NAME \
-            --directory /tmp/git/techdocs/$REPOSITORY
+          ${techdocs_generate_args}
+          ${techdocs_publish_args}
         volumeMounts:
           - name: repo
-            mountPath: /tmp/git/
+            mountPath: /tmp/${branch}/git/
         env:
         - name: ENVOY_ADMIN_API
           value: "http://127.0.0.1:15000"
@@ -82,7 +95,7 @@ spec:
             cpu: 500m
             memory: 1024Mi
       imagePullSecrets:
-        - name: docker-registry-creds
+        - name: "${ghcr_secrets}"
       restartPolicy: Never
       volumes:
       - name: repo
@@ -90,18 +103,20 @@ spec:
 EOF
 }
 
+run_main() {
+    service_account_name=${1}
+    repo_name=${2}
+    namespace=${3}
+    kind=${4}
+    name=${5}
+
+    check_required_environment "${service_account_name}" "${repo_name}" "${namespace}" "${kind}" "${name}" || exit 1
+    set_git_sync_args "${repo_name}" "${GITHUB_USER}" "${GITHUB_TOKEN}" || exit 1
+    set_techdocs_args "${repo_name}" "${namespace}" "${kind}" "${name}" || exit 1
+    create_job "${service_account_name}" "${repo_name}" || exit 1
+}
+
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
 then
-  check_required_environment \
-    "${BRANCH}" \
-    "${GITHUB_USER}" \
-    "${GITHUB_TOKEN}" \
-    "${KIND}" \
-    "${NAME}" \
-    "${NAMESPACE}" \
-    "${REPOSITORY}" \
-    "${S3_BUCKET_NAME}" \
-    "${SERVICE_ACCOUNT_NAME}" \
-    || exit 1
-  create_job || exit 1
+  run_main "${SERVICE_ACCOUNT_NAME}" "${REPO_NAME}" "${namespace}" "${KIND}" "${NAME}"
 fi
