@@ -3,8 +3,10 @@ on:
   repository_dispatch:
     types: [techdocs]
   push:
-    branches: [main]
-    paths: ["**/*.md", "**/mkdocs.yaml"]
+    branches:
+      - main
+      - api-24511-refactor-techdocs-job-status
+    paths: ["**/*.md", "**/mkdocs.yml"]
   workflow_dispatch:
 env:
   REPO: ${{ github.event.client_payload.inputs.repository != '' && github.event.client_payload.inputs.repository || github.repository }}
@@ -83,7 +85,7 @@ jobs:
           PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
     if: ${{ github.event.client_payload.inputs.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
-    needs: [validate-techdocs]
+    needs: [build-techdocs]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

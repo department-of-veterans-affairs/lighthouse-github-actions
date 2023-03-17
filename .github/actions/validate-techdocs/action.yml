@@ -59,7 +59,9 @@ runs:
         NAMESPACE: ${{ inputs.namespace }}
         TOKEN: ${{ inputs.token }}
         ARGS: ${{ steps.args.outputs.args }}
-      run: /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/validate-techdocs.sh)
+      run: |
+        cd ${{ inputs.repository }}
+        /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/validate-techdocs.sh)
       shell: bash
     - name: Check for warnings
       if: ${{ inputs.strict-mode == 'true' }}
