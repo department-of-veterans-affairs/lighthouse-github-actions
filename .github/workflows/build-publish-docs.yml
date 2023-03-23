@@ -72,7 +72,7 @@ jobs:
         run: echo "${{ github.event.client_payload.github.sha }}"
       - name: Create techdocs
         if: ${{ matrix.environment == 'Development' || ( github.event.client_payload.inputs.enable-production != 'false' && matrix.environment == 'Production' ) }}
-        uses: ./department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs
+        uses: /department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
