@@ -48,9 +48,7 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 
 ### Examples
 
-- [Create standlone workflow with Github Actions](#Create-standalone-workflow-with-github-actions)
-
-### Create standalone workflow with Github Actions
+#### Create standalone workflow with Github Actions
 
 ```yaml
 # Example workflow
