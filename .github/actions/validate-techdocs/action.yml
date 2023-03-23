@@ -33,15 +33,16 @@ runs:
         multiline: true
     - name: Create Link Checker Config
       run: |
-        sed -i 's/%0A/\n/' '${{ steps.set-token.outputs.value }}' > department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
-        cat department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
+        echo '${{ steps.set-token.outputs.value }}' > department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
+        sed -i 's/%0A/\n/' department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json > department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
+        cat mlc_config.json
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
       uses: gaurav-nelson/github-action-markdown-link-check@1.0.15
       with:
         use-verbose-mode: 'yes'
-        config-file: 'department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json'
+        config-file: './department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json'
     - name: Setup validation args
       id: args
       run: |
