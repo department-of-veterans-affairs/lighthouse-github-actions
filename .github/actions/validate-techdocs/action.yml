@@ -26,7 +26,7 @@ runs:
   using: "composite"
   steps:
     - name: Set AuthZ token in link checker config
-      uses: sergeysova/jq-action@v2.2.1
+      uses: sergeysova/jq-action@v2.3.0
       id: set-token
       with:
         cmd: "jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json"
@@ -37,7 +37,7 @@ runs:
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
-      uses: gaurav-nelson/github-action-markdown-link-check@1.0.13
+      uses: gaurav-nelson/github-action-markdown-link-check@1.0.15
       with:
         use-verbose-mode: 'yes'
         config-file: 'department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json'
@@ -49,7 +49,7 @@ runs:
           args+="--strict "
         fi
         echo "${args}"
-        echo "::set-output name=args::${args}"
+        echo "args=${args}" >> $GITHUB_OUTPUT
       shell: bash
     - name: Run validation script
       id: validation
