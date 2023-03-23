@@ -34,8 +34,7 @@ runs:
     - name: Create Link Checker Config
       run: |
         echo '${{ steps.set-token.outputs.value }}' > department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
-    - run: |
-        sed -i 's/%0A/\n/' department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json > department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
+        sed -i 's/%0A/\n/' department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
         cat department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
       shell: bash
     - name: Check Techdoc Links
