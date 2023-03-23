@@ -48,7 +48,7 @@ jobs:
           ref: main
       - name: Validate techdocs
         id: validation
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@main
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs@API-24511-disable-production-publish
         with:
           repository: ${{ env.REPO }}
           descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
@@ -71,7 +71,7 @@ jobs:
         run: echo "${{ github.event.client_payload.github.sha }}"
       - name: Create techdocs
         if: ${{ matrix.environment == 'Development' || ( github.event.client_payload.inputs.enable-production != 'false' && matrix.environment == 'Production' ) }}
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@API-24511-disable-production-publish
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
