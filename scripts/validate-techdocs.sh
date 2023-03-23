@@ -1,6 +1,7 @@
 #!/bin/bash
 
 setup_mkdocs() {
+  echo $PATH
   /bin/bash ./setup_mkdocs.sh
 }
 
