@@ -32,10 +32,9 @@ runs:
         cmd: "jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json"
         multiline: true
     - name: Create Link Checker Config
-      run: |
+      run: | # GITHUB_OUTPUT not correctly parsing %0A as a newline character, so replace all instances from JQ output
         echo '${{ steps.set-token.outputs.value }}' > department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
         sed -i 's/%0A/\n/g' department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
-        cat department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
