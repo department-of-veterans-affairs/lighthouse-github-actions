@@ -36,7 +36,7 @@ jobs:
         with:
           repository: ${{ env.REPO }}
           # ref: ${{ steps.get-branch.outputs.branch }}
-          ref: API-24511-disable-production=publish
+          ref: API-24511-disable-production-publish
           token: ${{ env.TOKEN }}
           path: ${{ env.REPO }}
       - name: Check out Github Actions repository
