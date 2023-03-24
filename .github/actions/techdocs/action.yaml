@@ -49,24 +49,24 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Setup branch
-      id: get-branch
-      run: |
-        branch="${{ inputs.branch }}"
-        if [ "${{ inputs.branch }}" == "" ]; then
-          branch=$(curl \
-          -H "Accept: application/vnd.github+json" \
-          -H "Authorization: token ${{ inputs.PAT }}" \
-          https://api.github.com/repos/${{ inputs.repository }} | jq -r '.default_branch')
-        fi
-        echo "branch=${branch}" >> $GITHUB_ENV
-        echo "branch=${branch}" >> $GITHUB_OUTPUT
-      shell: bash
-    - uses: actions/checkout@v3
-      with:
-        repository: ${{ inputs.repository }}
-        ref: ${{ steps.get-branch.outputs.branch }}
-        token: ${{ inputs.PAT }}
+    # - name: Setup branch
+    #   id: get-branch
+    #   run: |
+    #     branch="${{ inputs.branch }}"
+    #     if [ "${{ inputs.branch }}" == "" ]; then
+    #       branch=$(curl \
+    #       -H "Accept: application/vnd.github+json" \
+    #       -H "Authorization: token ${{ inputs.PAT }}" \
+    #       https://api.github.com/repos/${{ inputs.repository }} | jq -r '.default_branch')
+    #     fi
+    #     echo "branch=${branch}" >> $GITHUB_ENV
+    #     echo "branch=${branch}" >> $GITHUB_OUTPUT
+    #   shell: bash
+    # - uses: actions/checkout@v3
+    #   with:
+    #     repository: ${{ inputs.repository }}
+    #     ref: ${{ steps.get-branch.outputs.branch }}
+    #     token: ${{ inputs.PAT }}
     - name: Set K8s context
       uses: azure/k8s-set-context@v1
       with:
@@ -77,7 +77,7 @@ runs:
       shell: bash
     - name: Get entity triplet
       id: entity
-      run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/entity-triplet.sh)
+      run: bash ./department-of-veterans-affairs/lighthouse-github-actions/scripts/entity-triplet.sh
       env:
         BASE_PATH: ${{ github.workspace }}
         FILE: ${{ inputs.descriptor-file }}
@@ -98,11 +98,11 @@ runs:
         echo "Entity's S3 Location: .../${namespace}/${kind}/${name}"
       shell: bash
     - name: Create Dockerconfigjson
-      run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-dockerconfigjson.sh) "${{ inputs.repository }}"
+      run: bash ./department-of-veterans-affairs/lighthouse-github-actions/scripts/create-dockerconfigjson.sh "${{ inputs.repository }}"
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
         GITHUB_USER: ${{ github.repository_owner }}
-        branch: ${{ steps.get-branch.outputs.branch }}
+        branch: ${{ inputs.branch }}
       shell: bash
     - name: Checkout lighthouse-developer-portal
       uses: actions/checkout@v3
