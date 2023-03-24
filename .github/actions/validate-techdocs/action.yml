@@ -26,9 +26,8 @@ runs:
   using: "composite"
   steps:
     - name: Set AuthZ token in link checker config
-      run: |
-        sudo apt-get install jq
-        jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
+      working-directory: department-of-veterans-affairs/lighthouse-github-actions
+      run: jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r mlc_config.json > mlc_config.json
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
