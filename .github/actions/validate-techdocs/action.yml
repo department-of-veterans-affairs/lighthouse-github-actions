@@ -61,7 +61,7 @@ runs:
         TOKEN: ${{ inputs.token }}
         ARGS: ${{ steps.args.outputs.args }}
       run: |
-        cd ${inputs.repository}
+        cd ${{ inputs.repository }}
         /bin/bash ./../../department-of-veterans-affairs/lighthouse-github-actions/scripts/validate-techdocs.sh
         cd ../../
       shell: bash
