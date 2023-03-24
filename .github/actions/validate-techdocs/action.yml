@@ -61,7 +61,9 @@ runs:
         TOKEN: ${{ inputs.token }}
         ARGS: ${{ steps.args.outputs.args }}
       run: |
-        /bin/bash ./department-of-veterans-affairs/lighthouse-github-actions/scripts/validate-techdocs.sh
+        cd ${inputs.repository}
+        /bin/bash ./../../department-of-veterans-affairs/lighthouse-github-actions/scripts/validate-techdocs.sh
+        cd ../../
       shell: bash
     - name: Check for warnings
       if: ${{ inputs.strict-mode == 'true' }}
