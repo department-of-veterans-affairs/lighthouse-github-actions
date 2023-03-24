@@ -1,4 +1,6 @@
 fileignoreconfig:
-- filename: link-tests.md
-  checksum: 7c3d7d7b7d202ad109aebb201c0a64008a125de4b3a33741d416c068def88fc2
+- filename: scripts/create-dockerconfigjson.sh
+  checksum: 6cfa8875aa9db1cb66a67a298215b527c728f1b313a9de604bdc81698b4b105e
+- filename: scripts/create-techdocs-job.sh
+  checksum: 89662dd331210c5d39b8aeae2a62a9cf91efe5170f77c1f42dac64325bb876e5
 version: ""

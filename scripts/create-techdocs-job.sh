@@ -40,7 +40,7 @@ create_job() {
   service_account_name=${1}
   repo=${2##*/}
   local ghcr_secrets
-  ghcr_secrets="docker-credentials"
+  ghcr_secrets="docker-creds"
 
 cat << EOF | kubectl apply -f -
 apiVersion: batch/v1
