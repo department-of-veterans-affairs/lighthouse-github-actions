@@ -63,6 +63,9 @@ runs:
       run: |
         cd ${{ inputs.repository }}
         /bin/bash ./scripts/validate-techdocs.sh
+        pwd
+        ls ~/
+        ls /
       shell: bash
     - name: Check for warnings
       if: ${{ inputs.strict-mode == 'true' }}
