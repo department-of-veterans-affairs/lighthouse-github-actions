@@ -26,15 +26,9 @@ runs:
   using: "composite"
   steps:
     - name: Set AuthZ token in link checker config
-      uses: sergeysova/jq-action@v2.3.0
-      id: set-token
-      with:
-        cmd: "jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json"
-        multiline: true
-    - name: Create Link Checker Config
-      run: | # GITHUB_OUTPUT not correctly parsing %0A as a newline character, so replace all instances from JQ output
-        echo '${{ steps.set-token.outputs.value }}' > department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
-        sed -i 's/%0A/\n/g' department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
+      run: |
+        sudo apt-get install jq
+        jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
@@ -54,6 +48,7 @@ runs:
       shell: bash
     - name: Run validation script
       id: validation
+      working-directory: ${{ inputs.repository }}
       env:
         REPO: ${{ inputs.repository }}
         ENTITY_FILE: ${{ inputs.descriptor-file }}
@@ -61,9 +56,7 @@ runs:
         TOKEN: ${{ inputs.token }}
         ARGS: ${{ steps.args.outputs.args }}
       run: |
-        cd ${{ inputs.repository }}
         /bin/bash ./../../department-of-veterans-affairs/lighthouse-github-actions/scripts/validate-techdocs.sh
-        cd ../../
       shell: bash
     - name: Check for warnings
       if: ${{ inputs.strict-mode == 'true' }}
