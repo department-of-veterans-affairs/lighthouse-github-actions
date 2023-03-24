@@ -5,7 +5,7 @@ setup_mkdocs() {
 }
 
 build_with_mkdocs() {
-  echo "$(mkdocs build ${ARGS} 2>&1)"
+  echo "$(mkdocs build --config-file ./${REPO} ${ARGS} 2>&1)"
 }
 
 build_with_techdocs() {
