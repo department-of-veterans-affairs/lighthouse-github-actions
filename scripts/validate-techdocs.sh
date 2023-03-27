@@ -1,7 +1,7 @@
 #!/bin/bash
 
 setup_mkdocs() {
-  /bin/bash <(curl -s https://${TOKEN}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/setup_mkdocs.sh)
+  /bin/bash <(curl -s https://${TOKEN}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/API-24511-disable-production-publish/scripts/setup_mkdocs.sh)
 }
 
 build_with_mkdocs() {
