@@ -1,1 +1,6 @@
 fileignoreconfig:
+- filename: scripts/create-dockerconfigjson.sh
+  checksum: 8b5aecc2ed0411af6bbbbe9b661acc6e286f3c4f0880088a4dee0dad6bcbe15d
+- filename: scripts/create-techdocs-job.sh
+  checksum: e3fbe1dfeb4ebaf703a855de39a9835e364adfcd302d5aa0a7e7382fa0d11baf
+version: ""

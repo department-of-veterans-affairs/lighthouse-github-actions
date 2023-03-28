@@ -22,7 +22,7 @@ main() {
   RESULTS="${RESULTS//'%'/'%25'}"
   RESULTS="${RESULTS//$'\n'/'%0A'}"
   RESULTS="${RESULTS//$'\r'/'%0D'}"
-  echo "::set-output name=results::${RESULTS}"
+  echo "results=${RESULTS}" >> $GITHUB_OUTPUT
 }
 
 main

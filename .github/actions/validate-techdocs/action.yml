@@ -26,21 +26,15 @@ runs:
   using: "composite"
   steps:
     - name: Set AuthZ token in link checker config
-      uses: sergeysova/jq-action@v2.2.1
-      id: set-token
-      with:
-        cmd: "jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json"
-        multiline: true
-    - name: Create Link Checker Config
-      run: |
-        echo '${{ steps.set-token.outputs.value }}' > department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json
+      working-directory: department-of-veterans-affairs/lighthouse-github-actions
+      run: jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' -r mlc_config.json > mlc_config.json
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
-      uses: gaurav-nelson/github-action-markdown-link-check@1.0.13
+      uses: gaurav-nelson/github-action-markdown-link-check@1.0.15
       with:
         use-verbose-mode: 'yes'
-        config-file: 'department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json'
+        config-file: './department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json'
     - name: Setup validation args
       id: args
       run: |
@@ -49,10 +43,11 @@ runs:
           args+="--strict "
         fi
         echo "${args}"
-        echo "::set-output name=args::${args}"
+        echo "args=${args}" >> $GITHUB_OUTPUT
       shell: bash
     - name: Run validation script
       id: validation
+      working-directory: ${{ inputs.repository }}
       env:
         REPO: ${{ inputs.repository }}
         ENTITY_FILE: ${{ inputs.descriptor-file }}
@@ -60,8 +55,7 @@ runs:
         TOKEN: ${{ inputs.token }}
         ARGS: ${{ steps.args.outputs.args }}
       run: |
-        cd ${{ inputs.repository }}
-        /bin/bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/validate-techdocs.sh)
+        /bin/bash ./../../department-of-veterans-affairs/lighthouse-github-actions/scripts/validate-techdocs.sh
       shell: bash
     - name: Check for warnings
       if: ${{ inputs.strict-mode == 'true' }}
