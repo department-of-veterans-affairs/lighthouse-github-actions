@@ -16,7 +16,7 @@ inputs:
     required: false
   strict-mode:
     description: "Used to enable or disables strict flag for validation"
-    default: "true"
+    default: "false"
     required: false
 outputs:
   results:
