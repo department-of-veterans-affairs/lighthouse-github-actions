@@ -70,7 +70,7 @@ spec:
             memory: 450Mi
       containers:
       - name: techdocs
-        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/techdocs:fb868c567d79ab5d2118121ca1a3e4467bfedb40
+        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/techdocs:92a595bcbceff532595a2afb781c537e1f21a453
         imagePullPolicy: Always
         command: ['/bin/sh']
         args:
