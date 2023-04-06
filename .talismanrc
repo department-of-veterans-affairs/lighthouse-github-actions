@@ -1,4 +1,4 @@
 fileignoreconfig:
 - filename: scripts/create-techdocs-job.sh
-  checksum: c9e2d65fd335f6a031165d9b71913c7f56fe31c57fa01e09fe13ea368fe6810c
+  checksum: 921d00462cb2037038be1e7672f40ac82d6a36afd5661accaace56ea48170519
 version: ""
