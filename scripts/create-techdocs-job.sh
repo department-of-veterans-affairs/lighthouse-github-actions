@@ -58,7 +58,7 @@ spec:
       serviceAccountName: ${service_account_name}
       initContainers:
       - name: git-sync
-        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/git-sync:edge
+        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/git-sync:latest
         command: ['/git-sync']
         args: ${git_sync_args}
         volumeMounts:
@@ -70,7 +70,7 @@ spec:
             memory: 450Mi
       containers:
       - name: techdocs
-        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/techdocs:edge
+        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/techdocs:latest
         imagePullPolicy: Always
         command: ['/bin/sh']
         args:
