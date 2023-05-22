@@ -49,14 +49,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Acknowledge TechDocs Webhook
-      if: github.event.action == 'techdocs'
-      run: |
-        curl -X POST https://api.github.com/repos/department-of-veterans-affairs/${{ inputs.repository }}/dispatches \
-        -H 'Accept: application/vnd.github.everest-preview+json' \
-        -H 'Authorization: token ${{ inputs.token }}' \
-        --data '{"event_type": "techdocs_ack", "client_payload": { "repository": "${{ github.repository }}"}}'
-      shell: bash
     - name: Setup branch
       id: get-branch
       run: |
