@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Acknowledge Webhook
-        if: github.event.action == 'techdocs'
+        if: github.event.action == 'techdocs_dev'
         run: |
           curl -X POST https://api.github.com/repos/department-of-veterans-affairs/${{ inputs.repository }}/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
