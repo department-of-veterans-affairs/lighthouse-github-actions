@@ -12,16 +12,6 @@ env:
   TOKEN: ${{ github.event.client_payload.inputs.token != '' && github.event.client_payload.inputs.token || secrets.TECHDOCS_PAT }}
   NAMESPACE: ${{ github.event.client_payload.inputs.namespace != '' &&  github.event.client_payload.inputs.namespace || secrets.KUBE_NAMESPACE }}
 jobs:
-  acknowledge-webhook:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Acknowledge Webhook
-        if: github.event.action == 'techdocs_dev'
-        run: |
-          curl -X POST https://api.github.com/repos/department-of-veterans-affairs/${{ inputs.repository }}/dispatches \
-          -H 'Accept: application/vnd.github.everest-preview+json' \
-          -H 'Authorization: token ${{ inputs.token }}' \
-          --data '{"event_type": "techdocs_ack", "client_payload": { "repository": "${{ github.repository }}"}}'
   validate-techdocs:
     runs-on: ubuntu-latest
     outputs:

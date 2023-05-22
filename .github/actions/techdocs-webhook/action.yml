@@ -40,20 +40,21 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Dispatch TechDocs Workflow
-      if: github.event.action != 'techdocs_ack'
-      run: |
-        curl -X POST https://api.github.com/repos/department-of-veterans-affairs/lighthouse-github-actions/dispatches \
-        -H 'Accept: application/vnd.github.everest-preview+json' \
-        -H 'Authorization: token ${{ inputs.token }}' \
-        --data '{"event_type": "techdocs", "client_payload": { "repository": "${{ github.repository }}", "ref": "${{ github.ref_name }}"}}'
-      shell: bash
-    - name: Acknowledgement from TechDocs Repository
-      if: github.event.action == 'techdocs_ack'
-      run: |
-        echo "Acknowledgement received from '${{ github.event.client_payload.repository }}'" && \
-        curl -X POST https://api.github.com/repos/department-of-veterans-affairs/lighthouse-github-actions/dispatches \
-        -H 'Accept: application/vnd.github.everest-preview+json' \
-        -u 'Authorization: token ${{ inputs.token }}'' \
-        --data '{"event_type": "ack", "client_payload": { "repository": "${{ github.repository }}", "ref": "${{ github.ref_name }}"}}'
-      shell: bash
+    - name: Dispatch build/publish documentation and get the run ID
+      id: get_run_id
+      uses: codex-/return-dispatch@v1
+      with:
+        owner: "department-of-veterans-affairs"
+        repo: "lighthouse-github-actions"
+        ref: ${{ github.ref }}
+        token: ${{ inputs.token }}
+        workflow_inputs: '{"${{ toJson(inputs) }}"}'
+    - name: Await run ID ${{ steps.get_run_id.outputs.run_id }}
+      uses: codex-/await-remote-run@v1.0.0
+      with:
+        token: ${{ inputs.token }}
+        repo: "lighthouse-github-actions"
+        owner: "department-of-veterans-affairs"
+        run_id: ${{ steps.get_run_id.outputs.run_id }}
+        run_timeout_seconds: 300
+        poll_interval_ms: 5000
