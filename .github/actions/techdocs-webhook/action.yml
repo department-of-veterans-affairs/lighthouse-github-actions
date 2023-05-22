@@ -56,3 +56,4 @@ runs:
         -H 'Accept: application/vnd.github.everest-preview+json' \
         -u ${{ inputs.token }} \
         --data '{"event_type": "ack", "client_payload": { "repository": "${{ github.repository }}"}}'
+      shell: bash
