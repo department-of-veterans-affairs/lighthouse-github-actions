@@ -40,23 +40,19 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: run test-in-another-repo
-      id: get_status
-      uses: stinkyfingers/cross-repo-dispatch@v0.1
-      with:
-        owner: "department-of-veterans-affairs"
-        repo: "lighthouse-github-actions"
-        ref: ${{ github.ref }}
-        pat: ${{ inputs.token }}
-        user: ${{ github.repository_owner }}
-        sha: ${{ github.sha }}
-        event_type: "techdocs"
-        client_payload: '{"github": ${{ toJson(github) }}, "inputs": ${{ toJson(inputs) }}}'
-        workflow_status_timeout: 1200
-    - name: Display Results
+    - name: Dispatch TechDocs Workflow
+      if: github.event.action != 'techdocs_ack'
       run: |
-        echo "Status: ${{ steps.get_status.outputs.status }}"
-        echo "Conclusion: ${{ steps.get_status.outputs.conclusion }}"
-        echo "Html url: ${{ steps.get_status.outputs.html_url }}"
-        if [ "${{ steps.get_status.outputs.conclusion }}" = "failure" ]; then exit 1; fi
+        curl -X POST https://api.github.com/repos/department-of-veterans-affairs/lighthouse-github-actions/dispatches \
+        -H 'Accept: application/vnd.github.everest-preview+json' \
+        -u ${{ inputs.token }} \
+        --data '{"event_type": "techdocs", "client_payload": { "repository": "${{ github.repository }}"}}'
       shell: bash
+    - name: Acknowledgement from TechDocs Repository
+      if: github.event.action == 'techdocs_ack'
+      run: |
+        echo "Acknowledgement received from '${{ github.event.client_payload.repository }}'" && \
+        curl -X POST https://api.github.com/repos/department-of-veterans-affairs/lighthouse-github-actions/dispatches \
+        -H 'Accept: application/vnd.github.everest-preview+json' \
+        -u ${{ inputs.token }} \
+        --data '{"event_type": "ack", "client_payload": { "repository": "${{ github.repository }}"}}'
