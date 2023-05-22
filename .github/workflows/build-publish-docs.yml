@@ -22,7 +22,6 @@ jobs:
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -H 'Authorization: token ${{ inputs.token }}' \
           --data '{"event_type": "techdocs_ack", "client_payload": { "repository": "${{ github.repository }}"}}'
-        shell: bash
   validate-techdocs:
     runs-on: ubuntu-latest
     outputs:
