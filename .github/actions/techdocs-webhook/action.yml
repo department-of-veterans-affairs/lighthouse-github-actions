@@ -46,7 +46,7 @@ runs:
         curl -X POST https://api.github.com/repos/department-of-veterans-affairs/lighthouse-github-actions/dispatches \
         -H 'Accept: application/vnd.github.everest-preview+json' \
         -H 'Authorization: token ${{ inputs.token }}' \
-        --data '{"event_type": "techdocs", "client_payload": { "repository": "${{ github.repository }}", "branch": "${{ inputs.branch }}"}}'
+        --data '{"event_type": "techdocs", "client_payload": { "repository": "${{ github.repository }}", "ref": "${{ github.ref }}"}}'
       shell: bash
     - name: Acknowledgement from TechDocs Repository
       if: github.event.action == 'techdocs_ack'
@@ -55,5 +55,5 @@ runs:
         curl -X POST https://api.github.com/repos/department-of-veterans-affairs/lighthouse-github-actions/dispatches \
         -H 'Accept: application/vnd.github.everest-preview+json' \
         -u 'Authorization: token ${{ inputs.token }}'' \
-        --data '{"event_type": "ack", "client_payload": { "repository": "${{ github.repository }}", "branch": "${{ inputs.branch }}"}}'
+        --data '{"event_type": "ack", "client_payload": { "repository": "${{ github.repository }}", "ref": "${{ github.ref }}"}}'
       shell: bash
