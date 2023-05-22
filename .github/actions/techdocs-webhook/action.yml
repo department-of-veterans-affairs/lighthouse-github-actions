@@ -48,7 +48,7 @@ runs:
         repo: "lighthouse-github-actions"
         ref: ${{ github.ref }}
         token: ${{ inputs.token }}
-        workflow: "techdocs"
+        workflow: "build-publish-docs.yml"
         workflow_inputs: "${{ toJson(inputs) }}"
     - name: Await run ID ${{ steps.get_run_id.outputs.run_id }}
       uses: codex-/await-remote-run@v1.0.0
