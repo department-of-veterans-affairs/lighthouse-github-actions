@@ -1,7 +1,7 @@
 name: Build & publish documentation
 on:
   repository_dispatch:
-    types: [techdocs]
+    types: [techdocs_dev]
   push:
     branches:
       - main
