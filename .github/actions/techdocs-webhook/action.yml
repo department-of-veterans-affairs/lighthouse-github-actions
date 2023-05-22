@@ -45,7 +45,7 @@ runs:
       run: |
         curl -X POST https://api.github.com/repos/department-of-veterans-affairs/lighthouse-github-actions/dispatches \
         -H 'Accept: application/vnd.github.everest-preview+json' \
-        -u ${{ inputs.token }} \
+        -u 'Authorization: token ${{ inputs.token }}' \
         --data '{"event_type": "techdocs", "client_payload": { "repository": "${{ github.repository }}"}}'
       shell: bash
     - name: Acknowledgement from TechDocs Repository
@@ -54,6 +54,6 @@ runs:
         echo "Acknowledgement received from '${{ github.event.client_payload.repository }}'" && \
         curl -X POST https://api.github.com/repos/department-of-veterans-affairs/lighthouse-github-actions/dispatches \
         -H 'Accept: application/vnd.github.everest-preview+json' \
-        -u ${{ inputs.token }} \
+        -u 'Authorization: token ${{ inputs.token }}'' \
         --data '{"event_type": "ack", "client_payload": { "repository": "${{ github.repository }}"}}'
       shell: bash
