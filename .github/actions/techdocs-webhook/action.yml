@@ -1,10 +1,6 @@
 name: "Send Techdocs Webhook"
 description: "Sends a webhook to trigger repository dispatch event for techdocs workflow"
 inputs:
-  event:
-    description: "Event trigger"
-    default: "techdocs"
-    required: false
   repository:
     description: "Name of repository"
     required: true
