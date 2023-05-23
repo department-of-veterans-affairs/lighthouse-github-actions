@@ -13,15 +13,12 @@ on:
         type: number
       repository:
         required: false
-        default: ${{ github.repository }}
         type: string
       token:
         required: false
-        default: ${{ secrets.TECHDOCS_PAT }}
         type: string
       namespace:
         required: false
-        default: ${{ secrets.KUBE_NAMESPACE }}
         type: string
       branch:
         required: false
