@@ -20,6 +20,21 @@ on:
       branch:
         required: false
         type: string
+      gh-pages:
+        required: false
+        default: false
+        type: boolean
+      descriptor-file:
+        required: false
+        type: string
+      strict-mode:
+        required: false
+        default: false
+        type: boolean
+      enable-production:
+        required: false
+        default: true
+        type: boolean
 
 env:
   REPO: ${{ inputs.repository != '' && inputs.repository || github.repository }}
@@ -64,7 +79,7 @@ jobs:
         uses: ./department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs
         with:
           repository: ${{ env.REPO }}
-          descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
+          descriptor-file: ${{ inputs.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
           token: ${{ env.TOKEN }}
           strict-mode: ${{ github.event.client_payload.inputs.strict-mode }}
@@ -97,7 +112,7 @@ jobs:
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
-    if: ${{ github.event.client_payload.inputs.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
+    if: ${{ inputs.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
     needs: [build-techdocs]
     runs-on: ubuntu-latest
     steps:

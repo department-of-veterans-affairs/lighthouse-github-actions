@@ -17,10 +17,6 @@ inputs:
   token:
     description: "Personal Access token for webhook"
     required: false
-  tag:
-    description: "Tag or Commit sha for techdocs job version"
-    default: "main"
-    required: false
   gh-pages:
     description: "Flag used to enable gh-pages deployment"
     default: ""
