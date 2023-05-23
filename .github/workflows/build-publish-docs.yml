@@ -22,7 +22,7 @@ on:
         type: boolean
       repository:
         required: false
-        default: 'lighthouse-github-actions'
+        default: 'department-of-veterans-affairs/lighthouse-github-actions'
         type: string
       token:
         required: false
