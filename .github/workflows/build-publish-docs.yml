@@ -1,3 +1,45 @@
+name: Build & Publish Documentation
+run-name: Build/Publish Docs - ${{ inputs.repository }}
+on:
+  repository_dispatch:
+    types: [techdocs]
+  push:
+    branches:
+      - main
+    paths: ["**/*.md", "**/mkdocs.yml"]
+  workflow_dispatch:
+    inputs:
+      enable-production:
+        required: false
+        default: true
+        type: boolean
+      gh-pages:
+        required: false
+        default: false
+        type: boolean
+      strict-mode:
+        required: false
+        default: false
+        type: boolean
+      repository:
+        required: false
+        default: 'department-of-veterans-affairs/lighthouse-github-actions'
+        type: string
+      token:
+        required: false
+        type: string
+      namespace:
+        required: false
+        type: string
+      branch:
+        required: false
+        type: string
+      descriptor-file:
+        required: false
+        type: string
+      distinct_id:
+        required: false
+        type: string
 env:
   REPO: ${{ inputs.repository != '' && inputs.repository || github.repository }}
   TOKEN: ${{ inputs.token != '' && inputs.token || secrets.TECHDOCS_PAT }}
@@ -44,7 +86,7 @@ jobs:
           descriptor-file: ${{ inputs.descriptor-file }}
           namespace: ${{ env.NAMESPACE }}
           token: ${{ env.TOKEN }}
-          strict-mode: ${{ github.event.client_payload.inputs.strict-mode }}
+          strict-mode: ${{ inputs.strict-mode }}
       - name: Validation results
         run: |
           echo "${{ steps.validation.outputs.results }}"
@@ -87,46 +129,3 @@ jobs:
       - name: Deploy Github Pages
         run: mkdocs gh-deploy --force -r https://${{ env.TOKEN }}@github.com/${{ env.REPO }}.git
         shell: bash
-
-name: Build & Publish Documentation
-run-name: Build/Publish Docs - ${{ inputs.repository }}
-on:
-  repository_dispatch:
-    types: [techdocs]
-  push:
-    branches:
-      - main
-    paths: ["**/*.md", "**/mkdocs.yml"]
-  workflow_dispatch:
-    inputs:
-      enable-production:
-        required: false
-        default: true
-        type: boolean
-      gh-pages:
-        required: false
-        default: false
-        type: boolean
-      strict-mode:
-        required: false
-        default: false
-        type: boolean
-      repository:
-        required: false
-        default: 'department-of-veterans-affairs/lighthouse-github-actions'
-        type: string
-      token:
-        required: false
-        type: string
-      namespace:
-        required: false
-        type: string
-      branch:
-        required: false
-        type: string
-      descriptor-file:
-        required: false
-        type: string
-      distinct_id:
-        required: false
-        type: string
