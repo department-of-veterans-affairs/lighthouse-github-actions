@@ -7,22 +7,36 @@ on:
       - main
     paths: ["**/*.md", "**/mkdocs.yml"]
   workflow_dispatch:
+    inputs:
+      repository:
+        required: false
+        type: string
+      token:
+        required: false
+        type: string
+      namespace:
+        required: false
+        type: string
+      branch:
+        required: false
+        type: string
+
 env:
-  REPO: ${{ github.event.client_payload.inputs.repository != '' && github.event.client_payload.inputs.repository || github.repository }}
-  TOKEN: ${{ github.event.client_payload.inputs.token != '' && github.event.client_payload.inputs.token || secrets.TECHDOCS_PAT }}
-  NAMESPACE: ${{ github.event.client_payload.inputs.namespace != '' &&  github.event.client_payload.inputs.namespace || secrets.KUBE_NAMESPACE }}
+  REPO: ${{ inputs.repository != '' && inputs.repository || github.repository }}
+  TOKEN: ${{ inputs.token != '' && inputs.token || secrets.TECHDOCS_PAT }}
+  NAMESPACE: ${{ inputs.namespace != '' &&  inputs.namespace || secrets.KUBE_NAMESPACE }}
 jobs:
   validate-techdocs:
     runs-on: ubuntu-latest
     outputs:
       branch: ${{ steps.get-branch.outputs.branch }}
     steps:
-      - name: ${{ github.event.client_payload.github.sha }} # Used to return success or fail to the source repo
-        run: echo "${{ github.event.client_payload.github.sha }}"
+      - name: Echo distinct ID ${{ github.event.inputs.distinct_id }} # Used to return success or fail to the source repo
+        run: echo "${{ github.event.inputs.distinct_id }}"
       - name: Setup branch
         id: get-branch
         run: |
-          branch="${{ github.event.client_payload.inputs.branch }}"
+          branch="${{ inputs.branch }}"
           if [ "$branch" == "" ]; then
             branch=$(curl \
             -H "Accept: application/vnd.github+json" \
