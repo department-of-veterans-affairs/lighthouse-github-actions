@@ -1,3 +1,4 @@
+name: Build & Publish Documentation
 run-name: Build/Publish Docs - ${{ inputs.repository }}
 on:
   repository_dispatch:
