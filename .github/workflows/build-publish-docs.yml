@@ -114,7 +114,7 @@ jobs:
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
-    if: ${{ inputs.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
+    if: ${{ inputs.gh-pages == 'true' }}
     needs: [build-techdocs]
     runs-on: ubuntu-latest
     steps:
