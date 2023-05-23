@@ -1,4 +1,4 @@
-name: Build & publish documentation
+run-name: Build & publish documentation for ${{ inputs.repository }}
 on:
   repository_dispatch:
     types: [techdocs]
@@ -22,6 +22,7 @@ on:
         type: boolean
       repository:
         required: false
+        default: 'lighthouse-github-actions'
         type: string
       token:
         required: false
