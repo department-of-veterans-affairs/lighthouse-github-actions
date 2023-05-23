@@ -110,7 +110,7 @@ jobs:
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
-    if: ${{ inputs.gh-pages == 'true' }}
+    if: ${{ inputs.gh-pages }}
     needs: [build-techdocs]
     runs-on: ubuntu-latest
     steps:
