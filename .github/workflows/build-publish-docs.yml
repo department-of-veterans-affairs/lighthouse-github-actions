@@ -8,7 +8,7 @@ on:
     paths: ["**/*.md", "**/mkdocs.yml"]
   workflow_dispatch:
     inputs:
-      distinct-id:
+      distinct_id:
         type: number
       repository:
         required: false
@@ -48,8 +48,8 @@ jobs:
     outputs:
       branch: ${{ steps.get-branch.outputs.branch }}
     steps:
-      - name: Echo distinct ID ${{ github.event.inputs.distinct_id }} # Used to return success or fail to the source repo
-        run: echo "${{ github.event.inputs.distinct_id }}"
+      - name: Echo distinct ID ${{ inputs.distinct_id }} # Used to return success or fail to the source repo
+        run: echo "${{ inputs.distinct_id }}"
       - name: Setup branch
         id: get-branch
         run: |
