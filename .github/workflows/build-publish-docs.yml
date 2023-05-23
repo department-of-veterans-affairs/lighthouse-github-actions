@@ -8,6 +8,8 @@ on:
     paths: ["**/*.md", "**/mkdocs.yml"]
   workflow_dispatch:
     inputs:
+      distinct-id:
+        type: number
       repository:
         required: false
         type: string
