@@ -9,15 +9,19 @@ on:
   workflow_dispatch:
     inputs:
       distinct_id:
+        required: false
         type: number
       repository:
         required: false
+        default: ${{ github.repository }}
         type: string
       token:
         required: false
+        default: ${{ secrets.TECHDOCS_PAT }}
         type: string
       namespace:
         required: false
+        default: ${{ secrets.KUBE_NAMESPACE }}
         type: string
       branch:
         required: false
@@ -38,10 +42,6 @@ on:
         default: true
         type: boolean
 
-env:
-  REPO: ${{ inputs.repository != '' && inputs.repository || github.repository }}
-  TOKEN: ${{ inputs.token != '' && inputs.token || secrets.TECHDOCS_PAT }}
-  NAMESPACE: ${{ inputs.namespace != '' &&  inputs.namespace || secrets.KUBE_NAMESPACE }}
 jobs:
   validate-techdocs:
     runs-on: ubuntu-latest
@@ -57,19 +57,19 @@ jobs:
           if [ "$branch" == "" ]; then
             branch=$(curl \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: token ${{ env.TOKEN }}" \
-            https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
+            -H "Authorization: token ${{ inputs.token }}" \
+            https://api.github.com/repos/${{ inputs.repository }} | jq -r '.default_branch')
           fi
           echo "branch=$branch" >> $GITHUB_OUTPUT
       - name: Check out target repository
         uses: actions/checkout@v3
         with:
-          repository: ${{ env.REPO }}
+          repository: ${{ inputs.repository }}
           ref: ${{ steps.get-branch.outputs.branch }}
-          token: ${{ env.TOKEN }}
-          path: ${{ env.REPO }}
+          token: ${{ inputs.token }}
+          path: ${{ inputs.repository }}
       - name: Check out Github Actions repository
-        if: ${{ env.REPO != 'department-of-veterans-affairs/lighthouse-github-actions' }}
+        if: ${{ inputs.repository != 'department-of-veterans-affairs/lighthouse-github-actions' }}
         uses: actions/checkout@v3
         with:
           repository: department-of-veterans-affairs/lighthouse-github-actions
@@ -80,11 +80,11 @@ jobs:
         id: validation
         uses: ./department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs
         with:
-          repository: ${{ env.REPO }}
+          repository: ${{ inputs.repository }}
           descriptor-file: ${{ inputs.descriptor-file }}
-          namespace: ${{ env.NAMESPACE }}
-          token: ${{ env.TOKEN }}
-          strict-mode: ${{ github.event.client_payload.inputs.strict-mode }}
+          namespace: ${{ inputs.namespace }}
+          token: ${{ inputs.token }}
+          strict-mode: ${{ inputs.strict-mode }}
       - name: Validation results
         run: |
           echo "${{ steps.validation.outputs.results }}"
@@ -97,8 +97,6 @@ jobs:
     environment:
       name: ${{ matrix.environment }}
     steps:
-      - name: ${{ github.event.client_payload.github.sha }}
-        run: echo "${{ github.event.client_payload.github.sha }}"
       - name: Create techdocs
         if: ${{ matrix.environment == 'Development' || ( github.event.client_payload.inputs.enable-production != 'false' && matrix.environment == 'Production' ) }}
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
@@ -106,13 +104,13 @@ jobs:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
-          repository: ${{ env.REPO }}
+          repository: ${{ inputs.repository }}
           branch: ${{ needs.validate-techdocs.outputs.branch }}
           descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
-          namespace: ${{ env.NAMESPACE }}
+          namespace: ${{ inputs.namespace }}
           token: ${{ secrets.TECHDOCS_PAT }}
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
-          PAT: ${{ env.TOKEN }}
+          PAT: ${{ inputs.token }}
   deploy-gh-pages:
     if: ${{ inputs.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
     needs: [build-techdocs]
@@ -120,12 +118,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: ${{ env.REPO }}
-          token: ${{ env.TOKEN }}
+          repository: ${{ inputs.repository }}
+          token: ${{ inputs.token }}
       - name: Install GraphViz
         run: sudo apt-get install -y graphviz
       - name: Setup Mkdocs dependencies
         run: /bin/sh <(curl -s https://${{ secrets.WEBHOOK_PAT }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/setup_mkdocs.sh)
       - name: Deploy Github Pages
-        run: mkdocs gh-deploy --force -r https://${{ env.TOKEN }}@github.com/${{ env.REPO }}.git
+        run: mkdocs gh-deploy --force -r https://${{ inputs.token }}@github.com/${{ inputs.repository }}.git
         shell: bash

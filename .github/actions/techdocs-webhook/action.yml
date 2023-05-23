@@ -49,5 +49,5 @@ runs:
         repo: "lighthouse-github-actions"
         owner: "department-of-veterans-affairs"
         run_id: ${{ steps.get_run_id.outputs.run_id }}
-        run_timeout_seconds: 300
+        run_timeout_seconds: 600
         poll_interval_ms: 5000
