@@ -8,9 +8,18 @@ on:
     paths: ["**/*.md", "**/mkdocs.yml"]
   workflow_dispatch:
     inputs:
-      distinct_id:
+      enable-production:
         required: false
-        type: number
+        default: true
+        type: boolean
+      gh-pages:
+        required: false
+        default: false
+        type: boolean
+      strict-mode:
+        required: false
+        default: false
+        type: boolean
       repository:
         required: false
         type: string
@@ -23,21 +32,12 @@ on:
       branch:
         required: false
         type: string
-      gh-pages:
-        required: false
-        default: false
-        type: boolean
       descriptor-file:
         required: false
         type: string
-      strict-mode:
+      distinct_id:
         required: false
-        default: false
-        type: boolean
-      enable-production:
-        required: false
-        default: true
-        type: boolean
+        type: number
 
 env:
   REPO: ${{ inputs.repository != '' && inputs.repository || github.repository }}
