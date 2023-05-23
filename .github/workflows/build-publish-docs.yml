@@ -1,4 +1,4 @@
-run-name: ${{ inputs.repository }} - Build/Publish Docs
+run-name: Build/Publish Docs - ${{ inputs.repository }}
 on:
   repository_dispatch:
     types: [techdocs]
