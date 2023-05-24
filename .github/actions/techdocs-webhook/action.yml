@@ -29,7 +29,7 @@ runs:
   using: "composite"
   steps:
     - name: Get repository name
-      runs: |
+      run: |
         echo "REPO_NAME=$(basename ${{ inputs.repository }})" >> $GITHUB_ENV
       shell: bash
     - name: Dispatch build/publish documentation and get the run ID
