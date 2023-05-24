@@ -30,7 +30,8 @@ runs:
   steps:
     - name: Get repository name
       run: |
-        echo "INPUTS = $(toJson(${{ inputs }}) | jq '.repo-name=$(basename ${{ inputs.repository }})')" >> $GITHUB_ENV
+        echo "INPUTS = $(toJson(${{ inputs }})"
+        echo "INPUTS | jq '.repo-name=$(basename ${{ inputs.repository }})')" >> $GITHUB_ENV
       shell: bash
     - name: Dispatch build/publish documentation and get the run ID
       id: get_run_id
