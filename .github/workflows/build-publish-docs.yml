@@ -118,6 +118,7 @@ jobs:
         with:
           repository: ${{ env.REPO }}
           token: ${{ env.TOKEN }}
+          ref: ${{ steps.get-branch.outputs.branch }}
       - name: Install GraphViz
         run: sudo apt-get install -y graphviz
       - name: Setup Mkdocs dependencies
