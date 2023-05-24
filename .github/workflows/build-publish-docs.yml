@@ -1,5 +1,5 @@
 name: Build & Publish Documentation
-run-name: Build/Publish Docs - ${{ inputs.repository }}
+run-name: Build/Publish Docs - ${{ inputs.repo-name }}
 on:
   push:
     branches:
@@ -22,6 +22,10 @@ on:
       repository:
         required: false
         default: 'department-of-veterans-affairs/lighthouse-github-actions'
+        type: string
+      repo-name:
+        required: false
+        default: 'lighthouse-github-actions'
         type: string
       token:
         required: false
