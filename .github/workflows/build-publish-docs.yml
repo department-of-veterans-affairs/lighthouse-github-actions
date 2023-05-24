@@ -1,5 +1,5 @@
 name: Build & Publish Documentation
-run-name: Build/Publish Docs - ${{ inputs.repository }}
+run-name: Build/Publish Docs - ${{ inputs.repository#*/ }}
 on:
   push:
     branches:
