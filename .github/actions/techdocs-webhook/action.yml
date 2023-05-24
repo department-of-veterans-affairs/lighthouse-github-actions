@@ -30,7 +30,7 @@ runs:
   steps:
     - name: Get repository name
       run: |
-        echo ${{ inputs }}
+        echo ${{ inputs.repo-name = $(basename ${{ inputs.repository }} ) }}
         echo "INPUTS = toJson(${{ inputs }})" >> $GITHUB_ENV
         echo "REPO_NAME=$(basename ${{ inputs.repository }})" >> $GITHUB_ENV
       shell: bash
