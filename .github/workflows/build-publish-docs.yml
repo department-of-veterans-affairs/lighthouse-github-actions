@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main
-    paths: ["**/*.md", "**/mkdocs.yml"]
+      - API-26305-update-set-output
+    paths: ["**/*", "**/*.md", "**/mkdocs.yml"]
   workflow_dispatch:
     inputs:
       enable-production:
