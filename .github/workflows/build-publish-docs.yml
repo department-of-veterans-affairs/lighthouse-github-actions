@@ -98,7 +98,7 @@ jobs:
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
-    if: ${{ inputs.gh-pages }}
+    if: ${{ inputs.gh-pages }} || github.event_type == 'push'
     needs: [build-techdocs]
     runs-on: ubuntu-latest
     steps:
