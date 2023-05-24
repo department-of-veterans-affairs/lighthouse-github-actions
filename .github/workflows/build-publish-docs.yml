@@ -41,27 +41,14 @@ env:
 jobs:
   validate-techdocs:
     runs-on: ubuntu-latest
-    outputs:
-      branch: ${{ steps.get-branch.outputs.branch }}
     steps:
       - name: Echo distinct ID ${{ inputs.distinct_id }} # Used to return success or fail to the source repo
         run: echo "${{ inputs.distinct_id }}"
-      - name: Setup branch
-        id: get-branch
-        run: |
-          branch="${{ inputs.branch }}"
-          if [ "$branch" == "" ]; then
-            branch=$(curl \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: token ${{ env.TOKEN }}" \
-            https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
-          fi
-          echo "branch=$branch" >> $GITHUB_OUTPUT
       - name: Check out target repository
         uses: actions/checkout@v3
         with:
           repository: ${{ env.REPO }}
-          ref: ${{ steps.get-branch.outputs.branch }}
+          ref: ${{ inputs.branch }}
           token: ${{ env.TOKEN }}
           path: ${{ env.REPO }}
       - name: Check out Github Actions repository
@@ -103,7 +90,7 @@ jobs:
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
           repository: ${{ env.REPO }}
-          branch: ${{ needs.validate-techdocs.outputs.branch }}
+          branch: ${{ inputs.branch }}
           descriptor-file: ${{ inputs.descriptor-file }}
           namespace: ${{ secrets.KUBE_NAMESPACE }}
           token: ${{ secrets.TECHDOCS_PAT }}
@@ -118,7 +105,7 @@ jobs:
         with:
           repository: ${{ env.REPO }}
           token: ${{ env.TOKEN }}
-          ref: ${{ steps.get-branch.outputs.branch }}
+          ref: ${{ inputs.branch }}
       - name: Install GraphViz
         run: sudo apt-get install -y graphviz
       - name: Setup Mkdocs dependencies
