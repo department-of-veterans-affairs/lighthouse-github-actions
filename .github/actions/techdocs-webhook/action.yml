@@ -28,15 +28,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Get repository name
+    - name: Get repository name and update input buffer
       run: |
         echo '${{ toJson(inputs) }}' > temp.json
-        cat temp.json
         REPO_NAME=$( basename ${{ inputs.repository }})
-        echo $REPO_NAME
         cat <<< $(jq --arg v $REPO_NAME '."repo-name"=$v' temp.json) > temp.json
-        cat temp.json
-        DL=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+        DL=$(dd if=/dev/urandom bs=15 count=1 status=none | base64) # delimiter for GITHUB_ENV multiline output
         echo "INPUTS<<$DL" >> "$GITHUB_ENV"
         cat temp.json >> "$GITHUB_ENV"
         echo "$DL" >> "$GITHUB_ENV"
