@@ -31,7 +31,8 @@ runs:
     - name: Get repository name
       run: |
         echo '${{ toJson(inputs) }}' >> temp.json
-        cat <<< $(jq --arg v '$(basename ${{ inputs.repository }})' '.repo-name=$v' temp.json) > temp.json
+        cat <<< $(jq --arg v '$(basename #{{ inputs.repository }})' '.repo-name=$v' temp.json) > temp.json
+        cat temp.json
         DL=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
         echo "INPUTS<<$DL" >> "$GITHUB_ENV"
         cat temp.json >> "$GITHUB_ENV"
