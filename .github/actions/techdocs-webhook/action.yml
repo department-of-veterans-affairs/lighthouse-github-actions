@@ -33,10 +33,9 @@ runs:
         echo '${{ toJson(inputs) }}' > temp.json
         REPO_NAME=$( basename ${{ inputs.repository }})
         cat <<< $(jq --arg v $REPO_NAME '."repo-name"=$v' temp.json) > temp.json
-        DL=$(dd if=/dev/urandom bs=15 count=1 status=none | base64) # delimiter for GITHUB_ENV multiline output
-        echo "INPUTS<<$DL" >> "$GITHUB_ENV"
+        echo "INPUTS<<EOF" >> "$GITHUB_ENV"
         cat temp.json >> "$GITHUB_ENV"
-        echo "$DL" >> "$GITHUB_ENV"
+        echo "EOF" >> "$GITHUB_ENV"
       shell: bash
     - name: Dispatch build/publish documentation and get the run ID
       id: get_run_id
