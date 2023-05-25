@@ -34,7 +34,7 @@ runs:
         cat temp.json
         REPO_NAME=$( basename ${{ inputs.repository }})
         echo $REPO_NAME
-        cat <<< $(jq --arg v 'env.REPO_NAME' '."repo-name"=$v' temp.json) > temp.json
+        cat <<< $(jq --arg v '"$REPO_NAME"' '."repo-name"=$v' temp.json) > temp.json
         cat temp.json
         DL=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
         echo "INPUTS<<$DL" >> "$GITHUB_ENV"
