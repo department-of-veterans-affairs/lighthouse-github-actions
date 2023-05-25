@@ -33,6 +33,7 @@ runs:
         echo '${{ toJson(inputs) }}' > temp.json
         cat temp.json
         REPO_NAME=$( basename ${{ inputs.repository }})
+        echo $REPO_NAME
         cat <<< $(jq --arg v '$REPO_NAME' '."repo-name"=$v' temp.json) > temp.json
         cat temp.json
         DL=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
