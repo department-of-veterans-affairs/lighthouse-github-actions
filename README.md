@@ -26,22 +26,31 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 
 ```yaml
 - name: Create TechDocs Job
-  uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
+  uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs-webhook@main
   with:
     # Owner and repository where the documentation lives (e.g. department-of-veterans-affairs/lighthouse-developer-portal)
     # Default: ${{ github.repository }}
-    # Required: true
-    repository: ""
+    repository: ''
+
+    # Repo branch to validate/publish documentation; use ${{ github.ref_name }} to specify the branch used for the workflow dispatch
+    # Defaults to repository's default branch
+    branch: ''
 
     # Name of Entity descriptor file; used to create Entity path (i.e. namespace/kind/name)
     # Default: 'catalog-info.yaml'
-    # Required: false
-    descriptor-file: ""
+    descriptor-file: ''
 
     # Personal Access Token used for TechDocs Webhook
     # Scopes: Repo
-    # Required: true
-    token: ""
+    token: ''
+
+    # Deploy to gh-pages; only include if you want to publish docs externally to GitHub (github.io)
+    # Default: false
+    gh-pages: true|false
+
+    # Flag for enabling/disabling TechDocs for production
+    # Default: true
+    enable-production: true|false
 ```
 
 <!-- end usage -->
@@ -58,15 +67,16 @@ name: Publish Documentation
 on:
   push:
     branches: [main]
-    paths: ["**/docs/*", "**/mkdocs.yaml"]
+    paths: ['**/docs/*', '**/mkdocs.yaml'] # Additionally, using '**/*.md' will check all '.md' files for changes including in /docs
 jobs:
   create-techdocs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: TechDocs webhook
+      - name: Techdocs webhook
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs-webhook@main
         with:
           repository: ${{ github.repository }}
-          token: ${{ secrets.WEBHOOK_PAT }}
+          token: ${{ secrets.PAT }}
+          branch: ${{ github.ref_name }}
 ```

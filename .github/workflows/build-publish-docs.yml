@@ -1,40 +1,58 @@
-name: Build & publish documentation
+name: Build & Publish Documentation
+run-name: Build/Publish Docs - ${{ inputs.repo-name }}
 on:
-  repository_dispatch:
-    types: [techdocs]
   push:
     branches:
       - main
     paths: ["**/*.md", "**/mkdocs.yml"]
   workflow_dispatch:
+    inputs:
+      enable-production:
+        required: false
+        default: true
+        type: boolean
+      gh-pages:
+        required: false
+        default: false
+        type: boolean
+      strict-mode:
+        required: false
+        default: false
+        type: boolean
+      repository:
+        required: false
+        default: 'department-of-veterans-affairs/lighthouse-github-actions'
+        type: string
+      repo-name:
+        required: false
+        default: 'lighthouse-github-actions'
+        type: string
+      token:
+        required: false
+        type: string
+      branch:
+        required: false
+        type: string
+      descriptor-file:
+        required: false
+        type: string
+      distinct_id:
+        required: false
+        type: string
 env:
-  REPO: ${{ github.event.client_payload.inputs.repository != '' && github.event.client_payload.inputs.repository || github.repository }}
-  TOKEN: ${{ github.event.client_payload.inputs.token != '' && github.event.client_payload.inputs.token || secrets.TECHDOCS_PAT }}
-  NAMESPACE: ${{ github.event.client_payload.inputs.namespace != '' &&  github.event.client_payload.inputs.namespace || secrets.KUBE_NAMESPACE }}
+  REPO: ${{ inputs.repository != '' && inputs.repository || github.repository }}
+  TOKEN: ${{ inputs.token != '' && inputs.token || secrets.TECHDOCS_PAT }}
 jobs:
   validate-techdocs:
     runs-on: ubuntu-latest
-    outputs:
-      branch: ${{ steps.get-branch.outputs.branch }}
     steps:
-      - name: ${{ github.event.client_payload.github.sha }} # Used to return success or fail to the source repo
-        run: echo "${{ github.event.client_payload.github.sha }}"
-      - name: Setup branch
-        id: get-branch
-        run: |
-          branch="${{ github.event.client_payload.inputs.branch }}"
-          if [ "$branch" == "" ]; then
-            branch=$(curl \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: token ${{ env.TOKEN }}" \
-            https://api.github.com/repos/${{ env.REPO }} | jq -r '.default_branch')
-          fi
-          echo "branch=$branch" >> $GITHUB_OUTPUT
+      - name: Echo distinct ID ${{ inputs.distinct_id }} # Used to return success or fail to the source repo
+        run: echo "${{ inputs.distinct_id }}"
       - name: Check out target repository
         uses: actions/checkout@v3
         with:
           repository: ${{ env.REPO }}
-          ref: ${{ steps.get-branch.outputs.branch }}
+          ref: ${{ inputs.branch }}
           token: ${{ env.TOKEN }}
           path: ${{ env.REPO }}
       - name: Check out Github Actions repository
@@ -50,10 +68,10 @@ jobs:
         uses: ./department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs
         with:
           repository: ${{ env.REPO }}
-          descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
-          namespace: ${{ env.NAMESPACE }}
+          descriptor-file: ${{ inputs.descriptor-file }}
+          namespace: ${{ secrets.KUBE_NAMESPACE }}
           token: ${{ env.TOKEN }}
-          strict-mode: ${{ github.event.client_payload.inputs.strict-mode }}
+          strict-mode: ${{ inputs.strict-mode }}
       - name: Validation results
         run: |
           echo "${{ steps.validation.outputs.results }}"
@@ -62,28 +80,28 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        environment: [Development]
+        environment:
+          - Development
+          # - Production
     environment:
       name: ${{ matrix.environment }}
     steps:
-      - name: ${{ github.event.client_payload.github.sha }}
-        run: echo "${{ github.event.client_payload.github.sha }}"
       - name: Create techdocs
-        if: ${{ matrix.environment == 'Development' || ( github.event.client_payload.inputs.enable-production != 'false' && matrix.environment == 'Production' ) }}
+        if: ${{ matrix.environment == 'Development' || ( inputs.enable-production != 'false' && matrix.environment == 'Production' ) }}
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
           repository: ${{ env.REPO }}
-          branch: ${{ needs.validate-techdocs.outputs.branch }}
-          descriptor-file: ${{ github.event.client_payload.inputs.descriptor-file }}
-          namespace: ${{ env.NAMESPACE }}
+          branch: ${{ inputs.branch }}
+          descriptor-file: ${{ inputs.descriptor-file }}
+          namespace: ${{ secrets.KUBE_NAMESPACE }}
           token: ${{ secrets.TECHDOCS_PAT }}
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
-    if: ${{ github.event.client_payload.inputs.gh-pages == 'true' || github.event_name != 'repository_dispatch' }}
+    if: ${{ inputs.gh-pages }} || github.event_type == 'push'
     needs: [build-techdocs]
     runs-on: ubuntu-latest
     steps:
@@ -91,6 +109,7 @@ jobs:
         with:
           repository: ${{ env.REPO }}
           token: ${{ env.TOKEN }}
+          ref: ${{ inputs.branch }}
       - name: Install GraphViz
         run: sudo apt-get install -y graphviz
       - name: Setup Mkdocs dependencies

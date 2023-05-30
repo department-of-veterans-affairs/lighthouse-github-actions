@@ -1,10 +1,6 @@
 name: "Send Techdocs Webhook"
 description: "Sends a webhook to trigger repository dispatch event for techdocs workflow"
 inputs:
-  event:
-    description: "Event trigger"
-    default: "techdocs"
-    required: false
   repository:
     description: "Name of repository"
     required: true
@@ -14,16 +10,8 @@ inputs:
   descriptor-file:
     description: "Name of catalog entity descriptor file"
     required: false
-  namespace:
-    description: "Namespace of entity; used as namespace for --entity <namespace/kind/name>"
-    default: "default"
-    required: false
   token:
     description: "Personal Access token for webhook"
-    required: false
-  tag:
-    description: "Tag or Commit sha for techdocs job version"
-    default: "main"
     required: false
   gh-pages:
     description: "Flag used to enable gh-pages deployment"
@@ -40,23 +28,31 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: run test-in-another-repo
-      id: get_status
-      uses: stinkyfingers/cross-repo-dispatch@52c5ff3cc7277612c058d932896ac665f77ec249
+    - name: Get repository name and update input buffer
+      run: |
+        echo '${{ toJson(inputs) }}' > temp.json
+        REPO_NAME=$( basename ${{ inputs.repository }})
+        cat <<< $(jq --arg v $REPO_NAME '."repo-name"=$v' temp.json) > temp.json
+        echo "INPUTS<<EOF" >> "$GITHUB_ENV"
+        cat temp.json >> "$GITHUB_ENV"
+        echo "EOF" >> "$GITHUB_ENV"
+      shell: bash
+    - name: Dispatch build/publish documentation and get the run ID
+      id: get_run_id
+      uses: codex-/return-dispatch@v1
       with:
         owner: "department-of-veterans-affairs"
         repo: "lighthouse-github-actions"
         ref: ${{ github.ref }}
-        pat: ${{ inputs.token }}
-        user: ${{ github.repository_owner }}
-        sha: ${{ github.sha }}
-        event_type: "techdocs"
-        client_payload: '{"github": ${{ toJson(github) }}, "inputs": ${{ toJson(inputs) }}}'
-        workflow_status_timeout: 1200
-    - name: Display Results
-      run: |
-        echo "Status: ${{ steps.get_status.outputs.status }}"
-        echo "Conclusion: ${{ steps.get_status.outputs.conclusion }}"
-        echo "Html url: ${{ steps.get_status.outputs.html_url }}"
-        if [ "${{ steps.get_status.outputs.conclusion }}" = "failure" ]; then exit 1; fi
-      shell: bash
+        token: ${{ inputs.token }}
+        workflow: "build-publish-docs.yml"
+        workflow_inputs: "${{ env.INPUTS }}"
+    - name: Await run ID ${{ steps.get_run_id.outputs.run_id }}
+      uses: codex-/await-remote-run@v1.0.0
+      with:
+        token: ${{ inputs.token }}
+        repo: "lighthouse-github-actions"
+        owner: "department-of-veterans-affairs"
+        run_id: ${{ steps.get_run_id.outputs.run_id }}
+        run_timeout_seconds: 600
+        poll_interval_ms: 5000
