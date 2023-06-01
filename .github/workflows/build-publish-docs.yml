@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - main
-      - API-00000-fix-gh-pages-deploy
-    paths: ["**/*.md", "**/mkdocs.yml", "**/*"]
+    paths: ["**/*.md", "**/mkdocs.yml"]
   workflow_dispatch:
     inputs:
       enable-production:
