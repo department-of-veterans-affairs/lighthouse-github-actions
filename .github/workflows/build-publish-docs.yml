@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - API-00000-fix-gh-pages-deploy
     paths: ["**/*.md", "**/mkdocs.yml"]
   workflow_dispatch:
     inputs:
@@ -101,7 +102,7 @@ jobs:
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
-    if: ${{ inputs.gh-pages }} || github.event_type == 'push'
+    if: ${{ inputs.gh-pages }}
     needs: [build-techdocs]
     runs-on: ubuntu-latest
     steps:
