@@ -43,7 +43,7 @@ runs:
       with:
         owner: "department-of-veterans-affairs"
         repo: "lighthouse-github-actions"
-        ref: ${{ inputs.branch }}
+        ref: API-00000-fix-gh-pages-deploy
         token: ${{ inputs.token }}
         workflow: "build-publish-docs.yml"
         workflow_inputs: "${{ env.INPUTS }}"
