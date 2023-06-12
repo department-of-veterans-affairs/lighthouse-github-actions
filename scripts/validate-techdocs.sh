@@ -19,7 +19,7 @@ main() {
   results+="$(build_with_techdocs)"
   # Need this for handling newlines for Github Action variables
   format=$(echo "${results}")
-  echo "value<<EOF" >> $GITHUB_OUTPUT
+  echo "results<<EOF" >> $GITHUB_OUTPUT
   echo "$format" >> $GITHUB_OUTPUT
   echo "EOF" >> $GITHUB_OUTPUT
 }
