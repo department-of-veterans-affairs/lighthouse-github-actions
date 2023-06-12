@@ -18,11 +18,10 @@ main() {
   results+="$(build_with_mkdocs)"
   results+="$(build_with_techdocs)"
   # Need this for handling newlines for Github Action variables
-  RESULTS="$(echo "${results}")"
-  RESULTS="${RESULTS//'%'/'%25'}"
-  RESULTS="${RESULTS//$'\n'/'%0A'}"
-  RESULTS="${RESULTS//$'\r'/'%0D'}"
-  echo "results=${RESULTS}" >> $GITHUB_OUTPUT
+  format=$(echo "${results}")
+  echo "value<<EOF" >> $GITHUB_OUTPUT
+  echo "$format" >> $GITHUB_OUTPUT
+  echo "EOF" >> $GITHUB_OUTPUT
 }
 
 main

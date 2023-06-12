@@ -60,15 +60,15 @@ runs:
     - name: Check for warnings
       if: ${{ inputs.strict-mode == 'true' }}
       run: |
-        if echo "${{ steps.validation.outputs.RESULTS }}" | grep -i "warning"; then
-          echo -e "Validation Error:\n${{ steps.validation.outputs.RESULTS }}";
+        if echo "${{ steps.validation.outputs.results }}" | grep -i "warning"; then
+          echo -e "Validation Error:\n${{ steps.validation.outputs.results }}";
           exit 1;
         fi
       shell: bash
     - name: Check for errors
       run: |
-        if echo "${{ steps.validation.outputs.RESULTS }}" | grep -i "error"; then
-          if echo "${{ steps.validation.outputs.RESULTS }}" | grep -i "failed to run plantuml"; then
+        if echo "${{ steps.validation.outputs.results }}" | grep -i "error"; then
+          if echo "${{ steps.validation.outputs.results }}" | grep -i "failed to run plantuml"; then
             echo -e "Validation Error: Unable to create diagram with Plantuml.\nMake sure to use the @startuml and @enduml notation."
           fi
           exit 1;
