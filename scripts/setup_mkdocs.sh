@@ -11,7 +11,7 @@ install_mkdocs() {
     'mkdocs-material>=9.1.3' \
     'mkdocs-monorepo-plugin>=1.0.4' \
     'mkdocs-techdocs-core>=1.2.1' \
-    'pymdown-extensions>=9.3'
+    'pymdown-extensions>=10.0'
 }
 
 install_plant_uml() {
