@@ -71,7 +71,7 @@ jobs:
           descriptor-file: ${{ inputs.descriptor-file }}
           namespace: ${{ secrets.KUBE_NAMESPACE }}
           token: ${{ env.TOKEN }}
-          strict-mode: ${{ inputs.strict-mode }}
+          strict-mode: true
       - name: Validation results
         run: |
           echo "${{ steps.validation.outputs.results }}"
