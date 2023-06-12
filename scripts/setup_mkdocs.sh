@@ -2,7 +2,7 @@
 # shellcheck disable=SC2272
 
 install_jquery_techdocs_cli() {
-  npm install -g jquery@3.6.0 @techdocs/cli@1.2.0 parse-url@8.1.0
+  npm install -g jquery@3.7.0 @techdocs/cli@1.2.3 parse-url@8.1.0
 }
 
 install_mkdocs() {
