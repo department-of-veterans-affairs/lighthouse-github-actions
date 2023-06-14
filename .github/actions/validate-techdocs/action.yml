@@ -29,6 +29,7 @@ runs:
       id: lintmd
       uses: nosborn/github-action-markdown-cli@v3.3.0
       with:
+        config: ./department-of-veterans-affairs/lighthouse-github-actions/.markdownlint.yaml
         files: ./${{inputs.repository}}
     - name: Check Techdoc Links
       id: checkmd
