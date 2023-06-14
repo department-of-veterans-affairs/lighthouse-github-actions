@@ -25,6 +25,11 @@ runs:
       working-directory: department-of-veterans-affairs/lighthouse-github-actions
       run: cat <<< $(jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' mlc_config.json) > mlc_config.json
       shell: bash
+    - name: Lint TechDocs
+      id: lintmd
+      uses: nosborn/github-action-markdown-cli@v3.3.0
+      with:
+        files: ./${{inputs.repository}}
     - name: Check Techdoc Links
       id: checkmd
       uses: gaurav-nelson/github-action-markdown-link-check@1.0.15
