@@ -2,16 +2,16 @@
 # shellcheck disable=SC2272
 
 install_jquery_techdocs_cli() {
-  npm install -g jquery@3.6.0 @techdocs/cli@1.2.0 parse-url@8.1.0
+  npm install -g jquery@3.7.0 @techdocs/cli@1.2.3 parse-url@8.1.0
 }
 
 install_mkdocs() {
-  pip install --no-cache-dir --upgrade 'pip>=23.0.1' && pip install --no-cache-dir \
-    'mkdocs>=1.4.2' \
-    'mkdocs-material>=8.1.11' \
-    'mkdocs-monorepo-plugin>=1.0.3' \
-    'mkdocs-techdocs-core>=1.1.5' \
-    'pymdown-extensions>=9.3'
+  pip install --no-cache-dir --upgrade 'pip>=23' && pip install --no-cache-dir \
+    'mkdocs>=1.4.3' \
+    'mkdocs-material>=9.1.3' \
+    'mkdocs-monorepo-plugin>=1.0.4' \
+    'mkdocs-techdocs-core>=1.2.1' \
+    'pymdown-extensions>=10.0'
 }
 
 install_plant_uml() {

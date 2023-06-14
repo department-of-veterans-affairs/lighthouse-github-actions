@@ -17,10 +17,6 @@ inputs:
     description: "Flag used to enable gh-pages deployment"
     default: ""
     required: false
-  strict-mode:
-    description: "Flag used to enable or disable strict mode"
-    default: "false"
-    required: false
   enable-production:
     description: "Flag used to enable or disable techdocs for production"
     default: "true"

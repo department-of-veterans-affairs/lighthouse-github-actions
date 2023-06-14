@@ -15,10 +15,6 @@ on:
         required: false
         default: false
         type: boolean
-      strict-mode:
-        required: false
-        default: false
-        type: boolean
       repository:
         required: false
         default: 'department-of-veterans-affairs/lighthouse-github-actions'
@@ -71,7 +67,6 @@ jobs:
           descriptor-file: ${{ inputs.descriptor-file }}
           namespace: ${{ secrets.KUBE_NAMESPACE }}
           token: ${{ env.TOKEN }}
-          strict-mode: ${{ inputs.strict-mode }}
       - name: Validation results
         run: |
           echo "${{ steps.validation.outputs.results }}"
