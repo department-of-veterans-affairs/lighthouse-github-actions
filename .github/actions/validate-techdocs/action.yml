@@ -21,17 +21,17 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Set AuthZ token in link checker config
-      working-directory: department-of-veterans-affairs/lighthouse-github-actions
-      run: cat <<< $(jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' mlc_config.json) > mlc_config.json
-      shell: bash
     - name: Lint TechDocs
       id: lintmd
       uses: nosborn/github-action-markdown-cli@v3.3.0
       with:
-        config_file: ./department-of-veterans-affairs/lighthouse-github-actions/.markdownlint.yaml
+        config_file: ./department-of-veterans-affairs/lighthouse-github-actions/.markdownlint.json
         ignore_path: ./department-of-veterans-affairs/lighthouse-github-actions/.markdownlintignore
         files: ./${{inputs.repository}}
+    - name: Set AuthZ token in link checker config
+      working-directory: department-of-veterans-affairs/lighthouse-github-actions
+      run: cat <<< $(jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' mlc_config.json) > mlc_config.json
+      shell: bash
     - name: Check Techdoc Links
       id: checkmd
       uses: gaurav-nelson/github-action-markdown-link-check@1.0.15
