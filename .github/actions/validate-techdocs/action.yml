@@ -34,7 +34,7 @@ runs:
       with:
         config_file: ./department-of-veterans-affairs/lighthouse-github-actions/.markdownlint.json
         ignore_path: ./${{ inputs.repository }}/.markdownlintignore
-        files: ./${{ inputs.repository }}
+        files: ./${{ inputs.repository }}/docs
     - name: Lint TechDocs (without ignore file)
       if: ${{ !steps.ignorefile.outputs.exists }}
       uses: nosborn/github-action-markdown-cli@v3.3.0
