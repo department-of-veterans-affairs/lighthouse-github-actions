@@ -21,12 +21,26 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Lint TechDocs
+    - name: Check for lint ignore file
+      id: ignorefile
+      run: |
+        if test -f "./${{ inputs.repository }}/.markdownlintignore"; then
+          echo "exists=true" >> $GITHUB_OUTPUT
+        fi
+    - name: Lint TechDocs (with ignore file)
+      if: ${{ steps.ignorefile.outputs.exists }}
       id: lintmd
       uses: nosborn/github-action-markdown-cli@v3.3.0
       with:
         config_file: ./department-of-veterans-affairs/lighthouse-github-actions/.markdownlint.json
         ignore_path: ./${{ inputs.repository }}/.markdownlintignore
+        files: ./${{ inputs.repository }}
+    - name: Lint TechDocs (without ignore file)
+      if: ${{ !steps.ignorefile.outputs.exists }}
+      id: lintmd
+      uses: nosborn/github-action-markdown-cli@v3.3.0
+      with:
+        config_file: ./department-of-veterans-affairs/lighthouse-github-actions/.markdownlint.json
         files: ./${{ inputs.repository }}
     - name: Set AuthZ token in link checker config
       working-directory: department-of-veterans-affairs/lighthouse-github-actions
