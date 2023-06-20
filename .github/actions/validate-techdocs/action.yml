@@ -29,7 +29,6 @@ runs:
         fi
     - name: Lint TechDocs (with ignore file)
       if: ${{ steps.ignorefile.outputs.exists }}
-      id: lintmd
       uses: nosborn/github-action-markdown-cli@v3.3.0
       with:
         config_file: ./department-of-veterans-affairs/lighthouse-github-actions/.markdownlint.json
@@ -37,7 +36,6 @@ runs:
         files: ./${{ inputs.repository }}
     - name: Lint TechDocs (without ignore file)
       if: ${{ !steps.ignorefile.outputs.exists }}
-      id: lintmd
       uses: nosborn/github-action-markdown-cli@v3.3.0
       with:
         config_file: ./department-of-veterans-affairs/lighthouse-github-actions/.markdownlint.json
