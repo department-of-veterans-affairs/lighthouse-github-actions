@@ -27,6 +27,7 @@ runs:
         if test -f "./${{ inputs.repository }}/.markdownlintignore"; then
           echo "exists=true" >> $GITHUB_OUTPUT
         fi
+      shell: bash
     - name: Lint TechDocs (with ignore file)
       if: ${{ steps.ignorefile.outputs.exists }}
       uses: nosborn/github-action-markdown-cli@v3.3.0
