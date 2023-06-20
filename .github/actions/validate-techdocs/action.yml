@@ -34,6 +34,7 @@ runs:
       shell: bash
     - name: Check Techdoc Links
       id: checkmd
+      needs: lintmd
       uses: gaurav-nelson/github-action-markdown-link-check@1.0.15
       with:
         use-verbose-mode: 'yes'
