@@ -24,17 +24,13 @@ runs:
     - name: Check for lint ignore file
       id: ignorefile
       run: |
-        pwd
         IGNORE_PATH=./${{ inputs.repository }}/.markdownlintignore
-        cat $IGNORE_PATH
         if ! test -f "$IGNORE_PATH"; then
           touch "$IGNORE_PATH"
         else
           # Prepend ignore file with input directory for runner filepath
           awk -i inplace '{print "${{ inputs.repository }}/" $0}' $IGNORE_PATH
         fi
-        cat $IGNORE_PATH
-        ls
         echo "IGNORE_PATH=$IGNORE_PATH" >> $GITHUB_ENV
       shell: bash
     - name: Lint TechDocs
