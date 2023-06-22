@@ -18,15 +18,13 @@ outputs:
   results:
     description: "Results of validation script"
     value: ${{ steps.validation.outputs.RESULTS }}
-env:
-  lint_ignore_path: "./${{ inputs.repository }}/.markdownlintignore"
 runs:
   using: "composite"
   steps:
     - name: Check for lint ignore file
       id: ignorefile
       run: |
-        echo lint_ignore_path="./${{ inputs.repository }}/.markdownlintignore" >> GITHUB_OUTPUT
+        echo lint_ignore_path="./${{ inputs.repository }}/.markdownlintignore" >> GITHUB_ENV
         if ! test -f "${{ env.lint_ignore_path }}"; then
           touch "${{ env.lint_ignore_path }}"
         fi
