@@ -24,6 +24,7 @@ runs:
     - name: Check for lint ignore file
       id: ignorefile
       run: |
+        pwd
         IGNORE_PATH=./${{ inputs.repository }}/.markdownlintignore
         cat $IGNORE_PATH
         if ! test -f "$IGNORE_PATH"; then
