@@ -25,8 +25,8 @@ runs:
       id: ignorefile
       run: |
         echo "IGNORE_PATH=./${{ inputs.repository }}/.markdownlintignore" >> $GITHUB_ENV
-        if ! test -f "${{ env.IGNORE_PATH }}"; then
-          touch "${{ env.IGNORE_PATH }}"
+        if ! test -f "$IGNORE_PATH"; then
+          touch "$IGNORE_PATH"
         fi
       shell: bash
     - name: Lint TechDocs
