@@ -26,14 +26,14 @@ runs:
       run: |
         echo "IGNORE_PATH=$(echo ./${{ inputs.repository }}/.markdownlintignore)" >> $GITHUB_ENV
         if ! test -f "${{ env.IGNORE_PATH }}"; then
-          touch "${{ env.IGNORE_PATH }}"
+          touch "$IGNORE_PATH"
         fi
       shell: bash
     - name: Lint TechDocs
       uses: nosborn/github-action-markdown-cli@v3.3.0
       with:
         config_file: ./department-of-veterans-affairs/lighthouse-github-actions/.markdownlint.json
-        ignore_path: ${{ env.IGNORE_PATH }}
+        ignore_path: $IGNORE_PATH
         files: ./${{ inputs.repository }}/docs
     - name: Set AuthZ token in link checker config
       working-directory: department-of-veterans-affairs/lighthouse-github-actions
