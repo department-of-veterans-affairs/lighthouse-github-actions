@@ -25,6 +25,7 @@ runs:
       id: ignorefile
       run: |
         IGNORE_PATH=./${{ inputs.repository }}/.markdownlintignore
+        cat $IGNORE_PATH
         if ! test -f "$IGNORE_PATH"; then
           touch "$IGNORE_PATH"
         else
