@@ -31,7 +31,7 @@ runs:
           touch "$IGNORE_PATH"
         else
           # Prepend ignore file with input directory for runner filepath
-          awk -i inplace '{print "${ inputs.repository }/" $0}' $IGNORE_PATH
+          awk -i inplace '{print "${{ inputs.repository }}/" $0}' $IGNORE_PATH
         fi
         cat $IGNORE_PATH
         ls
