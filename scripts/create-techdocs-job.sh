@@ -48,7 +48,6 @@ kind: Job
 metadata:
   name: techdocs-${repo}
 spec:
-  ttlSecondsAfterFinished: 100
   template:
     metadata:
       labels:
