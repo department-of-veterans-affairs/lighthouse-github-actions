@@ -24,10 +24,11 @@ runs:
     - name: Check for lint ignore file
       id: ignorefile
       run: |
-        echo "IGNORE_PATH=./${{ inputs.repository }}/.markdownlintignore" >> $GITHUB_ENV
+        IGNORE_PATH=./${{ inputs.repository }}/.markdownlintignore
         if ! test -f "$IGNORE_PATH"; then
           touch "$IGNORE_PATH"
         fi
+        echo "IGNORE_PATH=$IGNORE_PATH" >> $GITHUB_ENV
       shell: bash
     - name: Lint TechDocs
       uses: nosborn/github-action-markdown-cli@v3.3.0
