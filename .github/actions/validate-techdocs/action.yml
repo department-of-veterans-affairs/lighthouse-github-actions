@@ -24,7 +24,7 @@ runs:
     - name: Check for lint ignore file
       id: ignorefile
       run: |
-        echo lint_ignore_path="./${{ inputs.repository }}/.markdownlintignore" >> $GITHUB_ENV
+        echo "lint_ignore_path=$('./${{ inputs.repository }}/.markdownlintignore') >> $GITHUB_ENV
         if ! test -f "${{ env.lint_ignore_path }}"; then
           touch "${{ env.lint_ignore_path }}"
         fi
