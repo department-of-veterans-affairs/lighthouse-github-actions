@@ -51,7 +51,6 @@ spec:
   template:
     metadata:
       labels:
-        app: techdocs-${repo}
         job-name: techdocs-${repo}
         sidecar.istio.io/inject: "false"
     spec:
