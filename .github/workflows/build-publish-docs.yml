@@ -58,7 +58,7 @@ jobs:
           repository: department-of-veterans-affairs/lighthouse-github-actions
           path: department-of-veterans-affairs/lighthouse-github-actions
           token: ${{ secrets.TECHDOCS_PAT }}
-          ref: API-25869-lint-techdocs
+          ref: main
       - name: Validate techdocs
         id: validation
         uses: ./department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs
