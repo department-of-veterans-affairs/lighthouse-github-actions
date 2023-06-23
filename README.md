@@ -26,7 +26,7 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 
 ```yaml
 - name: Create TechDocs Job
-  uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs-webhook@main
+  uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs-webhook@latest
   with:
     # Owner and repository where the documentation lives (e.g. department-of-veterans-affairs/lighthouse-developer-portal)
     # Default: ${{ github.repository }}

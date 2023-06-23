@@ -83,7 +83,7 @@ jobs:
     steps:
       - name: Create techdocs
         if: ${{ matrix.environment == 'Development' || ( inputs.enable-production && matrix.environment == 'Production' ) }}
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@API-25869-lint-techdocs
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
