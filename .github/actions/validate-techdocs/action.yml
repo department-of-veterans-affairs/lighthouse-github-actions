@@ -21,6 +21,24 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Check for lint ignore file
+      id: ignorefile
+      run: |
+        IGNORE_PATH=./${{ inputs.repository }}/.markdownlintignore
+        if ! test -f "$IGNORE_PATH"; then
+          touch "$IGNORE_PATH"
+        else
+          # Prepend ignore file entries with input directory for runner filepath
+          awk -i inplace '{print "${{ inputs.repository }}/" $0}' $IGNORE_PATH
+        fi
+        echo "IGNORE_PATH=$IGNORE_PATH" >> $GITHUB_ENV
+      shell: bash
+    - name: Lint TechDocs
+      uses: nosborn/github-action-markdown-cli@v3.3.0
+      with:
+        config_file: ./department-of-veterans-affairs/lighthouse-github-actions/.markdownlint.json
+        ignore_path: ${{ env.IGNORE_PATH }}
+        files: ./${{ inputs.repository }}/docs
     - name: Set AuthZ token in link checker config
       working-directory: department-of-veterans-affairs/lighthouse-github-actions
       run: cat <<< $(jq --arg v 'token ${{ inputs.token }}' '.httpHeaders[] .headers.Authorization=$v' mlc_config.json) > mlc_config.json
