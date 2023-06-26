@@ -28,7 +28,7 @@ runs:
         if ! test -f "$IGNORE_PATH"; then
           touch "$IGNORE_PATH"
         else
-          # Prepend ignore file with input directory for runner filepath
+          # Prepend ignore file entries with input directory for runner filepath
           awk -i inplace '{print "${{ inputs.repository }}/" $0}' $IGNORE_PATH
         fi
         echo "IGNORE_PATH=$IGNORE_PATH" >> $GITHUB_ENV
