@@ -24,5 +24,5 @@ metadata:
     github.com/project-slug: department-of-veterans-affairs/lighthouse-github-actions
 spec:
   type: repository
-  lifecycle: experimental
+  lifecycle: production
   owner: lighthouse-bandicoot
