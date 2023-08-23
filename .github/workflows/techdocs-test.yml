@@ -1,0 +1,14 @@
+name: Validate Techdocs
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  validate-techdocs:
+    uses: department-of-veterans-affairs/lighthouse-developer-portal/.github/workflows/validate-techdocs.yaml@API-26886-techdocs-validations
+    with:
+      repository: ${{ github.repository }}
+    secrets: inherit
