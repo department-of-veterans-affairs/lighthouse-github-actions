@@ -8,7 +8,7 @@ This action creates a [Kubernetes Job](https://github.com/department-of-veterans
 
 ### Overview
 
-The Kubernetes Job consists of two containers: a [git-sync](https://github.com/kubernetes/git-sync) container and a [TechDocs](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/techdocs/Dockerfile) container. The `git-sync` container is an initContainer that pulls a git repository to a shared volume so the TechDocs container has a copy of all markdown files. The `TechDocs` container then uses the [TechDocs-cli](https://backstage.io/docs/features/techdocs/cli) to generate and publish your documentation to the Lighthouse S3 bucket.
+The Kubernetes Job consists of a [git-sync](https://github.com/kubernetes/git-sync) container and a TechDocs container. The `git-sync` container is an initContainer that pulls a git repository to a shared volume so the TechDocs container has a copy of all markdown files. The `TechDocs` container then uses the [TechDocs-cli](https://backstage.io/docs/features/techdocs/cli) to generate and publish your documentation to the Lighthouse S3 bucket.
 
 ### TechDocs Prerequisites
 
