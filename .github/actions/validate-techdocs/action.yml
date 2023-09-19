@@ -49,6 +49,7 @@ runs:
       with:
         use-verbose-mode: 'yes'
         config-file: './department-of-veterans-affairs/lighthouse-github-actions/mlc_config.json'
+        folder-path: './${{ inputs.repository }}'
     - name: Setup validation args
       id: args
       run: |
