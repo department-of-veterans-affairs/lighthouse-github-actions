@@ -10,6 +10,7 @@ install_mkdocs() {
     'mkdocs>=1.4.3' \
     'mkdocs-material>=9.1.3' \
     'mkdocs-monorepo-plugin>=1.0.4' \
+    'mkdocs-section-index>=0.3.7' \
     'mkdocs-techdocs-core>=1.2.1' \
     'pymdown-extensions>=10.0'
 }
