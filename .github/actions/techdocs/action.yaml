@@ -97,14 +97,13 @@ runs:
         fi
         echo "Entity's S3 Location: .../${namespace}/${kind}/${name}"
       shell: bash
-    # - name: Create Dockerconfigjson
-    #   run: >
-    #     kubectl create secret docker-registry docker-credentials --save-config --dry-run=client 
-    #     --docker-server=ghcr.io
-    #     --docker-username=${{ github.repository_owner }}
-    #     --docker-password=${{ inputs.token }}
-    #     -o yaml | kubectl apply -f -
-    #   shell: bash
+    - name: Create Dockerconfigjson
+      run: >
+        kubectl create secret docker-registry docker-credentials --save-config --dry-run=client 
+        --docker-server=ghcr.io
+        --docker-password=${{ inputs.token }}
+        -o yaml | kubectl apply -f -
+      shell: bash
     - name: Checkout lighthouse-developer-portal
       uses: actions/checkout@v3
       with:
