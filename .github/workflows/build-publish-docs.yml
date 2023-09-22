@@ -85,7 +85,7 @@ jobs:
         if: ${{ matrix.environment == 'Development' || ( inputs.enable-production && matrix.environment == 'Production' ) }}
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@API-00000-fix-auth-error
         with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG_TEST }}
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
           repository: ${{ env.REPO }}
