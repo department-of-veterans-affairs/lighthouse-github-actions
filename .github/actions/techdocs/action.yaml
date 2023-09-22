@@ -101,6 +101,7 @@ runs:
       run: >
         kubectl create secret docker-registry docker-credentials --save-config --dry-run=client 
         --docker-server=ghcr.io
+        --docker-username=va-lighthouse-hub
         --docker-password=${{ inputs.token }}
         -o yaml | kubectl apply -f -
       shell: bash
