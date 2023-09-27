@@ -99,10 +99,10 @@ runs:
       shell: bash
     - name: Login to GHCR.io
       uses: docker/login-action@v3
-        with:
-          username: ${{ inputs.username }}
-          password: ${{ inputs.token }}
-          registry: ghcr.io
+      with:
+        username: ${{ inputs.username }}
+        password: ${{ inputs.token }}
+        registry: ghcr.io
     - name: Create Dockerconfigjson
       run: >
         kubectl create secret docker-registry docker-credentials --save-config --dry-run=client 
