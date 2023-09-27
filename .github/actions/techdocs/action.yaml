@@ -97,11 +97,17 @@ runs:
         fi
         echo "Entity's S3 Location: .../${namespace}/${kind}/${name}"
       shell: bash
+    - name: Login to GHCR.io
+      uses: docker/login-action@v3
+        with:
+          username: ${{ inputs.username }}
+          password: ${{ inputs.token }}
+          registry: ghcr.io
     - name: Create Dockerconfigjson
       run: >
         kubectl create secret docker-registry docker-credentials --save-config --dry-run=client 
         --docker-server=ghcr.io
-        --docker-username=va-lighthouse-hub
+        --docker-username=${{ inputs.username }}
         --docker-password=${{ inputs.token }}
         -o yaml | kubectl apply -f -
       shell: bash
