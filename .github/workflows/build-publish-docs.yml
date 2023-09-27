@@ -92,7 +92,7 @@ jobs:
           branch: ${{ inputs.branch }}
           descriptor-file: ${{ inputs.descriptor-file }}
           namespace: ${{ secrets.KUBE_NAMESPACE }}
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.TECHDOCS_PAT }}
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
