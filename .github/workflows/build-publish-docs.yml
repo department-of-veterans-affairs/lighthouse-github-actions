@@ -85,14 +85,14 @@ jobs:
         if: ${{ matrix.environment == 'Development' || ( inputs.enable-production && matrix.environment == 'Production' ) }}
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@API-00000-fix-auth-error
         with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG_TEST }}
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
           serviceAccountName: bandicoot-sa
           repository: ${{ env.REPO }}
           branch: ${{ inputs.branch }}
           descriptor-file: ${{ inputs.descriptor-file }}
           namespace: ${{ secrets.KUBE_NAMESPACE }}
-          token: ${{ secrets.TEST_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
           AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
           PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
