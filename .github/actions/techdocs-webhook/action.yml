@@ -39,7 +39,7 @@ runs:
       with:
         owner: "department-of-veterans-affairs"
         repo: "lighthouse-github-actions"
-        ref: main
+        ref: API-00000-fix-auth-error
         token: ${{ inputs.token }}
         workflow: "build-publish-docs.yml"
         workflow_inputs: "${{ env.INPUTS }}"
