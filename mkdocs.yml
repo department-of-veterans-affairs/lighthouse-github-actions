@@ -1,4 +1,4 @@
-plugins: [techdocs-core]
+plugins: [techdocs-core, section-index]
 repo_url: https://github.com/department-of-veterans-affairs/lighthouse-github-actions
 site_name: Lighthouse Github Actions Documentation
 markdown_extensions:
