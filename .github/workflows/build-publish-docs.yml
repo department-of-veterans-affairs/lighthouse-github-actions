@@ -37,7 +37,7 @@ on:
         type: string
 env:
   REPO: ${{ inputs.repository != '' && inputs.repository || github.repository }}
-  TOKEN: ${{ inputs.token != '' && inputs.token || secrets.TEST_TOKEN }}
+  TOKEN: ${{ inputs.token != '' && inputs.token || secrets.TECHDOCS_PAT }}
 jobs:
   validate-techdocs:
     runs-on: ubuntu-latest

@@ -108,14 +108,6 @@ runs:
         docker pull ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/git-sync:23.06.1
         docker pull ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/techdocs:23.06.1
       shell: bash
-    # - name: Create Dockerconfigjson
-    #   run: >
-    #     kubectl create secret docker-registry docker-credentials --save-config --dry-run=client 
-    #     --docker-server=ghcr.io
-    #     --docker-username=${{ inputs.username }}
-    #     --docker-password=${{ inputs.token }}
-    #     -o yaml | kubectl apply -f -
-    #   shell: bash
     - name: Checkout lighthouse-developer-portal
       uses: actions/checkout@v3
       with:
