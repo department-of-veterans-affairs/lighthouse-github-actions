@@ -35,7 +35,7 @@
       "pattern": "github.com/department-of-veterans-affairs/(?=.+/settings/.+)"
     },
     {
-      "pattern": "github.com(?=.+/pkgs)"
+      "pattern": "github.com(?=.+/pkgs|.+/issues)"
     },
     {
       "pattern": "github.com(?=.+/actions$)"
