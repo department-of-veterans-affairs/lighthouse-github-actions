@@ -103,7 +103,7 @@ runs:
         --dry-run=client
         --docker-server=ghcr.io
         --docker-username=${{ inputs.username }}
-        --docker-password=${{ inputs.token }}"
+        --docker-password=${{ inputs.token }}
         -o yaml | kubectl apply -f -
       shell: bash
     - name: Checkout lighthouse-developer-portal
