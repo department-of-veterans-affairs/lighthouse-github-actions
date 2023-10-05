@@ -125,7 +125,7 @@ runs:
     - name: Create techdocs Job
       if: ${{ steps.delete-jobs.outcome == 'success'}}
       run: >
-        bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-techdocs-job.sh)
+        bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/API-30210-fix-image-pull/scripts/create-techdocs-job.sh)
         "${{ inputs.serviceAccountName }}"
         "${{ inputs.repository }}"
         "$namespace"
