@@ -92,6 +92,8 @@ spec:
           limits:
             cpu: 500m
             memory: 1024Mi
+      imagePullSecrets:
+        - name: "${ghcr_secrets}"
       restartPolicy: Never
       volumes:
       - name: repo
