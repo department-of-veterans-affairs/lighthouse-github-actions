@@ -4,3 +4,5 @@ site_name: Lighthouse Github Actions Documentation
 markdown_extensions:
   - pymdownx.snippets:
       check_paths: true
+nav:
+  - index.md
