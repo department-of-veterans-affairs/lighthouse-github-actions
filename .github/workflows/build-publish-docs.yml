@@ -58,7 +58,7 @@ jobs:
           repository: department-of-veterans-affairs/lighthouse-github-actions
           path: department-of-veterans-affairs/lighthouse-github-actions
           token: ${{ secrets.TECHDOCS_PAT }}
-          ref: API-00000-fix-auth-error
+          ref: main
       - name: Validate techdocs
         id: validation
         uses: ./department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs
@@ -83,7 +83,7 @@ jobs:
     steps:
       - name: Create techdocs
         if: ${{ matrix.environment == 'Development' || ( inputs.enable-production && matrix.environment == 'Production' ) }}
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@API-00000-fix-auth-error
+        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
