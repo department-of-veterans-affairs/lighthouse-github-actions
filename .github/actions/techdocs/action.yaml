@@ -103,6 +103,7 @@ runs:
         GITHUB_TOKEN: ${{ inputs.token }}
         GITHUB_USER: ${{ github.repository_owner }}
         branch: ${{ steps.get-branch.outputs.branch }}
+      shell: bash
     # - name: Create Docker secrets
     #   run: >
     #     kubectl create secret docker-registry docker-credentials --save-config 
