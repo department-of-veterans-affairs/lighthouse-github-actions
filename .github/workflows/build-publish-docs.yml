@@ -82,7 +82,7 @@ jobs:
       name: ${{ matrix.environment }}
     steps:
       - name: Create techdocs
-        if: ${{ matrix.environment == 'Development' || ( inputs.enable-production && matrix.environment == 'Production' ) }}
+        if: ${{ matrix.environment == 'Development' || inputs.enable-production }}
         uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@API-30210-fix-image-pull
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
