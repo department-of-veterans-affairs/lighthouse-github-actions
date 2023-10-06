@@ -78,7 +78,7 @@ spec:
           cd /tmp/git/${repo} || exit 1
           ${techdocs_generate_args}
           ${techdocs_publish_args}
-          sleep 3600
+          sleep 600
         volumeMounts:
           - name: repo
             mountPath: /tmp/git/
