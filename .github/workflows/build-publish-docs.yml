@@ -39,39 +39,39 @@ env:
   REPO: ${{ inputs.repository != '' && inputs.repository || github.repository }}
   TOKEN: ${{ inputs.token != '' && inputs.token || secrets.TECHDOCS_PAT }}
 jobs:
-  # validate-techdocs:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Echo distinct ID ${{ inputs.distinct_id }} # Used to return success or fail to the source repo
-  #       run: echo "${{ inputs.distinct_id }}"
-  #     - name: Check out target repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         repository: ${{ env.REPO }}
-  #         ref: ${{ inputs.branch }}
-  #         token: ${{ env.TOKEN }}
-  #         path: ${{ env.REPO }}
-  #     - name: Check out Github Actions repository
-  #       if: ${{ env.REPO != 'department-of-veterans-affairs/lighthouse-github-actions' }}
-  #       uses: actions/checkout@v3
-  #       with:
-  #         repository: department-of-veterans-affairs/lighthouse-github-actions
-  #         path: department-of-veterans-affairs/lighthouse-github-actions
-  #         token: ${{ secrets.TECHDOCS_PAT }}
-  #         ref: main
-  #     - name: Validate techdocs
-  #       id: validation
-  #       uses: ./department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs
-  #       with:
-  #         repository: ${{ env.REPO }}
-  #         descriptor-file: ${{ inputs.descriptor-file }}
-  #         namespace: ${{ secrets.KUBE_NAMESPACE }}
-  #         token: ${{ env.TOKEN }}
-  #     - name: Validation results
-  #       run: |
-  #         echo "${{ steps.validation.outputs.results }}"
+  validate-techdocs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo distinct ID ${{ inputs.distinct_id }} # Used to return success or fail to the source repo
+        run: echo "${{ inputs.distinct_id }}"
+      - name: Check out target repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ env.REPO }}
+          ref: ${{ inputs.branch }}
+          token: ${{ env.TOKEN }}
+          path: ${{ env.REPO }}
+      - name: Check out Github Actions repository
+        if: ${{ env.REPO != 'department-of-veterans-affairs/lighthouse-github-actions' }}
+        uses: actions/checkout@v3
+        with:
+          repository: department-of-veterans-affairs/lighthouse-github-actions
+          path: department-of-veterans-affairs/lighthouse-github-actions
+          token: ${{ secrets.TECHDOCS_PAT }}
+          ref: main
+      - name: Validate techdocs
+        id: validation
+        uses: ./department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs
+        with:
+          repository: ${{ env.REPO }}
+          descriptor-file: ${{ inputs.descriptor-file }}
+          namespace: ${{ secrets.KUBE_NAMESPACE }}
+          token: ${{ env.TOKEN }}
+      - name: Validation results
+        run: |
+          echo "${{ steps.validation.outputs.results }}"
   build-techdocs:
-    # needs: [validate-techdocs]
+    needs: [validate-techdocs]
     runs-on: ubuntu-latest
     strategy:
       matrix:
