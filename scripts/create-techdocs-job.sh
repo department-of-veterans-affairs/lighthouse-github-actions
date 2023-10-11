@@ -69,7 +69,7 @@ spec:
             memory: 450Mi
       containers:
       - name: techdocs
-        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/techdocs:23.06.1
+        image: ghcr.io/department-of-veterans-affairs/lighthouse-developer-portal/techdocs:23.10.1
         imagePullPolicy: Always
         command: ['/bin/sh']
         args:
@@ -92,6 +92,8 @@ spec:
           limits:
             cpu: 500m
             memory: 1024Mi
+      imagePullSecrets:
+        - name: "${ghcr_secrets}"
       restartPolicy: Never
       volumes:
       - name: repo
