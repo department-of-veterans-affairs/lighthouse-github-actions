@@ -39,7 +39,7 @@ runs:
       with:
         owner: "department-of-veterans-affairs"
         repo: "lighthouse-github-actions"
-        ref: API-30210-fix-image-pull
+        ref: main
         token: ${{ inputs.token }}
         workflow: "build-publish-docs.yml"
         workflow_inputs: "${{ env.INPUTS }}"
