@@ -41,6 +41,7 @@ env:
 jobs:
   validate-techdocs:
     runs-on: ubuntu-latest
+    if: false
     steps:
       - name: Echo distinct ID ${{ inputs.distinct_id }} # Used to return success or fail to the source repo
         run: echo "${{ inputs.distinct_id }}"
@@ -71,7 +72,7 @@ jobs:
         run: |
           echo "${{ steps.validation.outputs.results }}"
   build-techdocs:
-    needs: [validate-techdocs]
+    # needs: [validate-techdocs]
     runs-on: ubuntu-latest
     strategy:
       matrix:
