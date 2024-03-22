@@ -21,6 +21,10 @@ inputs:
     description: "Flag used to enable or disable techdocs for production"
     default: "true"
     required: false
+  lighthouse-github-actions-git-ref:
+    description: "The version of build-publish-docs.yaml you want to run"
+    required: false
+    default: main
 runs:
   using: "composite"
   steps:
@@ -29,6 +33,7 @@ runs:
         echo '${{ toJson(inputs) }}' > temp.json
         REPO_NAME=$( basename ${{ inputs.repository }})
         cat <<< $(jq --arg v $REPO_NAME '."repo-name"=$v' temp.json) > temp.json
+        jq -r 'del(."lighthouse-github-actions-git-ref")' < temp.json > temp.json
         echo "INPUTS<<EOF" >> "$GITHUB_ENV"
         cat temp.json >> "$GITHUB_ENV"
         echo "EOF" >> "$GITHUB_ENV"
@@ -39,7 +44,7 @@ runs:
       with:
         owner: "department-of-veterans-affairs"
         repo: "lighthouse-github-actions"
-        ref: main
+        ref: ${{ inputs.lighthouse-github-actions-git-ref }}
         token: ${{ inputs.token }}
         workflow: "build-publish-docs.yml"
         workflow_inputs: "${{ env.INPUTS }}"
