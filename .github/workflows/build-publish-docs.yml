@@ -42,6 +42,12 @@ jobs:
   validate-techdocs:
     runs-on: ubuntu-latest
     steps:
+      - name: Print Input
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "GITHUB_CONTEXT"
+          echo "$GITHUB_CONTEXT"
       - name: Echo distinct ID ${{ inputs.distinct_id }} # Used to return success or fail to the source repo
         run: echo "${{ inputs.distinct_id }}"
       - name: Check out target repository
