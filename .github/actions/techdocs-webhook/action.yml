@@ -31,20 +31,26 @@ runs:
     - name: Get repository name and update input buffer
       run: |
         echo '${{ toJson(inputs) }}' > temp.json
+        echo "cat 1"
         cat temp.json
         REPO_NAME=$( basename ${{ inputs.repository }})
         cat <<< $(jq --arg v $REPO_NAME '."repo-name"=$v' temp.json) > temp.json
+        echo "cat 2"
         cat temp.json
         cat <<< $(jq -r 'del(."lighthouse-github-actions-git-ref")' temp.json) > temp.json
+        echo "cat 3"
         cat temp.json
         echo "INPUTS<<EOF" >> "$GITHUB_ENV"
         cat temp.json >> "$GITHUB_ENV"
         echo "EOF" >> "$GITHUB_ENV"
+        echo "cat 4"
         cat temp.json
       shell: bash
     - name: Echo the env inputs
       shell: bash
-      run: echo ${{ env.INPUTS }}
+      run: |
+        echo "Echoing env.INPUTS"
+        echo "${{ env.INPUTS }}"
     - name: Dispatch build/publish documentation and get the run ID
       id: get_run_id
       uses: codex-/return-dispatch@v1
