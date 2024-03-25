@@ -37,7 +37,11 @@ runs:
         echo "INPUTS<<EOF" >> "$GITHUB_ENV"
         cat temp.json >> "$GITHUB_ENV"
         echo "EOF" >> "$GITHUB_ENV"
+        cat temp.json
       shell: bash
+    - name: Echo the env inputs
+      shell: bash
+      run: echo ${{ env.INPUTS }}
     - name: Dispatch build/publish documentation and get the run ID
       id: get_run_id
       uses: codex-/return-dispatch@v1
