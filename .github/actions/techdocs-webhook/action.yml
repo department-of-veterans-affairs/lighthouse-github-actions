@@ -35,7 +35,7 @@ runs:
         REPO_NAME=$( basename ${{ inputs.repository }})
         cat <<< $(jq --arg v $REPO_NAME '."repo-name"=$v' temp.json) > temp.json
         cat temp.json
-        jq -r 'del(."lighthouse-github-actions-git-ref")' < temp.json > temp.json
+        cat <<< $(jq -r 'del(."lighthouse-github-actions-git-ref")' temp.json) > temp.json
         cat temp.json
         echo "INPUTS<<EOF" >> "$GITHUB_ENV"
         cat temp.json >> "$GITHUB_ENV"
