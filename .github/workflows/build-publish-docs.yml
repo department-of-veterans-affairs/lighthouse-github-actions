@@ -42,6 +42,12 @@ jobs:
   validate-techdocs:
     runs-on: ubuntu-latest
     steps:
+      - name: Print Input
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "GITHUB_CONTEXT"
+          echo "$GITHUB_CONTEXT"
       - name: Echo distinct ID ${{ inputs.distinct_id }} # Used to return success or fail to the source repo
         run: echo "${{ inputs.distinct_id }}"
       - name: Check out target repository
@@ -58,7 +64,7 @@ jobs:
           repository: department-of-veterans-affairs/lighthouse-github-actions
           path: department-of-veterans-affairs/lighthouse-github-actions
           token: ${{ secrets.TECHDOCS_PAT }}
-          ref: main
+          ref: ${{ github.ref_name }}
       - name: Validate techdocs
         id: validation
         uses: ./department-of-veterans-affairs/lighthouse-github-actions/.github/actions/validate-techdocs
@@ -81,34 +87,39 @@ jobs:
     environment:
       name: ${{ matrix.environment }}
     steps:
-      - name: Create techdocs
-        if: ${{ matrix.environment == 'Development' || inputs.enable-production }}
-        uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
-        with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
-          kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
-          serviceAccountName: bandicoot-sa
-          repository: ${{ env.REPO }}
-          branch: ${{ inputs.branch }}
-          descriptor-file: ${{ inputs.descriptor-file }}
-          namespace: ${{ secrets.KUBE_NAMESPACE }}
-          token: ${{ secrets.TECHDOCS_PAT }}
-          AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
-          PAT: ${{ env.TOKEN }}
+        - name: Test echo build-techdocs
+          if: ${{ matrix.environment == 'Development' || inputs.enable-production }}
+          run: echo "running build-techdocs"
+      # - name: Create techdocs
+      #   if: ${{ matrix.environment == 'Development' || inputs.enable-production }}
+      #   uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs@main
+      #   with:
+      #     kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      #     kube_namespace: ${{ secrets.KUBE_NAMESPACE }}
+      #     serviceAccountName: bandicoot-sa
+      #     repository: ${{ env.REPO }}
+      #     branch: ${{ inputs.branch }}
+      #     descriptor-file: ${{ inputs.descriptor-file }}
+      #     namespace: ${{ secrets.KUBE_NAMESPACE }}
+      #     token: ${{ secrets.TECHDOCS_PAT }}
+      #     AWSBucketName: ${{ secrets.AWS_BUCKET_NAME }}
+      #     PAT: ${{ env.TOKEN }}
   deploy-gh-pages:
     if: ${{ inputs.gh-pages || ( inputs.repository == 'department-of-veterans-affairs/lighthouse-github-actions' ) }}
     needs: [build-techdocs]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: ${{ env.REPO }}
-          token: ${{ env.TOKEN }}
-          ref: ${{ inputs.branch }}
-      - name: Install GraphViz
-        run: sudo apt-get install -y graphviz
-      - name: Setup Mkdocs dependencies
-        run: /bin/sh <(curl -s https://${{ secrets.WEBHOOK_PAT }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/setup_mkdocs.sh)
-      - name: Deploy Github Pages
-        run: mkdocs gh-deploy --force -r https://${{ env.TOKEN }}@github.com/${{ env.REPO }}.git
-        shell: bash
+      - name: Test echo deploy-gh-pages
+        run: echo "running deploy-gh-pages"
+      # - uses: actions/checkout@v3
+      #   with:
+      #     repository: ${{ env.REPO }}
+      #     token: ${{ env.TOKEN }}
+      #     ref: ${{ inputs.branch }}
+      # - name: Install GraphViz
+      #   run: sudo apt-get install -y graphviz
+      # - name: Setup Mkdocs dependencies
+      #   run: /bin/sh <(curl -s https://${{ secrets.WEBHOOK_PAT }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/setup_mkdocs.sh)
+      # - name: Deploy Github Pages
+      #   run: mkdocs gh-deploy --force -r https://${{ env.TOKEN }}@github.com/${{ env.REPO }}.git
+      #   shell: bash

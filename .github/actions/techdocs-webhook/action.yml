@@ -21,25 +21,44 @@ inputs:
     description: "Flag used to enable or disable techdocs for production"
     default: "true"
     required: false
+  lighthouse-github-actions-git-ref:
+    description: "The version of lighthouse-github-actions to validate your docs"
+    required: false
+    default: main
+    type: string
 runs:
   using: "composite"
   steps:
     - name: Get repository name and update input buffer
       run: |
         echo '${{ toJson(inputs) }}' > temp.json
+        echo "cat 1"
+        cat temp.json
         REPO_NAME=$( basename ${{ inputs.repository }})
         cat <<< $(jq --arg v $REPO_NAME '."repo-name"=$v' temp.json) > temp.json
+        echo "cat 2"
+        cat temp.json
+        cat <<< $(jq -r 'del(."lighthouse-github-actions-git-ref")' temp.json) > temp.json
+        echo "cat 3"
+        cat temp.json
         echo "INPUTS<<EOF" >> "$GITHUB_ENV"
         cat temp.json >> "$GITHUB_ENV"
         echo "EOF" >> "$GITHUB_ENV"
+        echo "cat 4"
+        cat temp.json
       shell: bash
+    - name: Echo the env inputs
+      shell: bash
+      run: |
+        echo "Echoing env.INPUTS"
+        echo "${{ env.INPUTS }}"
     - name: Dispatch build/publish documentation and get the run ID
       id: get_run_id
       uses: codex-/return-dispatch@v1
       with:
         owner: "department-of-veterans-affairs"
         repo: "lighthouse-github-actions"
-        ref: main
+        ref: ${{ inputs.lighthouse-github-actions-git-ref }}
         token: ${{ inputs.token }}
         workflow: "build-publish-docs.yml"
         workflow_inputs: "${{ env.INPUTS }}"
