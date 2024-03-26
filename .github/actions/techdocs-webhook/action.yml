@@ -22,9 +22,10 @@ inputs:
     default: "true"
     required: false
   lighthouse-github-actions-git-ref:
-    description: "The version of build-publish-docs.yaml you want to run"
+    description: "The version of lighthouse-github-actions to validate your docs"
     required: false
     default: main
+    type: string
 runs:
   using: "composite"
   steps:
