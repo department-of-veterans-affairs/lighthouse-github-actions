@@ -3,5 +3,8 @@
   "MD033": {
     "allowed_elements": ["a", "b", "i", "table", "tbody", "thead", "td", "tr", "sup"]
   },
+  "MD046": {
+    "style": "fenced"
+  },
   "default": true
 }
