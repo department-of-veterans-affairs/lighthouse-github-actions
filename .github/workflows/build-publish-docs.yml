@@ -109,7 +109,7 @@ jobs:
         run: sudo apt-get install -y graphviz
       - name: Setup Mkdocs dependencies
         run: |
-          curl -H "Authorization: ${{ secrets.WEBHOOK_PAT }}" \
+          curl -H "Authorization: token ${{ secrets.WEBHOOK_PAT }}" \
           https://raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/setup_mkdocs.sh
         shell: bash
       - name: Deploy Github Pages
