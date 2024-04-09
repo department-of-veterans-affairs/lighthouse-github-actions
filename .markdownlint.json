@@ -1,0 +1,7 @@
+{
+  "MD013": false,
+  "MD033": {
+    "allowed_elements": ["a", "b", "i", "table", "tbody", "thead", "td", "tr", "sup"]
+  },
+  "default": true
+}

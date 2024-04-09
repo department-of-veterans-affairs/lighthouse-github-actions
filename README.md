@@ -1,14 +1,14 @@
-# Lighthouse Internal Developer Hub Github Actions
+# Lighthouse Hub Github Actions
 
-Github Actions that help teams use the Lighthouse Internal Developer Hub
+Github Actions that help teams use the Lighthouse Hub
 
 ## TechDocs Action
 
-This action creates a [Kubernetes Job](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/scripts/create-techdocs-job.sh) that will generate and publish your TechDocs for the Lighthouse Internal Developer Portal.
+This action creates a [Kubernetes Job](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/scripts/create-techdocs-job.sh) that will generate and publish your TechDocs for the Lighthouse Hub.
 
 ### Overview
 
-The Kubernetes Job consists of two containers: a [git-sync](https://github.com/kubernetes/git-sync) container and a [TechDocs](https://github.com/department-of-veterans-affairs/lighthouse-developer-portal/blob/main/techdocs/Dockerfile) container. The `git-sync` container is an initContainer that pulls a git repository to a shared volume so the TechDocs container has a copy of all markdown files. The `TechDocs` container then uses the [TechDocs-cli](https://backstage.io/docs/features/techdocs/cli) to generate and publish your documentation to the Lighthouse S3 bucket.
+The Kubernetes Job consists of two containers: a [git-sync](https://github.com/kubernetes/git-sync) container and a TechDocs container. The `git-sync` container is an initContainer that pulls a git repository to a shared volume so the TechDocs container has a copy of all markdown files. The `TechDocs` container then uses the [TechDocs-cli](https://backstage.io/docs/features/techdocs/cli) to generate and publish your documentation to the Lighthouse S3 bucket.
 
 ### TechDocs Prerequisites
 
@@ -26,7 +26,7 @@ More info about [Entity Descriptor files](https://backstage.io/docs/features/sof
 
 ```yaml
 - name: Create TechDocs Job
-  uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs-webhook@main
+  uses: department-of-veterans-affairs/lighthouse-github-actions/.github/actions/techdocs-webhook@latest
   with:
     # Owner and repository where the documentation lives (e.g. department-of-veterans-affairs/lighthouse-developer-portal)
     # Default: ${{ github.repository }}
