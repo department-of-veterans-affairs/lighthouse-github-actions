@@ -77,7 +77,9 @@ runs:
       shell: bash
     - name: Get entity triplet
       id: entity
-      run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/entity-triplet.sh)
+      run: |
+        curl -H "Authorization: token ${{ inputs.token }}" \
+        https://raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/entity-triplet.sh
       env:
         BASE_PATH: ${{ github.workspace }}
         FILE: ${{ inputs.descriptor-file }}
@@ -98,7 +100,10 @@ runs:
         echo "Entity's S3 Location: .../${namespace}/${kind}/${name}"
       shell: bash
     - name: Create Dockerconfigjson
-      run: bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-dockerconfigjson.sh) "${{ inputs.repository }}"
+      run: |
+        curl -H "Authorization: token ${{ inputs.token }}" \
+        https://raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-dockerconfigjson.sh) \
+        "${{ inputs.repository }}"
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
         GITHUB_USER: ${{ github.repository_owner }}
@@ -122,13 +127,14 @@ runs:
         job-name: 'techdocs-${{ env.REPO_NAME }}'
     - name: Create techdocs Job
       if: ${{ steps.delete-jobs.outcome == 'success'}}
-      run: >
-        bash <(curl -s https://${{ inputs.token }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-techdocs-job.sh)
-        "${{ inputs.serviceAccountName }}"
-        "${{ inputs.repository }}"
-        "$namespace"
-        "$kind"
-        "$name"
+      run: |
+        curl -H "Authorization: token ${{ inputs.token }}" \
+        https://raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/create-techdocs-job.sh \
+        "${{ inputs.serviceAccountName }}" \
+        "${{ inputs.repository }}" \
+        "$namespace" \
+        "$kind" \
+        "$name" \
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
         GITHUB_USER: ${{ inputs.username }}

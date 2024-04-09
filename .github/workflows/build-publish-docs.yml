@@ -108,7 +108,10 @@ jobs:
       - name: Install GraphViz
         run: sudo apt-get install -y graphviz
       - name: Setup Mkdocs dependencies
-        run: /bin/sh <(curl -s https://${{ secrets.WEBHOOK_PAT }}@raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/setup_mkdocs.sh)
+        run: |
+          curl -H "Authorization: ${{ secrets.WEBHOOK_PAT }}" \
+          https://raw.githubusercontent.com/department-of-veterans-affairs/lighthouse-github-actions/main/scripts/setup_mkdocs.sh
+        shell: bash
       - name: Deploy Github Pages
         run: mkdocs gh-deploy --force -r https://${{ env.TOKEN }}@github.com/${{ env.REPO }}.git
         shell: bash
