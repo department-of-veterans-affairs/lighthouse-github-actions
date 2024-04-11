@@ -2,7 +2,7 @@
 
 Github Actions that help teams use the Lighthouse Hub
 
-## TechDocs Action
+## TechDocs Action   *** DEPRECATED!!!! (use techdocs [reusable workflow](https://department-of-veterans-affairs.github.io/code-va-docs/TechDocs/techdocs-setup) instead
 
 This action creates a [Kubernetes Job](https://github.com/department-of-veterans-affairs/lighthouse-github-actions/blob/main/scripts/create-techdocs-job.sh) that will generate and publish your TechDocs for the Lighthouse Hub.
 
